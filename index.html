@@ -1993,24 +1993,6 @@
           <span>تحميل دليل PDF</span>
         </a>
 
-        <!-- PWA Install Button (Appears when installable) -->
-        <button class="header-btn pwa-btn" id="btn-install-pwa" onclick="triggerPwaInstall()" style="display:none;" title="تثبيت التطبيق كبرنامج على الهاتف أو الكمبيوتر">
-          <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
-          <span id="txt-install-app">تثبيت التطبيق</span>
-        </button>
-
-        <!-- Version & Update Check Button -->
-        <button class="header-btn version-btn" id="btn-version-status" onclick="checkForUpdates(true)" title="فحص التحديثات يدوياً">
-          <span class="version-dot" id="version-dot"></span>
-          <span id="txt-version-number">v1.0.2</span>
-        </button>
-
-        <!-- 100% Offline Status Badge -->
-        <div class="offline-indicator" title="النظام يعمل بكفاءة 100% دون اتصال بالإنترنت">
-          <span class="indicator-pulse"></span>
-          <span id="txt-offline-status">مستقل 100% أوفلاين</span>
-        </div>
-
         <!-- Tax & Recharge Calculator Button -->
         <button class="header-btn" onclick="openCalculatorModal()" title="حاسبة الشحن والضريبة">
           <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-6 14H7v-2h6v2zm4-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
@@ -3739,7 +3721,8 @@
       document.documentElement.lang = currentLang;
 
       document.getElementById("lang-btn").innerHTML = `<span>${isArabic ? "EN" : "عربي"}</span>`;
-      document.getElementById("txt-offline-status").textContent = isArabic ? "مستقل 100% أوفلاين" : "100% Offline";
+      const offTxt = document.getElementById("txt-offline-status");
+      if (offTxt) offTxt.textContent = isArabic ? "مستقل 100% أوفلاين" : "100% Offline";
       const installTxt = document.getElementById("txt-install-app");
       if (installTxt) installTxt.textContent = isArabic ? "تثبيت التطبيق" : "Install App";
       const reloadTxt = document.getElementById("txt-reload-now");
@@ -3805,7 +3788,7 @@
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.2";
+    const CURRENT_APP_VERSION = "1.0.3";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
