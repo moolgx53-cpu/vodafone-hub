@@ -4559,12 +4559,26 @@
       showToast(isArabic ? "تم حذف البطاقة بنجاح" : "Note deleted");
     }
 
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
     function togglePasswordVisibility(noteId, btnEl) {
       const passEl = document.getElementById("pass-val-" + noteId);
       if (!passEl) return;
+      const prof = getActiveProfile();
+      const note = (prof.notes || []).find(n => n.id === noteId);
+      if (!note) return;
+
       const isMasked = passEl.getAttribute("data-is-masked") !== "false";
       if (isMasked) {
-        passEl.textContent = passEl.getAttribute("data-real-pass");
+        passEl.textContent = note.password;
         passEl.setAttribute("data-is-masked", "false");
         btnEl.textContent = "🙈";
         btnEl.title = currentLang === "ar" ? "إخفاء كلمة المرور" : "Hide Password";
@@ -4573,6 +4587,35 @@
         passEl.setAttribute("data-is-masked", "true");
         btnEl.textContent = "👁️";
         btnEl.title = currentLang === "ar" ? "إظهار كلمة المرور" : "Show Password";
+      }
+    }
+
+    function copyCredField(noteId, field, btnEl) {
+      const prof = getActiveProfile();
+      const note = (prof.notes || []).find(n => n.id === noteId);
+      if (!note) return;
+      const isArabic = currentLang === "ar";
+      let val = "";
+      let label = "";
+      if (field === "user") {
+        val = note.username;
+        label = isArabic ? "اسم المستخدم" : "Username";
+      } else if (field === "pass") {
+        val = note.password;
+        label = isArabic ? "كلمة المرور" : "Password";
+      } else if (field === "extra") {
+        val = note.extra;
+        label = isArabic ? "الملاحظات" : "Note";
+      }
+      if (!val) return;
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(val).then(() => {
+          showCopySuccess(btnEl, label);
+        }).catch(() => {
+          fallbackCopy(val, label, btnEl);
+        });
+      } else {
+        fallbackCopy(val, label, btnEl);
       }
     }
 
@@ -4675,7 +4718,6 @@
       notes.forEach((note) => {
         const safeSystem = escapeHtml(note.system);
         const safeUser = escapeHtml(note.username);
-        const safePass = escapeHtml(note.password);
         const safeExtra = note.extra ? escapeHtml(note.extra) : "";
         const color = note.color || "yellow";
 
@@ -4698,7 +4740,7 @@
                   <span class="cred-label">${isArabic ? "المستخدم:" : "User:"}</span>
                   <code class="cred-val">${safeUser}</code>
                 </div>
-                <button class="btn-copy-cred" onclick="copyCredValue('${safeUser}', '${isArabic ? "اسم المستخدم" : "Username"}', this)" title="${isArabic ? "نسخ اسم المستخدم" : "Copy Username"}">
+                <button class="btn-copy-cred" onclick="copyCredField('${note.id}', 'user', this)" title="${isArabic ? "نسخ اسم المستخدم" : "Copy Username"}">
                   <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                   <span>${isArabic ? "نسخ" : "Copy"}</span>
                 </button>
@@ -4708,11 +4750,11 @@
               <div class="note-cred-row">
                 <div class="cred-label-val">
                   <span class="cred-label">${isArabic ? "كلمة المرور:" : "Password:"}</span>
-                  <span class="cred-val masked-pass" id="pass-val-${note.id}" data-real-pass="${safePass}" data-is-masked="true">••••••••••</span>
+                  <span class="cred-val masked-pass" id="pass-val-${note.id}" data-is-masked="true">••••••••••</span>
                 </div>
                 <div class="pass-actions">
                   <button class="btn-toggle-eye" onclick="togglePasswordVisibility('${note.id}', this)" title="${isArabic ? "إظهار/إخفاء" : "Show/Hide"}">👁️</button>
-                  <button class="btn-copy-cred" onclick="copyCredValue('${safePass}', '${isArabic ? "كلمة المرور" : "Password"}', this)" title="${isArabic ? "نسخ كلمة المرور" : "Copy Password"}">
+                  <button class="btn-copy-cred" onclick="copyCredField('${note.id}', 'pass', this)" title="${isArabic ? "نسخ كلمة المرور" : "Copy Password"}">
                     <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                     <span>${isArabic ? "نسخ" : "Copy"}</span>
                   </button>
@@ -4726,7 +4768,7 @@
                   <span class="cred-label">${isArabic ? "ملاحظة:" : "Note:"}</span>
                   <span class="cred-extra-text">${safeExtra}</span>
                 </div>
-                <button class="btn-copy-cred mini" onclick="copyCredValue('${safeExtra}', '${isArabic ? "الملاحظات" : "Note"}', this)" title="${isArabic ? "نسخ" : "Copy"}">
+                <button class="btn-copy-cred mini" onclick="copyCredField('${note.id}', 'extra', this)" title="${isArabic ? "نسخ" : "Copy"}">
                   <span>${isArabic ? "نسخ" : "Copy"}</span>
                 </button>
               </div>` : ''}
@@ -4843,7 +4885,7 @@
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.4";
+    const CURRENT_APP_VERSION = "1.0.5";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
