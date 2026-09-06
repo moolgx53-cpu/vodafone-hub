@@ -2858,7 +2858,7 @@
             <span class="sidebar-icon">🌐</span>
             <span id="tab-txt-all">جميع الباقات</span>
           </div>
-          <span class="tab-count" id="count-all">39</span>
+          <span class="tab-count" id="count-all">43</span>
         </button>
 
         <button class="cat-tab sidebar-item" data-cat="red" onclick="switchCategory('red'); closeSidebarOnMobile();">
@@ -2883,6 +2883,14 @@
             <span id="tab-txt-adsl">إنترنت منزلي ADSL</span>
           </div>
           <span class="tab-count" id="count-adsl">9</span>
+        </button>
+
+        <button class="cat-tab sidebar-item" data-cat="wireless" onclick="switchCategory('wireless'); closeSidebarOnMobile();">
+          <div class="sidebar-item-info">
+            <span class="sidebar-icon">📡</span>
+            <span id="tab-txt-wireless">هوم وايرلس Home Wireless</span>
+          </div>
+          <span class="tab-count" id="count-wireless">4</span>
         </button>
 
         <button class="cat-tab sidebar-item" data-cat="mi_plus" onclick="switchCategory('mi_plus'); closeSidebarOnMobile();">
@@ -3534,6 +3542,124 @@
       { id: "adsl-750gb-100", category: "adsl", name: "ADSL 750 GB (100 Mbps)", nameEn: "ADSL 750 GB (100 Mbps)", quotaText: "750 GB سرعة 100", quotaTextEn: "750 GB 100Mbps", quotaNum: 750, priceBeforeTax: 1425, priceAfterTax: 1624.5, badge: "100 Mbps", speed: "100", features: ["سرعة 100 ميجابت/ث", "750 جيجابايت شهرياً", "اشتراكات: OSN + WATCH IT + Yango + Prime + TOD", "شامل الضريبة: 1624.5 ج.م"], featuresEn: ["Speed: 100 Mbps", "750 GB Quota", "OSN, WATCH IT, Yango, Prime, TOD", "After TAX: 1624.5 LE"], apps: ["osn", "watchit", "yangoplay", "prime", "tod"], ussd: "*2828#" },
       { id: "adsl-1500gb-200", category: "adsl", name: "ADSL 1500 GB (200 Mbps)", nameEn: "ADSL 1500 GB (200 Mbps)", quotaText: "1500 GB أقصى سرعة 200", quotaTextEn: "1500 GB Max Speed", quotaNum: 1500, priceBeforeTax: 2350, priceAfterTax: 2679, badge: "200 Mbps Ultra", speed: "200", features: ["أعلى سرعة: 200 ميجابت/ث", "سعة 1.5 تيرابايت (1500 GB)", "اشتراكات: OSN + WATCH IT + Yango + Prime + TOD", "شامل الضريبة: 2679 ج.م"], featuresEn: ["Speed: 200 Mbps", "1500 GB Quota", "Full Entertainment Suite", "After TAX: 2679 LE"], apps: ["osn", "watchit", "yangoplay", "prime", "tod"], ussd: "*2828#" },
 
+      // AT HOME WIRELESS PLANS (راوتر هوائي 4G بدون خط أرضي)
+      {
+        id: "wireless-290",
+        category: "wireless",
+        name: "Home Wireless 290",
+        nameEn: "Home Wireless 290",
+        quotaText: "40 GB سعة تحميل",
+        quotaTextEn: "40 GB Data Quota",
+        quotaNum: 40,
+        priceBeforeTax: 290,
+        priceAfterTax: 414.3,
+        priceNote: "شهرياً شامل الضريبة / Month",
+        badge: "Home Wireless 4G",
+        features: [
+          "سعة التحميل: 40 جيجابايت شهرياً",
+          "السعر الشهري الأساسي: 290 ج.م",
+          "السعر المطلوب سداده: 414.3 ج.م (شامل الضريبة)",
+          "راوتر هوائي 4G منزلي بدون خط أرضي"
+        ],
+        featuresEn: [
+          "Data Quota: 40 GB monthly",
+          "Monthly Price: 290 EGP",
+          "Pay: 414.3 EGP (Tax Included)",
+          "4G Wireless router without landline"
+        ],
+        apps: [],
+        ussd: "تطبيق أنا فودافون / الفرع"
+      },
+      {
+        id: "wireless-520",
+        category: "wireless",
+        name: "Home Wireless 520",
+        nameEn: "Home Wireless 520",
+        quotaText: "135 GB سعة تحميل",
+        quotaTextEn: "135 GB Data Quota",
+        quotaNum: 135,
+        priceBeforeTax: 520,
+        priceAfterTax: 742.9,
+        priceNote: "شهرياً شامل الضريبة / Month",
+        badge: "الأكثر طلباً",
+        isPopular: true,
+        features: [
+          "سعة التحميل: 135 جيجابايت شهرياً",
+          "السعر الشهري الأساسي: 520 ج.م",
+          "السعر المطلوب سداده: 742.9 ج.م (شامل الضريبة)",
+          "راوتر هوائي 4G منزلي بدون خط أرضي",
+          "الباقة الأكثر ملاءمة للاستخدام المنزلي والعائلي"
+        ],
+        featuresEn: [
+          "Data Quota: 135 GB monthly",
+          "Monthly Price: 520 EGP",
+          "Pay: 742.9 EGP (Tax Included)",
+          "4G Wireless router without landline",
+          "Most popular family choice"
+        ],
+        apps: [],
+        ussd: "تطبيق أنا فودافون / الفرع"
+      },
+      {
+        id: "wireless-830",
+        category: "wireless",
+        name: "Home Wireless 830",
+        nameEn: "Home Wireless 830",
+        quotaText: "250 GB سعة تحميل",
+        quotaTextEn: "250 GB Data Quota",
+        quotaNum: 250,
+        priceBeforeTax: 830,
+        priceAfterTax: 1185.7,
+        priceNote: "شهرياً شامل الضريبة / Month",
+        badge: "Home Wireless Pro",
+        features: [
+          "سعة التحميل: 250 جيجابايت شهرياً",
+          "السعر الشهري الأساسي: 830 ج.م",
+          "السعر المطلوب سداده: 1185.7 ج.م (شامل الضريبة)",
+          "راوتر هوائي 4G منزلي بدون خط أرضي",
+          "سعة فائقة لمشاهدة الفيديوهات والتحميل الكثيف"
+        ],
+        featuresEn: [
+          "Data Quota: 250 GB monthly",
+          "Monthly Price: 830 EGP",
+          "Pay: 1185.7 EGP (Tax Included)",
+          "4G Wireless router without landline",
+          "High capacity for HD streaming & downloads"
+        ],
+        apps: [],
+        ussd: "تطبيق أنا فودافون / الفرع"
+      },
+      {
+        id: "wireless-1270",
+        category: "wireless",
+        name: "Home Wireless 1270",
+        nameEn: "Home Wireless 1270",
+        quotaText: "400 GB سعة فائقة",
+        quotaTextEn: "400 GB Ultra Quota",
+        quotaNum: 400,
+        priceBeforeTax: 1270,
+        priceAfterTax: 1814.3,
+        priceNote: "شهرياً شامل الضريبة / Month",
+        badge: "أعلى سعة (Ultra)",
+        isBestValue: true,
+        features: [
+          "سعة التحميل: 400 جيجابايت فائقة شهرياً",
+          "السعر الشهري الأساسي: 1270 ج.م",
+          "السعر المطلوب سداده: 1814.3 ج.م (شامل الضريبة)",
+          "راوتر هوائي 4G منزلي بدون خط أرضي",
+          "أقصى سعة تحميل للألعاب ومشاهدة 4K والعمل الحر"
+        ],
+        featuresEn: [
+          "Data Quota: 400 GB ultra monthly",
+          "Monthly Price: 1270 EGP",
+          "Pay: 1814.3 EGP (Tax Included)",
+          "4G Wireless router without landline",
+          "Maximum quota for 4K streaming, gaming & heavy work"
+        ],
+        apps: [],
+        ussd: "تطبيق أنا فودافون / الفرع"
+      },
+
       // MI PLUS BUNDLE
       { id: "mi-10-5", category: "mi_plus", name: "VF Plus 10.5 LE", nameEn: "VF Plus 10.5 LE", quotaText: "250 ميجابايت (MB)", quotaTextEn: "250 MB", quotaNum: 0.25, priceBeforeTax: 10.5, priceAfterTax: 15, badge: "MI Plus", features: ["250 ميجابايت", "السعر بعد الضريبة: 15 ج.م", "الاشتراك: تطبيق أنا فودافون"], featuresEn: ["250 MB", "Price: 15 EGP", "Code: Ana Vodafone"], apps: [], ussd: "Ana Vodafone" },
       { id: "mi-23", category: "mi_plus", name: "VF Plus 23 LE", nameEn: "VF Plus 23 LE", quotaText: "750 ميجابايت (MB)", quotaTextEn: "750 MB", quotaNum: 0.75, priceBeforeTax: 23, priceAfterTax: 33, badge: "MI Plus", features: ["750 ميجابايت", "السعر بعد الضريبة: 33 ج.م", "الاشتراك: تطبيق أنا فودافون"], featuresEn: ["750 MB", "Price: 33 EGP", "Code: Ana Vodafone"], apps: [], ussd: "Ana Vodafone" },
@@ -4010,6 +4136,7 @@
         red: base.filter(p => p.category === "red").length,
         flex: base.filter(p => p.category === "flex").length,
         adsl: base.filter(p => p.category === "adsl").length,
+        wireless: base.filter(p => p.category === "wireless").length,
         mi: base.filter(p => p.category === "mi_plus").length,
         biz: base.filter(p => p.category === "business").length,
       };
@@ -4017,6 +4144,7 @@
       const countRed = document.getElementById("count-red");
       const countFlex = document.getElementById("count-flex");
       const countAdsl = document.getElementById("count-adsl");
+      const countWireless = document.getElementById("count-wireless");
       const countMi = document.getElementById("count-mi");
       const countBiz = document.getElementById("count-biz");
 
@@ -4024,6 +4152,7 @@
       if (countRed) countRed.textContent = counts.red;
       if (countFlex) countFlex.textContent = counts.flex;
       if (countAdsl) countAdsl.textContent = counts.adsl;
+      if (countWireless) countWireless.textContent = counts.wireless;
       if (countMi) countMi.textContent = counts.mi;
       if (countBiz) countBiz.textContent = counts.biz;
     }
@@ -4277,6 +4406,7 @@
           { cat: "red", title: isArabic ? "باقات فودافون ريد (Vodafone RED Plans)" : "Vodafone RED Plans", desc: isArabic ? "باقات الفاتورة الشهرية متضمنة ترفيه، تجوال، وتقسيط أجهزة" : "Monthly postpaid plans with entertainment, roaming & devices" },
           { cat: "flex", title: isArabic ? "باقات فليكس الشهرية (Flex Rate Plans)" : "Flex Rate Plans", desc: isArabic ? "صلاحية 28 يوماً - مكالمات ورسائل وإنترنت" : "28 Days validity for calls, SMS & internet" },
           { cat: "adsl", title: isArabic ? "باقات الإنترنت المنزلي (ADSL Rate Plans)" : "ADSL Rate Plans", desc: isArabic ? "سرعات تبدأ من 30 وحتى 200 ميجابت واشتراكات ترفيه مجانية" : "Speeds up to 200 Mbps with free entertainment" },
+          { cat: "wireless", title: isArabic ? "باقات هوم وايرلس (At Home Wireless 4G)" : "At Home Wireless 4G", desc: isArabic ? "إنترنت هوائي عالي السرعة بدون خط أرضي بشرائح 4G" : "High-speed 4G home internet router without landline" },
           { cat: "mi_plus", title: isArabic ? "باقات الإنترنت للموبايل (MI Plus Bundle)" : "MI Plus Bundle", desc: isArabic ? "أفضل أسعار لميجات الإنترنت لجميع خطوط فودافون" : "Competitive mobile internet bundles for all customers" },
           { cat: "business", title: isArabic ? "باقات فودافون للشركات 2026 (Business Plans)" : "Vodafone Business Plans 2026", desc: isArabic ? "دقائق العمل داخل الشركة، باقات فليكس بيزنس وريد بيزنس" : "Business Flex & Red Business corporate packages" },
         ];
@@ -5865,6 +5995,8 @@
       document.getElementById("tab-txt-red").textContent = isArabic ? "باقات Vodafone RED" : "Vodafone RED";
       document.getElementById("tab-txt-flex").textContent = isArabic ? "باقات فليكس Flex" : "Flex Rate Plans";
       document.getElementById("tab-txt-adsl").textContent = isArabic ? "إنترنت منزلي ADSL" : "Home ADSL";
+      const tabWirelessTxt = document.getElementById("tab-txt-wireless");
+      if (tabWirelessTxt) tabWirelessTxt.textContent = isArabic ? "هوم وايرلس Home Wireless" : "At Home Wireless";
       document.getElementById("tab-txt-mi").textContent = isArabic ? "باقات النت MI Plus" : "Mobile Internet Plus";
       document.getElementById("tab-txt-biz").textContent = isArabic ? "باقات الشركات Business" : "Vodafone Business";
 
@@ -5917,7 +6049,7 @@
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.13";
+    const CURRENT_APP_VERSION = "1.0.14";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
