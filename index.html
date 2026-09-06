@@ -431,6 +431,336 @@
     }
 
     /* ==========================================================
+       ENTERPRISE SIDEBAR & DUAL-COLUMN APP LAYOUT
+       ========================================================== */
+    .app-layout-container {
+      max-width: 1440px;
+      margin: 1.25rem auto 3rem;
+      padding: 0 1.25rem;
+      width: 100%;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      box-sizing: border-box;
+    }
+
+    /* Sidebar Container */
+    .app-sidebar {
+      width: 290px;
+      min-width: 290px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 1rem;
+      max-height: calc(100vh - 2rem);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 100;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .app-sidebar::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--vf-red) 0%, #ff6b6b 100%);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar-title svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--vf-red);
+    }
+
+    .sidebar-close-btn {
+      display: none;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-full);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: var(--transition);
+    }
+
+    .sidebar-close-btn:hover {
+      background: var(--vf-red-subtle);
+      color: var(--vf-red);
+    }
+
+    /* Vertical Category Navigation List */
+    .sidebar-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .cat-tab.sidebar-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0.75rem 0.95rem;
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: right;
+      transition: var(--transition);
+    }
+
+    [dir="ltr"] .cat-tab.sidebar-item {
+      text-align: left;
+    }
+
+    .sidebar-item-info {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .sidebar-icon {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .cat-tab.sidebar-item:hover {
+      background: var(--vf-red-subtle);
+      border-color: var(--vf-red-border);
+      color: var(--vf-red);
+      transform: translateX(-3px);
+    }
+
+    [dir="ltr"] .cat-tab.sidebar-item:hover {
+      transform: translateX(3px);
+    }
+
+    .cat-tab.sidebar-item.active {
+      background: linear-gradient(135deg, var(--vf-red), var(--vf-red-dark));
+      color: #ffffff;
+      border-color: var(--vf-red-dark);
+      box-shadow: 0 4px 14px rgba(230, 0, 0, 0.3);
+      transform: none;
+    }
+
+    .cat-tab.sidebar-item .tab-count {
+      background: rgba(0, 0, 0, 0.08);
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      min-width: 22px;
+      text-align: center;
+    }
+
+    .cat-tab.sidebar-item.active .tab-count {
+      background: #ffffff;
+      color: var(--vf-red);
+    }
+
+    /* Sidebar Quick Tools / Links */
+    .sidebar-section-divider {
+      height: 1px;
+      background: var(--border-color);
+      margin: 0.25rem 0;
+    }
+
+    .sidebar-quick-tools {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .sidebar-subheading {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0 0.25rem 0.25rem;
+    }
+
+    .sidebar-tool-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.65rem 0.85rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: right;
+    }
+
+    [dir="ltr"] .sidebar-tool-btn {
+      text-align: left;
+    }
+
+    .sidebar-tool-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .sidebar-tool-btn:hover {
+      background: var(--vf-red-subtle);
+      color: var(--vf-red);
+      border-color: var(--vf-red-border);
+    }
+
+    /* Main Area Container */
+    .app-main-area {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .app-main-area .controls-hero {
+      margin: 0;
+      padding: 0;
+      max-width: 100%;
+    }
+
+    .app-main-area .main-content {
+      margin: 0;
+      padding: 0;
+      max-width: 100%;
+    }
+
+    /* Mobile Sidebar Toggle Button */
+    .sidebar-toggle-btn {
+      display: none;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.65rem 1rem;
+      background: var(--vf-red);
+      color: #ffffff;
+      border-radius: var(--radius-md);
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 8px rgba(230, 0, 0, 0.25);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .sidebar-toggle-btn:hover {
+      background: var(--vf-red-hover);
+    }
+
+    .sidebar-toggle-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 998;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Responsive Breakpoint for Sidebar */
+    @media (max-width: 992px) {
+      .app-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        right: -320px !important;
+        width: 300px !important;
+        max-height: 100vh !important;
+        border-radius: 0 !important;
+        z-index: 1000 !important;
+        box-shadow: -6px 0 24px rgba(0, 0, 0, 0.3) !important;
+        transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1), left 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      [dir="ltr"] .app-sidebar {
+        right: auto !important;
+        left: -320px !important;
+        box-shadow: 6px 0 24px rgba(0, 0, 0, 0.3) !important;
+      }
+
+      .app-sidebar.open {
+        right: 0 !important;
+      }
+
+      [dir="ltr"] .app-sidebar.open {
+        left: 0 !important;
+      }
+
+      .sidebar-close-btn {
+        display: flex !important;
+      }
+
+      .sidebar-backdrop.open {
+        display: block !important;
+        opacity: 1 !important;
+      }
+
+      .sidebar-toggle-btn {
+        display: inline-flex !important;
+      }
+
+      .app-layout-container {
+        flex-direction: column !important;
+        gap: 1rem !important;
+        padding: 0 0.85rem !important;
+      }
+    }
+
+    /* ==========================================================
        SUB-HEADER: QUICK CODES TICKER
        ========================================================== */
     .quick-codes-strip {
@@ -1672,7 +2002,7 @@
         <!-- Version & Update Check Button -->
         <button class="header-btn version-btn" id="btn-version-status" onclick="checkForUpdates(true)" title="فحص التحديثات يدوياً">
           <span class="version-dot" id="version-dot"></span>
-          <span id="txt-version-number">v1.0.1</span>
+          <span id="txt-version-number">v1.0.2</span>
         </button>
 
         <!-- 100% Offline Status Badge -->
@@ -1760,102 +2090,162 @@
   </div>
 
   <!-- ==========================================================
-       HERO CONTROL PANEL: TABS, SEARCH & FILTERS
+       APP LAYOUT: SIDEBAR NAVIGATION & MAIN CONTENT
        ========================================================== -->
-  <section class="controls-hero">
-    <div class="hero-card">
-      
-      <!-- Search & Quick Actions -->
-      <div class="search-filter-row">
-        <div class="search-wrapper">
-          <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 14z"/></svg>
-          <input type="text" id="global-search" class="search-input" placeholder="ابحث بالاسم، السعر، الجيجات، أو كود الخدمة (مثال: كاش, سلفني, 575, 888, *155#, 100 Mbps)..." oninput="handleSearch()">
-          <button id="clear-search" class="clear-search-btn" onclick="clearSearchInput()" title="مسح البحث">✕</button>
+  <div class="app-layout-container">
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title">
+          <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+          <span id="txt-sidebar-title">أقسام الباقات</span>
         </div>
-
-        <div class="filter-group">
-          <button class="header-btn" onclick="window.print()" title="طباعة الصفحة أو تصدير PDF">
-            <svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-4 11H9v-5h6v5zm4-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-3-9H8v3h8V3z"/></svg>
-            <span id="btn-print-txt">طباعة الدليل</span>
-          </button>
-        </div>
+        <button class="sidebar-close-btn" id="sidebar-close-btn" onclick="toggleSidebar(false)" title="إغلاق القائمة">✕</button>
       </div>
 
-      <!-- Main Category Tabs -->
-      <div class="category-tabs-container" id="category-tabs">
-        <button class="cat-tab active" data-cat="all" onclick="switchCategory('all')">
-          <span id="tab-txt-all">جميع الباقات</span>
+      <nav class="sidebar-nav-list" id="category-tabs">
+        <button class="cat-tab sidebar-item active" data-cat="all" onclick="switchCategory('all'); closeSidebarOnMobile();">
+          <div class="sidebar-item-info">
+            <span class="sidebar-icon">🌐</span>
+            <span id="tab-txt-all">جميع الباقات</span>
+          </div>
           <span class="tab-count" id="count-all">39</span>
         </button>
-        <button class="cat-tab" data-cat="red" onclick="switchCategory('red')">
-          <span id="tab-txt-red">باقات Vodafone RED</span>
+
+        <button class="cat-tab sidebar-item" data-cat="red" onclick="switchCategory('red'); closeSidebarOnMobile();">
+          <div class="sidebar-item-info">
+            <span class="sidebar-icon">👑</span>
+            <span id="tab-txt-red">باقات Vodafone RED</span>
+          </div>
           <span class="tab-count" id="count-red">5</span>
         </button>
-        <button class="cat-tab" data-cat="flex" onclick="switchCategory('flex')">
-          <span id="tab-txt-flex">باقات فليكس Flex</span>
+
+        <button class="cat-tab sidebar-item" data-cat="flex" onclick="switchCategory('flex'); closeSidebarOnMobile();">
+          <div class="sidebar-item-info">
+            <span class="sidebar-icon">⚡</span>
+            <span id="tab-txt-flex">باقات فليكس Flex</span>
+          </div>
           <span class="tab-count" id="count-flex">5</span>
         </button>
-        <button class="cat-tab" data-cat="adsl" onclick="switchCategory('adsl')">
-          <span id="tab-txt-adsl">إنترنت منزلي ADSL</span>
+
+        <button class="cat-tab sidebar-item" data-cat="adsl" onclick="switchCategory('adsl'); closeSidebarOnMobile();">
+          <div class="sidebar-item-info">
+            <span class="sidebar-icon">🏠</span>
+            <span id="tab-txt-adsl">إنترنت منزلي ADSL</span>
+          </div>
           <span class="tab-count" id="count-adsl">9</span>
         </button>
-        <button class="cat-tab" data-cat="mi_plus" onclick="switchCategory('mi_plus')">
-          <span id="tab-txt-mi">باقات النت MI Plus</span>
+
+        <button class="cat-tab sidebar-item" data-cat="mi_plus" onclick="switchCategory('mi_plus'); closeSidebarOnMobile();">
+          <div class="sidebar-item-info">
+            <span class="sidebar-icon">📱</span>
+            <span id="tab-txt-mi">باقات النت MI Plus</span>
+          </div>
           <span class="tab-count" id="count-mi">11</span>
         </button>
-        <button class="cat-tab" data-cat="business" onclick="switchCategory('business')">
-          <span id="tab-txt-biz">باقات الشركات Business</span>
+
+        <button class="cat-tab sidebar-item" data-cat="business" onclick="switchCategory('business'); closeSidebarOnMobile();">
+          <div class="sidebar-item-info">
+            <span class="sidebar-icon">💼</span>
+            <span id="tab-txt-biz">باقات الشركات Business</span>
+          </div>
           <span class="tab-count" id="count-biz">9</span>
         </button>
+      </nav>
+
+      <!-- Sidebar Quick Tools -->
+      <div class="sidebar-section-divider"></div>
+      <div class="sidebar-quick-tools">
+        <div class="sidebar-subheading">
+          <span id="txt-sidebar-tools">أدوات سريعة</span>
+        </div>
+        <button class="sidebar-tool-btn" onclick="openCalculatorModal(); closeSidebarOnMobile();">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-6 14H7v-2h6v2zm4-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          <span id="sidebar-calc-txt">حاسبة الرصيد والضريبة</span>
+        </button>
+        <button class="sidebar-tool-btn" onclick="openOrDownloadPdf(); closeSidebarOnMobile();">
+          <svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zm4.5 1.5h1v-2.5h-1V11zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+          <span id="sidebar-pdf-txt">دليل الأكواد (PDF)</span>
+        </button>
       </div>
+    </aside>
 
-      <!-- Secondary Filters Bar -->
-      <div class="filter-toolbar">
-        <div class="filter-group">
-          <span class="filter-label" id="lbl-sort">ترتيب حسب:</span>
-          <select id="sort-select" class="filter-select" onchange="applyFiltersAndSort()">
-            <option value="default">الترتيب الافتراضي للكتالوج</option>
-            <option value="price-asc">السعر: من الأقل للأعلى</option>
-            <option value="price-desc">السعر: من الأعلى للأقل</option>
-            <option value="quota-desc">سعة الجيجات / الفليكسات: الأكثر</option>
-          </select>
+    <!-- SIDEBAR BACKDROP FOR MOBILE -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="toggleSidebar(false)"></div>
 
-          <span class="filter-label" id="lbl-budget" style="margin-right: 0.5rem;">الميزانية:</span>
-          <select id="budget-select" class="filter-select" onchange="applyFiltersAndSort()">
-            <option value="all">كافة الفئات السعرية</option>
-            <option value="under100">أقل من 100 ج.م</option>
-            <option value="100to500">100 - 500 ج.م</option>
-            <option value="500to1500">500 - 1,500 ج.م</option>
-            <option value="above1500">أكثر من 1,500 ج.م</option>
-          </select>
+    <!-- MAIN CONTENT AREA -->
+    <div class="app-main-area">
+      <!-- Search & Filters Control Bar -->
+      <section class="controls-hero">
+        <div class="hero-card">
+          <div class="search-filter-row">
+            <!-- Mobile Toggle Sidebar Button -->
+            <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" onclick="toggleSidebar(true)" title="فتح قائمة الأقسام">
+              <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+              <span id="txt-toggle-categories">الأقسام</span>
+            </button>
 
-          <!-- Speed filter (visible when ADSL is active) -->
-          <div id="adsl-speed-filter-wrap" style="display: none; align-items: center; gap: 0.5rem;">
-            <span class="filter-label">السرعة:</span>
-            <select id="speed-select" class="filter-select" onchange="applyFiltersAndSort()">
-              <option value="all">كافة السرعات</option>
-              <option value="30">30 Mbps</option>
-              <option value="70">70 Mbps</option>
-              <option value="100">100 Mbps</option>
-              <option value="200">200 Mbps</option>
-            </select>
+            <!-- Search bar -->
+            <div class="search-wrapper">
+              <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 14z"/></svg>
+              <input type="text" id="global-search" class="search-input" placeholder="ابحث بالاسم، السعر، الجيجات، أو كود الخدمة (مثال: كاش, سلفني, 575, 888, *155#, 100 Mbps)..." oninput="handleSearch()">
+              <button id="clear-search" class="clear-search-btn" onclick="clearSearchInput()" title="مسح البحث">✕</button>
+            </div>
+
+            <div class="filter-group">
+              <button class="header-btn" onclick="window.print()" title="طباعة الصفحة أو تصدير PDF">
+                <svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-4 11H9v-5h6v5zm4-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-3-9H8v3h8V3z"/></svg>
+                <span id="btn-print-txt">طباعة الدليل</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Secondary Filters Bar -->
+          <div class="filter-toolbar">
+            <div class="filter-group">
+              <span class="filter-label" id="lbl-sort">ترتيب حسب:</span>
+              <select id="sort-select" class="filter-select" onchange="applyFiltersAndSort()">
+                <option value="default">الترتيب الافتراضي للكتالوج</option>
+                <option value="price-asc">السعر: من الأقل للأعلى</option>
+                <option value="price-desc">السعر: من الأعلى للأقل</option>
+                <option value="quota-desc">سعة الجيجات / الفليكسات: الأكثر</option>
+              </select>
+
+              <span class="filter-label" id="lbl-budget" style="margin-right: 0.5rem;">الميزانية:</span>
+              <select id="budget-select" class="filter-select" onchange="applyFiltersAndSort()">
+                <option value="all">كافة الفئات السعرية</option>
+                <option value="under100">أقل من 100 ج.م</option>
+                <option value="100to500">100 - 500 ج.م</option>
+                <option value="500to1500">500 - 1,500 ج.م</option>
+                <option value="above1500">أكثر من 1,500 ج.م</option>
+              </select>
+
+              <!-- Speed filter (visible when ADSL is active) -->
+              <div id="adsl-speed-filter-wrap" style="display: none; align-items: center; gap: 0.5rem;">
+                <span class="filter-label">السرعة:</span>
+                <select id="speed-select" class="filter-select" onchange="applyFiltersAndSort()">
+                  <option value="all">كافة السرعات</option>
+                  <option value="30">30 Mbps</option>
+                  <option value="70">70 Mbps</option>
+                  <option value="100">100 Mbps</option>
+                  <option value="200">200 Mbps</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="stats-summary" id="results-count">
+              يتم عرض كافة البيانات
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="stats-summary" id="results-count">
-          يتم عرض كافة البيانات
-        </div>
-      </div>
-
+      <!-- Dynamic Plans Grid Content -->
+      <main class="main-content" id="main-container">
+        <!-- Dynamic Content Will Be Rendered Here by JavaScript -->
+      </main>
     </div>
-  </section>
-
-  <!-- ==========================================================
-       MAIN CONTENT: PLANS & PDF GUIDE SECTIONS
-       ========================================================== -->
-  <main class="main-content" id="main-container">
-    <!-- Dynamic Content Will Be Rendered Here by JavaScript -->
-  </main>
+  </div>
 
   <!-- ==========================================================
        FLOATING COMPARISON DOCK
@@ -3371,14 +3761,51 @@
       document.getElementById("tab-txt-mi").textContent = isArabic ? "باقات النت MI Plus" : "Mobile Internet Plus";
       document.getElementById("tab-txt-biz").textContent = isArabic ? "باقات الشركات Business" : "Vodafone Business";
 
+      const sbTitle = document.getElementById("txt-sidebar-title");
+      if (sbTitle) sbTitle.textContent = isArabic ? "أقسام الباقات" : "Categories";
+      const sbTools = document.getElementById("txt-sidebar-tools");
+      if (sbTools) sbTools.textContent = isArabic ? "أدوات سريعة" : "Quick Tools";
+      const sbToggle = document.getElementById("txt-toggle-categories");
+      if (sbToggle) sbToggle.textContent = isArabic ? "الأقسام" : "Categories";
+      const sbCalc = document.getElementById("sidebar-calc-txt");
+      if (sbCalc) sbCalc.textContent = isArabic ? "حاسبة الرصيد والضريبة" : "Tax Calculator";
+      const sbPdf = document.getElementById("sidebar-pdf-txt");
+      if (sbPdf) sbPdf.textContent = isArabic ? "دليل الأكواد (PDF)" : "Codes & Support (PDF)";
+
       renderMain();
+    }
+
+    /* ========================================================
+       SIDEBAR INTERACTION FUNCTIONS
+       ======================================================== */
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById("app-sidebar");
+      const backdrop = document.getElementById("sidebar-backdrop");
+      if (!sidebar) return;
+      
+      const shouldOpen = open !== undefined ? open : !sidebar.classList.contains("open");
+      if (shouldOpen) {
+        sidebar.classList.add("open");
+        if (backdrop) backdrop.classList.add("open");
+        document.body.style.overflow = window.innerWidth <= 992 ? "hidden" : "";
+      } else {
+        sidebar.classList.remove("open");
+        if (backdrop) backdrop.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+    }
+
+    function closeSidebarOnMobile() {
+      if (window.innerWidth <= 992) {
+        toggleSidebar(false);
+      }
     }
 
     /* ========================================================
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.1";
+    const CURRENT_APP_VERSION = "1.0.2";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
