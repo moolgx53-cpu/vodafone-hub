@@ -1,0 +1,22 @@
+{
+  "name": "دليل باقات وأكواد فودافون مصر التفاعلي",
+  "short_name": "دليل فودافون",
+  "description": "الدليل التفاعلي الشامل لباقات وأكواد فودافون مصر: ريد، فليكس، نت الموبايل، كاش، والشركات. يعمل 100% بدون إنترنت.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#e60000",
+  "theme_color": "#e60000",
+  "orientation": "any",
+  "dir": "rtl",
+  "lang": "ar",
+  "categories": ["utilities", "business", "productivity"],
+  "icons": [
+    {
+      "src": "vodafone-logo.png",
+      "sizes": "262x261 192x192 256x256 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
