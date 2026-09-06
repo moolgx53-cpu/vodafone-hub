@@ -4823,141 +4823,158 @@
     function getPipWindowStyles() {
       return `
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-        body {
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          background: #1e1e24;
-          color: #1f2937;
-          display: flex;
-          flex-direction: column;
-          height: 100vh;
+        html, body {
+          width: 100%;
+          height: 100%;
           overflow: hidden;
-          padding: 6px;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .pip-top-bar {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          background: #2b2b36;
-          color: #f3f4f6;
-          border-radius: 8px 8px 0 0;
-          padding: 5px 8px;
-          font-size: 0.74rem;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          gap: 6px;
-        }
-        .pip-top-left {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          flex: 1;
-        }
-        .pip-top-bar select {
-          background: #18181f;
-          color: #e5e7eb;
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          border-radius: 5px;
-          padding: 2px 6px;
-          font-size: 0.73rem;
-          font-weight: 700;
-          cursor: pointer;
-          outline: none;
-          max-width: 140px;
-        }
-        .pip-top-bar select:focus {
-          border-color: #e60000;
-        }
-        .pip-btn-detach {
-          background: rgba(255, 255, 255, 0.1);
-          border: none;
-          color: #e5e7eb;
-          border-radius: 4px;
-          padding: 2px 6px;
-          font-size: 0.68rem;
-          cursor: pointer;
-          display: inline-flex;
-          align-items: center;
-          gap: 3px;
-          transition: all 0.15s;
-        }
-        .pip-btn-detach:hover {
-          background: #e60000;
-          color: #fff;
-        }
-        .pip-cork {
-          flex: 1;
-          display: flex;
-          align-items: stretch;
-          justify-content: stretch;
-          background: #262630;
-          border-radius: 0 0 8px 8px;
-          padding: 8px;
-          position: relative;
-        }
-        .sticky-card {
-          flex: 1;
-          border-radius: 10px;
-          padding: 10px 12px;
+        body {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
+          padding: 10px 14px 8px;
           position: relative;
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-          border: 1px solid rgba(0, 0, 0, 0.1);
+          box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.04);
+          transition: background-color 0.25s ease, color 0.25s ease;
         }
-        .sticky-card.yellow { background: #fef9c3; border-color: #fef08a; color: #713f12; }
-        .sticky-card.blue   { background: #e0f2fe; border-color: #bae6fd; color: #075985; }
-        .sticky-card.green  { background: #dcfce7; border-color: #bbf7d0; color: #166534; }
-        .sticky-card.purple { background: #f3e8ff; border-color: #e9d5ff; color: #6b21a8; }
-        .sticky-card.orange { background: #ffedd5; border-color: #fed7aa; color: #9a3412; }
-        .pin {
+
+        /* Note themes applied directly to the entire window body */
+        body.yellow { background: #fef9c3; color: #713f12; }
+        body.blue   { background: #e0f2fe; color: #075985; }
+        body.green  { background: #dcfce7; color: #166534; }
+        body.purple { background: #f3e8ff; color: #6b21a8; }
+        body.orange { background: #ffedd5; color: #9a3412; }
+
+        /* Push pin centered at the top of the note */
+        .note-pin {
           position: absolute;
-          top: -8px;
+          top: 2px;
           left: 50%;
           transform: translateX(-50%);
-          font-size: 1rem;
-          filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+          font-size: 1.15rem;
+          filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
+          pointer-events: none;
+          z-index: 10;
         }
-        .card-top {
+
+        /* Integrated header merged seamlessly into note */
+        .note-header-integrated {
           display: flex;
           align-items: center;
           justify-content: space-between;
+          gap: 6px;
+          margin-top: 4px;
           margin-bottom: 8px;
-          padding-bottom: 4px;
-          border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+          padding-bottom: 6px;
+          border-bottom: 1px dashed rgba(0, 0, 0, 0.14);
+          position: relative;
+          z-index: 5;
         }
-        .card-title {
-          font-size: 0.98rem;
+
+        .header-dropdown-wrap {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          flex: 1;
+          min-width: 0;
+        }
+
+        .select-integrated-system {
+          background: rgba(255, 255, 255, 0.7);
+          color: inherit;
+          border: 1px solid rgba(0, 0, 0, 0.15);
+          border-radius: 6px;
+          padding: 4px 8px;
+          font-size: 0.85rem;
           font-weight: 800;
+          cursor: pointer;
+          outline: none;
+          width: 100%;
+          max-width: 200px;
+          backdrop-filter: blur(4px);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+          transition: all 0.2s ease;
         }
-        .card-body {
+
+        .select-integrated-system:focus, .select-integrated-system:hover {
+          background: #ffffff;
+          border-color: rgba(0, 0, 0, 0.3);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-ctrls {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .btn-integrated-ctrl {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 26px;
+          height: 26px;
+          background: rgba(255, 255, 255, 0.65);
+          border: 1px solid rgba(0, 0, 0, 0.12);
+          border-radius: 6px;
+          color: inherit;
+          font-size: 0.82rem;
+          font-weight: 800;
+          cursor: pointer;
+          transition: all 0.15s ease;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        }
+
+        .btn-integrated-ctrl:hover {
+          background: #ffffff;
+          transform: scale(1.06);
+        }
+
+        .btn-integrated-ctrl.close:hover {
+          background: #ef4444;
+          color: #ffffff;
+          border-color: #ef4444;
+        }
+
+        /* Note Body Container */
+        .note-body-integrated {
           display: flex;
           flex-direction: column;
-          gap: 7px;
+          gap: 8px;
           flex: 1;
+          justify-content: center;
         }
+
         .cred-row {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          background: rgba(255, 255, 255, 0.65);
-          border-radius: 7px;
-          padding: 5px 8px;
+          background: rgba(255, 255, 255, 0.72);
+          border-radius: 8px;
+          padding: 6px 10px;
           border: 1px solid rgba(0, 0, 0, 0.06);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+          backdrop-filter: blur(4px);
         }
+
         .cred-label-val {
           display: flex;
           flex-direction: column;
           min-width: 0;
           flex: 1;
         }
+
         .cred-label {
-          font-size: 0.65rem;
+          font-size: 0.64rem;
           font-weight: 700;
           opacity: 0.75;
+          text-transform: uppercase;
         }
+
         .cred-val {
           font-family: 'Consolas', 'Courier New', monospace;
-          font-size: 0.9rem;
+          font-size: 0.94rem;
           font-weight: 800;
           color: #111827;
           user-select: text;
@@ -4965,23 +4982,27 @@
           text-overflow: ellipsis;
           white-space: nowrap;
         }
+
         .cred-val.masked {
           letter-spacing: 2px;
-          font-size: 1.05rem;
+          font-size: 1.15rem;
         }
+
         .cred-extra-text {
-          font-size: 0.74rem;
-          font-weight: 600;
-          color: #374151;
+          font-size: 0.76rem;
+          font-weight: 700;
+          color: #1f2937;
           user-select: text;
         }
+
         .actions-group {
           display: flex;
           align-items: center;
-          gap: 3px;
-          margin-right: 4px;
+          gap: 4px;
+          margin-right: 6px;
         }
-        [dir="ltr"] .actions-group { margin-right: 0; margin-left: 4px; }
+        [dir="ltr"] .actions-group { margin-right: 0; margin-left: 6px; }
+
         .btn-action {
           display: inline-flex;
           align-items: center;
@@ -4989,56 +5010,68 @@
           gap: 3px;
           background: #ffffff;
           border: 1px solid rgba(0, 0, 0, 0.15);
-          border-radius: 5px;
-          padding: 3px 7px;
-          font-size: 0.72rem;
-          font-weight: 700;
+          border-radius: 6px;
+          padding: 4px 8px;
+          font-size: 0.74rem;
+          font-weight: 800;
           color: #111827;
           cursor: pointer;
           transition: all 0.15s ease;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
         }
+
         .btn-action:hover {
           background: #e60000;
           color: #ffffff;
           border-color: #e60000;
+          transform: translateY(-1px);
         }
+
         .btn-action.copied {
           background: #10b981 !important;
           color: #ffffff !important;
           border-color: #10b981 !important;
         }
-        .btn-action svg { width: 12px; height: 12px; fill: currentColor; }
+
+        .btn-action svg { width: 13px; height: 13px; fill: currentColor; }
+
         .btn-eye {
           background: transparent;
           border: none;
-          font-size: 0.9rem;
+          font-size: 1rem;
           cursor: pointer;
-          padding: 2px;
-          opacity: 0.7;
+          padding: 2px 4px;
+          opacity: 0.75;
+          transition: opacity 0.15s;
         }
-        .btn-eye:hover { opacity: 1; }
-        .card-footer {
+        .btn-eye:hover { opacity: 1; transform: scale(1.1); }
+
+        /* Integrated Footer */
+        .note-footer-integrated {
           display: flex;
           align-items: center;
           justify-content: space-between;
           margin-top: 8px;
           padding-top: 5px;
-          border-top: 1px dashed rgba(0, 0, 0, 0.15);
-          font-size: 0.65rem;
-          opacity: 0.7;
+          border-top: 1px dashed rgba(0, 0, 0, 0.14);
+          font-size: 0.68rem;
+          font-weight: 700;
+          opacity: 0.75;
         }
+
+        /* Toast Feedback */
         .toast-mini {
           position: fixed;
-          bottom: 10px;
+          bottom: 8px;
           left: 50%;
           transform: translateX(-50%) translateY(50px);
           background: #111827;
           color: #fff;
-          padding: 4px 10px;
+          padding: 4px 12px;
           border-radius: 16px;
           font-size: 0.72rem;
           font-weight: 700;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
           opacity: 0;
           transition: all 0.2s ease;
           pointer-events: none;
@@ -5068,87 +5101,105 @@
       const safeUser = escapeHtml(note.username);
       const safeExtra = escapeHtml(note.extra || "");
 
+      // Apply note color theme to entire body
+      pipWin.document.body.className = color;
+
       let optionsHtml = "";
       notes.forEach(n => {
-        optionsHtml += `<option value="${n.id}" ${n.id === note.id ? "selected" : ""}>${escapeHtml(n.system)}</option>`;
+        optionsHtml += `<option value="${n.id}" ${n.id === note.id ? "selected" : ""}>📌 ${escapeHtml(n.system)}</option>`;
       });
 
       pipWin.document.body.innerHTML = `
-        <div class="pip-top-bar">
-          <div class="pip-top-left">
-            <span>📌 ${isArabic ? "نظام:" : "System:"}</span>
-            <select id="pip-select-system">${optionsHtml}</select>
+        <div class="note-pin">📌</div>
+
+        <!-- Integrated Header on the note itself -->
+        <div class="note-header-integrated">
+          <div class="header-dropdown-wrap">
+            <select class="select-integrated-system" id="pip-select-system">${optionsHtml}</select>
           </div>
-          <div>
-            <button class="pip-btn-detach" id="pip-btn-detach" title="${isArabic ? 'فتح كنافذة منفصلة تماماً عن المتصفح' : 'Detach to separate window'}">
-              <span>↗ ${isArabic ? "نافذة منفصلة" : "Detach"}</span>
-            </button>
+          <div class="header-ctrls">
+            <button class="btn-integrated-ctrl" id="pip-btn-detach" title="${isArabic ? 'فتح كنافذة منفصلة تماماً' : 'Detach to separate window'}">↗</button>
+            <button class="btn-integrated-ctrl close" id="pip-btn-close" title="${isArabic ? 'إغلاق النوتة' : 'Close Note'}">✕</button>
           </div>
         </div>
 
-        <div class="pip-cork">
-          <div class="sticky-card ${color}">
-            <div class="pin">📌</div>
-
-            <div class="card-top">
-              <div class="card-title">${safeSystem}</div>
-              <div style="font-size:0.7rem;font-weight:700;opacity:0.65;">${isArabic ? "عائمة على الشاشة 💻" : "Floating"}</div>
+        <!-- Note Body -->
+        <div class="note-body-integrated">
+          <!-- User row -->
+          <div class="cred-row">
+            <div class="cred-label-val">
+              <span class="cred-label">${isArabic ? "اسم المستخدم:" : "Username:"}</span>
+              <span class="cred-val">${safeUser}</span>
             </div>
-
-            <div class="card-body">
-              <!-- User row -->
-              <div class="cred-row">
-                <div class="cred-label-val">
-                  <span class="cred-label">${isArabic ? "المستخدم:" : "Username:"}</span>
-                  <span class="cred-val">${safeUser}</span>
-                </div>
-                <div class="actions-group">
-                  <button class="btn-action" id="pip-copy-user" title="${isArabic ? "نسخ اسم المستخدم" : "Copy Username"}">
-                    <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                    <span>${isArabic ? "نسخ" : "Copy"}</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Pass row -->
-              <div class="cred-row">
-                <div class="cred-label-val">
-                  <span class="cred-label">${isArabic ? "كلمة المرور:" : "Password:"}</span>
-                  <span class="cred-val masked" id="pip-pass-val" data-is-masked="true">••••••••••</span>
-                </div>
-                <div class="actions-group">
-                  <button class="btn-eye" id="pip-eye-btn" title="${isArabic ? "إظهار/إخفاء" : "Show/Hide"}">👁️</button>
-                  <button class="btn-action" id="pip-copy-pass" title="${isArabic ? "نسخ كلمة المرور" : "Copy Password"}">
-                    <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                    <span>${isArabic ? "نسخ" : "Copy"}</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Extra row -->
-              ${safeExtra ? `
-              <div class="cred-row">
-                <div class="cred-label-val">
-                  <span class="cred-label">${isArabic ? "ملاحظة / PIN:" : "Note / PIN:"}</span>
-                  <span class="cred-extra-text">${safeExtra}</span>
-                </div>
-                <div class="actions-group">
-                  <button class="btn-action" id="pip-copy-extra" title="${isArabic ? "نسخ" : "Copy"}">
-                    <span>${isArabic ? "نسخ" : "Copy"}</span>
-                  </button>
-                </div>
-              </div>` : ''}
-            </div>
-
-            <div class="card-footer">
-              <span>🕒 ${note.updatedAt || (isArabic ? 'اليوم' : 'Today')}</span>
-              <span>فودافون مصر</span>
+            <div class="actions-group">
+              <button class="btn-action" id="pip-copy-user" title="${isArabic ? "نسخ اسم المستخدم" : "Copy Username"}">
+                <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                <span>${isArabic ? "نسخ" : "Copy"}</span>
+              </button>
             </div>
           </div>
+
+          <!-- Pass row -->
+          <div class="cred-row">
+            <div class="cred-label-val">
+              <span class="cred-label">${isArabic ? "كلمة المرور:" : "Password:"}</span>
+              <span class="cred-val masked" id="pip-pass-val" data-is-masked="true">••••••••••</span>
+            </div>
+            <div class="actions-group">
+              <button class="btn-eye" id="pip-eye-btn" title="${isArabic ? "إظهار/إخفاء" : "Show/Hide"}">👁️</button>
+              <button class="btn-action" id="pip-copy-pass" title="${isArabic ? "نسخ كلمة المرور" : "Copy Password"}">
+                <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                <span>${isArabic ? "نسخ" : "Copy"}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Extra row -->
+          ${safeExtra ? `
+          <div class="cred-row">
+            <div class="cred-label-val">
+              <span class="cred-label">${isArabic ? "ملاحظة / PIN:" : "Note / PIN:"}</span>
+              <span class="cred-extra-text">${safeExtra}</span>
+            </div>
+            <div class="actions-group">
+              <button class="btn-action" id="pip-copy-extra" title="${isArabic ? "نسخ" : "Copy"}">
+                <span>${isArabic ? "نسخ" : "Copy"}</span>
+              </button>
+            </div>
+          </div>` : ''}
+        </div>
+
+        <!-- Integrated Footer -->
+        <div class="note-footer-integrated">
+          <span>🕒 ${note.updatedAt || (isArabic ? 'اليوم' : 'Today')}</span>
+          <span>فودافون مصر</span>
         </div>
 
         <div class="toast-mini" id="pip-toast">✓ تم النسخ!</div>
       `;
+
+      // Wire close button
+      const closeBtn = pipWin.document.getElementById("pip-btn-close");
+      if (closeBtn) {
+        closeBtn.onclick = () => pipWin.close();
+      }
+
+      // Wire detach button
+      const detachBtn = pipWin.document.getElementById("pip-btn-detach");
+      if (detachBtn) {
+        detachBtn.onclick = () => {
+          const w = window.open(`note.html?id=${encodeURIComponent(note.id)}`, `vf_note_${note.id}`, 'width=340,height=370,resizable=yes');
+          if (w) w.focus();
+        };
+      }
+
+      // Wire select dropdown
+      const sel = pipWin.document.getElementById("pip-select-system");
+      if (sel) {
+        sel.onchange = (e) => {
+          renderPipNote(pipWin, e.target.value);
+        };
+      }
 
       const showPipFeedback = (btn, text) => {
         if (btn) {
@@ -5169,21 +5220,7 @@
         }
       };
 
-      const sel = pipWin.document.getElementById("pip-select-system");
-      if (sel) {
-        sel.onchange = (e) => {
-          renderPipNote(pipWin, e.target.value);
-        };
-      }
-
-      const detachBtn = pipWin.document.getElementById("pip-btn-detach");
-      if (detachBtn) {
-        detachBtn.onclick = () => {
-          const w = window.open(`note.html?id=${encodeURIComponent(note.id)}`, `vf_note_${note.id}`, 'width=340,height=400,resizable=yes');
-          if (w) w.focus();
-        };
-      }
-
+      // Wire copy user
       const copyUserBtn = pipWin.document.getElementById("pip-copy-user");
       if (copyUserBtn) {
         copyUserBtn.onclick = () => {
@@ -5193,6 +5230,7 @@
         };
       }
 
+      // Wire copy pass
       const copyPassBtn = pipWin.document.getElementById("pip-copy-pass");
       if (copyPassBtn) {
         copyPassBtn.onclick = () => {
@@ -5202,6 +5240,7 @@
         };
       }
 
+      // Wire eye button
       const eyeBtn = pipWin.document.getElementById("pip-eye-btn");
       const passValEl = pipWin.document.getElementById("pip-pass-val");
       if (eyeBtn && passValEl) {
@@ -5221,6 +5260,7 @@
         };
       }
 
+      // Wire copy extra
       const copyExtraBtn = pipWin.document.getElementById("pip-copy-extra");
       if (copyExtraBtn) {
         copyExtraBtn.onclick = () => {
@@ -5393,7 +5433,7 @@
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.7";
+    const CURRENT_APP_VERSION = "1.0.8";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 

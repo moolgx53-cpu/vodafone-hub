@@ -6,12 +6,6 @@
   <title>📌 ملاحظة عائمة | Vodafone Hub</title>
   <link rel="icon" type="image/png" href="./vodafone-logo.png">
   <style>
-    :root {
-      --vf-red: #e60000;
-      --vf-red-dark: #b30000;
-      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -19,163 +13,137 @@
       user-select: none;
     }
 
-    body {
-      font-family: var(--font-family);
-      background: #1e1e24;
-      color: #1f2937;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    html, body {
+      width: 100%;
+      height: 100%;
       overflow: hidden;
-      padding: 8px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* Top Floating Window Control Bar */
-    .float-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #2b2b36;
-      color: #f3f4f6;
-      border-radius: 8px 8px 0 0;
-      padding: 6px 10px;
-      font-size: 0.76rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .float-header-left {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .float-header select {
-      background: #18181f;
-      color: #e5e7eb;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 6px;
-      padding: 3px 6px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      cursor: pointer;
-      outline: none;
-      max-width: 140px;
-    }
-
-    .float-header select:focus {
-      border-color: var(--vf-red);
-    }
-
-    .btn-pip-top {
-      background: rgba(255, 255, 255, 0.12);
-      border: none;
-      color: #fff;
-      border-radius: 4px;
-      padding: 3px 7px;
-      font-size: 0.7rem;
-      cursor: pointer;
-      transition: background 0.15s;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-    }
-
-    .btn-pip-top:hover {
-      background: var(--vf-red);
-    }
-
-    /* Corkboard container */
-    .cork-container {
-      flex: 1;
-      display: flex;
-      align-items: stretch;
-      justify-content: stretch;
-      background: #262630;
-      border-radius: 0 0 8px 8px;
-      padding: 10px;
-      position: relative;
-    }
-
-    /* Sticky Card */
-    .sticky-card {
-      flex: 1;
-      border-radius: 12px;
-      padding: 12px 14px;
+    body {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      padding: 10px 14px 8px;
       position: relative;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      transition: all 0.2s ease;
+      box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.04);
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     /* Colors */
-    .sticky-card.yellow {
-      background: #fef9c3;
-      border-color: #fef08a;
-      color: #713f12;
-    }
-    .sticky-card.blue {
-      background: #e0f2fe;
-      border-color: #bae6fd;
-      color: #075985;
-    }
-    .sticky-card.green {
-      background: #dcfce7;
-      border-color: #bbf7d0;
-      color: #166534;
-    }
-    .sticky-card.purple {
-      background: #f3e8ff;
-      border-color: #e9d5ff;
-      color: #6b21a8;
-    }
-    .sticky-card.orange {
-      background: #ffedd5;
-      border-color: #fed7aa;
-      color: #9a3412;
-    }
+    body.yellow { background: #fef9c3; color: #713f12; }
+    body.blue   { background: #e0f2fe; color: #075985; }
+    body.green  { background: #dcfce7; color: #166534; }
+    body.purple { background: #f3e8ff; color: #6b21a8; }
+    body.orange { background: #ffedd5; color: #9a3412; }
 
-    .pin {
+    .note-pin {
       position: absolute;
-      top: -8px;
+      top: 2px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 1.1rem;
-      filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+      font-size: 1.15rem;
+      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
+      pointer-events: none;
+      z-index: 10;
     }
 
-    .card-top {
+    .note-header-integrated {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 10px;
+      gap: 6px;
+      margin-top: 4px;
+      margin-bottom: 8px;
       padding-bottom: 6px;
-      border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.14);
+      position: relative;
+      z-index: 5;
     }
 
-    .card-title {
-      font-size: 1.05rem;
+    .header-dropdown-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .select-integrated-system {
+      background: rgba(255, 255, 255, 0.7);
+      color: inherit;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.85rem;
       font-weight: 800;
-      letter-spacing: -0.3px;
+      cursor: pointer;
+      outline: none;
+      width: 100%;
+      max-width: 200px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s ease;
     }
 
-    .card-body {
+    .select-integrated-system:focus, .select-integrated-system:hover {
+      background: #ffffff;
+      border-color: rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .header-ctrls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-integrated-ctrl {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 6px;
+      color: inherit;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    .btn-integrated-ctrl:hover {
+      background: #ffffff;
+      transform: scale(1.06);
+    }
+
+    .btn-integrated-ctrl.close:hover {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #ef4444;
+    }
+
+    .note-body-integrated {
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: 8px;
       flex: 1;
+      justify-content: center;
     }
 
     .cred-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(255, 255, 255, 0.65);
+      background: rgba(255, 255, 255, 0.72);
       border-radius: 8px;
       padding: 6px 10px;
       border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      backdrop-filter: blur(4px);
     }
 
     .cred-label-val {
@@ -186,7 +154,7 @@
     }
 
     .cred-label {
-      font-size: 0.68rem;
+      font-size: 0.64rem;
       font-weight: 700;
       opacity: 0.75;
       text-transform: uppercase;
@@ -194,7 +162,7 @@
 
     .cred-val {
       font-family: 'Consolas', 'Courier New', monospace;
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       font-weight: 800;
       color: #111827;
       user-select: text;
@@ -205,13 +173,13 @@
 
     .cred-val.masked {
       letter-spacing: 2px;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
     }
 
     .cred-extra-text {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #374151;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #1f2937;
       user-select: text;
     }
 
@@ -221,38 +189,30 @@
       gap: 4px;
       margin-right: 6px;
     }
-
-    [dir="ltr"] .actions-group {
-      margin-right: 0;
-      margin-left: 6px;
-    }
+    [dir="ltr"] .actions-group { margin-right: 0; margin-left: 6px; }
 
     .btn-action {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 3px;
       background: #ffffff;
       border: 1px solid rgba(0, 0, 0, 0.15);
       border-radius: 6px;
       padding: 4px 8px;
       font-size: 0.74rem;
-      font-weight: 700;
+      font-weight: 800;
       color: #111827;
       cursor: pointer;
       transition: all 0.15s ease;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
 
     .btn-action:hover {
-      background: var(--vf-red);
+      background: #e60000;
       color: #ffffff;
-      border-color: var(--vf-red);
+      border-color: #e60000;
       transform: translateY(-1px);
-    }
-
-    .btn-action:active {
-      transform: translateY(0);
     }
 
     .btn-action.copied {
@@ -261,83 +221,82 @@
       border-color: #10b981 !important;
     }
 
-    .btn-action svg {
-      width: 13px;
-      height: 13px;
-      fill: currentColor;
-    }
+    .btn-action svg { width: 13px; height: 13px; fill: currentColor; }
 
     .btn-eye {
       background: transparent;
       border: none;
-      font-size: 0.95rem;
+      font-size: 1rem;
       cursor: pointer;
-      padding: 3px;
-      opacity: 0.7;
+      padding: 2px 4px;
+      opacity: 0.75;
       transition: opacity 0.15s;
     }
+    .btn-eye:hover { opacity: 1; transform: scale(1.1); }
 
-    .btn-eye:hover {
-      opacity: 1;
-    }
-
-    .card-footer {
+    .note-footer-integrated {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 10px;
-      padding-top: 6px;
-      border-top: 1px dashed rgba(0, 0, 0, 0.15);
+      margin-top: 8px;
+      padding-top: 5px;
+      border-top: 1px dashed rgba(0, 0, 0, 0.14);
       font-size: 0.68rem;
-      opacity: 0.7;
+      font-weight: 700;
+      opacity: 0.75;
     }
 
     .toast-mini {
       position: fixed;
-      bottom: 12px;
+      bottom: 8px;
       left: 50%;
       transform: translateX(-50%) translateY(50px);
       background: #111827;
       color: #fff;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.74rem;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 0.72rem;
       font-weight: 700;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       opacity: 0;
       transition: all 0.2s ease;
       pointer-events: none;
       z-index: 9999;
       white-space: nowrap;
     }
-
     .toast-mini.show {
       transform: translateX(-50%) translateY(0);
       opacity: 1;
     }
   </style>
 </head>
-<body>
+<body class="yellow">
 
-  <!-- Top Bar -->
-  <div class="float-header">
-    <div class="float-header-left">
-      <span>📌 نظام:</span>
-      <select id="select-note-system" onchange="switchCurrentNote(this.value)"></select>
+  <div class="note-pin">📌</div>
+
+  <!-- Integrated Header -->
+  <div class="note-header-integrated">
+    <div class="header-dropdown-wrap">
+      <select class="select-integrated-system" id="select-note-system" onchange="switchCurrentNote(this.value)"></select>
     </div>
-    <div>
-      <button class="btn-pip-top" id="btn-pip-toggle" onclick="toggleAlwaysOnTop()" title="تثبيت البطاقة فوق كل البرامج والشاشات Always-on-top">
-        <span>📌 فوق الشاشة</span>
-      </button>
+    <div class="header-ctrls">
+      <button class="btn-integrated-ctrl" id="btn-pip-always" onclick="requestPip()" title="تثبيت فوق كل البرامج Always-on-top">📌</button>
+      <button class="btn-integrated-ctrl close" onclick="window.close()" title="إغلاق النوتة">✕</button>
     </div>
   </div>
 
-  <!-- Corkboard & Sticky Note Content -->
-  <div class="cork-container" id="cork-container">
-    <!-- Dynamic Note rendered by JavaScript -->
+  <!-- Note Body -->
+  <div class="note-body-integrated" id="note-body-container">
+    <!-- Dynamic content -->
   </div>
 
-  <div class="toast-mini" id="mini-toast">✓ تم النسخ بنجاح!</div>
+  <!-- Integrated Footer -->
+  <div class="note-footer-integrated">
+    <span id="note-footer-date">🕒 اليوم</span>
+    <span>فودافون مصر</span>
+  </div>
+
+  <div class="toast-mini" id="mini-toast">✓ تم النسخ!</div>
 
   <script>
     const NOTES_STORAGE_KEY = "vf_employee_systems_notes_v1";
@@ -368,7 +327,6 @@
       currentNoteId = getQueryParam("id");
       loadAndRender();
 
-      // Listen to storage changes in case the main app updates notes
       window.addEventListener("storage", (e) => {
         if (e.key === NOTES_STORAGE_KEY) {
           loadAndRender();
@@ -382,25 +340,22 @@
       select.innerHTML = "";
 
       if (notes.length === 0) {
-        document.getElementById("cork-container").innerHTML = `
-          <div style="color:#e5e7eb;text-align:center;margin:auto;font-size:0.85rem;">
-            لا توجد بطاقات محفوظة لهذا الموظف.<br>
-            يمكنك إضافتها من النافذة الرئيسية للتطبيق.
+        document.getElementById("note-body-container").innerHTML = `
+          <div style="text-align:center;margin:auto;font-size:0.85rem;font-weight:700;">
+            لا توجد بطاقات محفوظة لهذا الموظف.
           </div>
         `;
         return;
       }
 
-      // Populate select dropdown
       notes.forEach((n) => {
         const opt = document.createElement("option");
         opt.value = n.id;
-        opt.textContent = n.system;
+        opt.textContent = `📌 ${n.system}`;
         if (n.id === currentNoteId) opt.selected = true;
         select.appendChild(opt);
       });
 
-      // If currentNoteId not found, select first
       let currentNote = notes.find((n) => n.id === currentNoteId);
       if (!currentNote) {
         currentNote = notes[0];
@@ -408,7 +363,7 @@
         select.value = currentNoteId;
       }
 
-      document.title = `📌 ${currentNote.system} | Vodafone Sticky Note`;
+      document.title = `📌 ${currentNote.system} | Vodafone Note`;
       renderNoteCard(currentNote);
     }
 
@@ -429,72 +384,58 @@
 
     function renderNoteCard(note) {
       const color = note.color || "yellow";
-      const safeSystem = escapeHtml(note.system);
+      document.body.className = color;
+
       const safeUser = escapeHtml(note.username);
       const safeExtra = escapeHtml(note.extra || "");
 
       const html = `
-        <div class="sticky-card ${color}">
-          <div class="pin">📌</div>
-
-          <div class="card-top">
-            <div class="card-title">${safeSystem}</div>
-            <div style="font-size:0.72rem;font-weight:700;opacity:0.6;">عائمة 💻</div>
+        <!-- User row -->
+        <div class="cred-row">
+          <div class="cred-label-val">
+            <span class="cred-label">اسم المستخدم:</span>
+            <span class="cred-val" id="val-user">${safeUser}</span>
           </div>
-
-          <div class="card-body">
-            <!-- User row -->
-            <div class="cred-row">
-              <div class="cred-label-val">
-                <span class="cred-label">اسم المستخدم:</span>
-                <span class="cred-val" id="val-user">${safeUser}</span>
-              </div>
-              <div class="actions-group">
-                <button class="btn-action" onclick="copyValue('${note.id}', 'user', this)" title="نسخ اسم المستخدم">
-                  <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                  <span>نسخ</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Pass row -->
-            <div class="cred-row">
-              <div class="cred-label-val">
-                <span class="cred-label">كلمة المرور:</span>
-                <span class="cred-val masked" id="val-pass" data-is-masked="true">••••••••••</span>
-              </div>
-              <div class="actions-group">
-                <button class="btn-eye" id="btn-toggle-eye" onclick="togglePass('${note.id}')" title="إظهار/إخفاء">👁️</button>
-                <button class="btn-action" onclick="copyValue('${note.id}', 'pass', this)" title="نسخ كلمة المرور">
-                  <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                  <span>نسخ</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Extra row -->
-            ${safeExtra ? `
-            <div class="cred-row">
-              <div class="cred-label-val">
-                <span class="cred-label">ملاحظات / PIN:</span>
-                <span class="cred-extra-text" id="val-extra">${safeExtra}</span>
-              </div>
-              <div class="actions-group">
-                <button class="btn-action" onclick="copyValue('${note.id}', 'extra', this)" title="نسخ الملاحظة">
-                  <span>نسخ</span>
-                </button>
-              </div>
-            </div>` : ''}
-          </div>
-
-          <div class="card-footer">
-            <span>🕒 ${note.updatedAt || 'اليوم'}</span>
-            <span>فودافون مصر</span>
+          <div class="actions-group">
+            <button class="btn-action" onclick="copyValue('${note.id}', 'user', this)" title="نسخ اسم المستخدم">
+              <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+              <span>نسخ</span>
+            </button>
           </div>
         </div>
+
+        <!-- Pass row -->
+        <div class="cred-row">
+          <div class="cred-label-val">
+            <span class="cred-label">كلمة المرور:</span>
+            <span class="cred-val masked" id="val-pass" data-is-masked="true">••••••••••</span>
+          </div>
+          <div class="actions-group">
+            <button class="btn-eye" id="btn-toggle-eye" onclick="togglePass('${note.id}')" title="إظهار/إخفاء">👁️</button>
+            <button class="btn-action" onclick="copyValue('${note.id}', 'pass', this)" title="نسخ كلمة المرور">
+              <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+              <span>نسخ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Extra row -->
+        ${safeExtra ? `
+        <div class="cred-row">
+          <div class="cred-label-val">
+            <span class="cred-label">ملاحظات / PIN:</span>
+            <span class="cred-extra-text" id="val-extra">${safeExtra}</span>
+          </div>
+          <div class="actions-group">
+            <button class="btn-action" onclick="copyValue('${note.id}', 'extra', this)" title="نسخ الملاحظة">
+              <span>نسخ</span>
+            </button>
+          </div>
+        </div>` : ''}
       `;
 
-      document.getElementById("cork-container").innerHTML = html;
+      document.getElementById("note-body-container").innerHTML = html;
+      document.getElementById("note-footer-date").textContent = `🕒 ${note.updatedAt || 'اليوم'}`;
     }
 
     function togglePass(noteId) {
@@ -533,26 +474,16 @@
 
       if (!val) return;
 
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(val).then(() => {
-          showFeedback(btnEl, label);
-        }).catch(() => {
-          fallbackCopy(val, label, btnEl);
-        });
-      } else {
-        fallbackCopy(val, label, btnEl);
-      }
-    }
-
-    function fallbackCopy(val, label, btnEl) {
-      const ta = document.createElement("textarea");
-      ta.value = val;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try { document.execCommand('copy'); showFeedback(btnEl, label); } catch (e) {}
-      document.body.removeChild(ta);
+      navigator.clipboard.writeText(val).then(() => {
+        showFeedback(btnEl, label);
+      }).catch(() => {
+        const ta = document.createElement("textarea");
+        ta.value = val;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); showFeedback(btnEl, label); } catch (e) {}
+        document.body.removeChild(ta);
+      });
     }
 
     function showFeedback(btnEl, label) {
@@ -575,108 +506,14 @@
       }
     }
 
-    // Document Picture-in-Picture Support (Always On Top)
-    async function toggleAlwaysOnTop() {
-      if (!('documentPictureInPicture' in window)) {
-        alert("خاصية التثبيت الدائم (Always-on-top) تتطلب متصفحاً حديثاً مثل Google Chrome أو Microsoft Edge.\n\nمع ذلك، هذه النافذة تظل مفتوحة ومستقلة على شاشتك حتى بعد إغلاق المتصفح!");
-        return;
-      }
-
-      try {
-        const pipWindow = await window.documentPictureInPicture.requestWindow({
-          width: 320,
-          height: 380,
-        });
-
-        // Copy styles to PiP window
-        [...document.styleSheets].forEach((styleSheet) => {
-          try {
-            const cssRules = [...styleSheet.cssRules].map((rule) => rule.cssText).join('');
-            const style = document.createElement('style');
-            style.textContent = cssRules;
-            pipWindow.document.head.appendChild(style);
-          } catch (e) {
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.type = styleSheet.type;
-            link.media = styleSheet.media;
-            link.href = styleSheet.href;
-            pipWindow.document.head.appendChild(link);
-          }
-        });
-
-        // Set dir and title
-        pipWindow.document.documentElement.dir = "rtl";
-        pipWindow.document.documentElement.lang = "ar";
-        pipWindow.document.title = document.title;
-
-        // Clone corkboard and scripts
-        const containerClone = document.getElementById("cork-container").cloneNode(true);
-        pipWindow.document.body.appendChild(containerClone);
-
-        // Toast inside PiP
-        const pipToast = document.createElement("div");
-        pipToast.className = "toast-mini";
-        pipToast.id = "pip-toast";
-        pipToast.textContent = "✓ تم النسخ!";
-        pipWindow.document.body.appendChild(pipToast);
-
-        // Bind events inside pipWindow
-        const notes = getActiveNotes();
-        const note = notes.find(n => n.id === currentNoteId) || notes[0];
-
-        // Wire copy buttons inside PiP
-        const btns = pipWindow.document.querySelectorAll(".btn-action");
-        btns.forEach((b) => {
-          const title = b.getAttribute("title") || "";
-          b.onclick = () => {
-            let val = "";
-            let lbl = "البيانات";
-            if (title.includes("المستخدم")) { val = note.username; lbl = "اسم المستخدم"; }
-            else if (title.includes("المرور")) { val = note.password; lbl = "كلمة المرور"; }
-            else { val = note.extra; lbl = "الملاحظات"; }
-
-            navigator.clipboard.writeText(val).then(() => {
-              b.classList.add("copied");
-              const span = b.querySelector("span");
-              if (span) span.textContent = "✓ تم!";
-              pipToast.textContent = `✓ تم نسخ ${lbl}!`;
-              pipToast.classList.add("show");
-              setTimeout(() => {
-                b.classList.remove("copied");
-                if (span) span.textContent = "نسخ";
-                pipToast.classList.remove("show");
-              }, 1200);
-            });
-          };
-        });
-
-        // Wire eye button inside PiP
-        const eye = pipWindow.document.getElementById("btn-toggle-eye");
-        const passVal = pipWindow.document.getElementById("val-pass");
-        if (eye && passVal) {
-          eye.onclick = () => {
-            const isMasked = passVal.getAttribute("data-is-masked") !== "false";
-            if (isMasked) {
-              passVal.textContent = note.password;
-              passVal.classList.remove("masked");
-              passVal.setAttribute("data-is-masked", "false");
-              eye.textContent = "🙈";
-            } else {
-              passVal.textContent = "••••••••••";
-              passVal.classList.add("masked");
-              passVal.setAttribute("data-is-masked", "true");
-              eye.textContent = "👁️";
-            }
-          };
-        }
-
-      } catch (err) {
-        console.error("PiP error:", err);
+    async function requestPip() {
+      if ('documentPictureInPicture' in window) {
+        try {
+          window.close();
+        } catch (e) {}
       }
     }
 
-    // Register service worker for offline
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
