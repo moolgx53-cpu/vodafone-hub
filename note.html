@@ -38,14 +38,7 @@
     body.orange { background: #ffedd5; color: #9a3412; }
 
     .note-pin {
-      position: absolute;
-      top: 2px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.15rem;
-      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
-      pointer-events: none;
-      z-index: 10;
+      display: none;
     }
 
     .note-header-integrated {
@@ -124,6 +117,17 @@
       background: #ef4444;
       color: #ffffff;
       border-color: #ef4444;
+    }
+
+    .btn-integrated-ctrl.pin-btn {
+      font-size: 0.88rem;
+      position: relative;
+    }
+
+    .btn-integrated-ctrl.pin-btn.is-pinned {
+      background: rgba(220, 38, 38, 0.12);
+      border-color: rgba(220, 38, 38, 0.35);
+      box-shadow: 0 0 6px rgba(220, 38, 38, 0.2);
     }
 
     .note-body-integrated {
@@ -272,15 +276,13 @@
 </head>
 <body class="yellow">
 
-  <div class="note-pin">📌</div>
-
   <!-- Integrated Header -->
   <div class="note-header-integrated">
     <div class="header-dropdown-wrap">
       <select class="select-integrated-system" id="select-note-system" onchange="switchCurrentNote(this.value)"></select>
     </div>
     <div class="header-ctrls">
-      <button class="btn-integrated-ctrl" id="btn-pip-always" onclick="requestPip()" title="تثبيت فوق كل البرامج Always-on-top">📌</button>
+      <button class="btn-integrated-ctrl pin-btn" id="btn-pip-always" onclick="togglePinAlways()" title="النافذة عادية 📍 (اضغط للتثبيت دائماً في المقدمة Always-on-top 📌)">📍</button>
       <button class="btn-integrated-ctrl close" onclick="window.close()" title="إغلاق النوتة">✕</button>
     </div>
   </div>
@@ -506,11 +508,26 @@
       }
     }
 
-    async function requestPip() {
+    async function togglePinAlways() {
+      if (window.opener && window.opener.openFloatingNote) {
+        window.opener.openFloatingNote(currentNoteId);
+        window.close();
+        return;
+      }
       if ('documentPictureInPicture' in window) {
         try {
+          const pipWin = await window.documentPictureInPicture.requestWindow({
+            width: 330,
+            height: 380,
+            disallowReturnToOpener: true
+          });
+          if (window.opener && window.opener.renderPipNote) {
+            window.opener.renderPipNote(pipWin, currentNoteId);
+          }
           window.close();
-        } catch (e) {}
+        } catch (e) {
+          console.warn("PiP failed", e);
+        }
       }
     }
 

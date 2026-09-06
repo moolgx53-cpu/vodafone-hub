@@ -4963,16 +4963,9 @@
         body.purple { background: #f3e8ff; color: #6b21a8; }
         body.orange { background: #ffedd5; color: #9a3412; }
 
-        /* Push pin centered at the top of the note */
+        /* Push pin is integrated as an active button in controls */
         .note-pin {
-          position: absolute;
-          top: 2px;
-          left: 50%;
-          transform: translateX(-50%);
-          font-size: 1.15rem;
-          filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
-          pointer-events: none;
-          z-index: 10;
+          display: none;
         }
 
         /* Integrated header merged seamlessly into note */
@@ -5052,6 +5045,22 @@
           background: #ef4444;
           color: #ffffff;
           border-color: #ef4444;
+        }
+
+        .btn-integrated-ctrl.pin-btn {
+          font-size: 0.88rem;
+          position: relative;
+        }
+
+        .btn-integrated-ctrl.pin-btn.is-pinned {
+          background: rgba(220, 38, 38, 0.12);
+          border-color: rgba(220, 38, 38, 0.35);
+          box-shadow: 0 0 6px rgba(220, 38, 38, 0.2);
+        }
+
+        .btn-integrated-ctrl.pin-btn.is-pinned:hover {
+          background: rgba(220, 38, 38, 0.22);
+          transform: scale(1.08);
         }
 
         /* Note Body Container */
@@ -5227,15 +5236,13 @@
       });
 
       pipWin.document.body.innerHTML = `
-        <div class="note-pin">📌</div>
-
         <!-- Integrated Header on the note itself -->
         <div class="note-header-integrated">
           <div class="header-dropdown-wrap">
             <select class="select-integrated-system" id="pip-select-system">${optionsHtml}</select>
           </div>
           <div class="header-ctrls">
-            <button class="btn-integrated-ctrl" id="pip-btn-detach" title="${isArabic ? 'فتح كنافذة منفصلة تماماً' : 'Detach to separate window'}">↗</button>
+            <button class="btn-integrated-ctrl pin-btn is-pinned" id="pip-btn-pin" title="${isArabic ? 'النافذة مثبتة في المقدمة 📌 (اضغط لإلغاء التثبيت فوق باقي النوافذ)' : 'Always on top 📌 (Click to unpin)'}">📌</button>
             <button class="btn-integrated-ctrl close" id="pip-btn-close" title="${isArabic ? 'إغلاق النوتة' : 'Close Note'}">✕</button>
           </div>
         </div>
@@ -5301,12 +5308,24 @@
         closeBtn.onclick = () => pipWin.close();
       }
 
-      // Wire detach button
-      const detachBtn = pipWin.document.getElementById("pip-btn-detach");
-      if (detachBtn) {
-        detachBtn.onclick = () => {
-          const w = window.open(`note.html?id=${encodeURIComponent(note.id)}`, `vf_note_${note.id}`, 'width=340,height=370,resizable=yes');
+      // Wire pin / always-on-top toggle button
+      const pinBtn = pipWin.document.getElementById("pip-btn-pin");
+      if (pinBtn) {
+        pinBtn.onclick = () => {
+          const left = Math.max(20, (pipWin.screenX || 100));
+          const top = Math.max(20, (pipWin.screenY || 100));
+          const width = 340;
+          const height = 400;
+
+          // Close PiP window and open as standard normal window (not always-on-top)
+          pipWin.close();
+          const w = window.open(
+            `note.html?id=${encodeURIComponent(note.id)}&pinned=0`,
+            `vf_note_${note.id}`,
+            `width=${width},height=${height},left=${left},top=${top},menubar=no,toolbar=no,location=no,status=no,resizable=yes`
+          );
           if (w) w.focus();
+          showToast(isArabic ? "📍 تم إلغاء تثبيت النافذة في المقدمة (نافذة عادية)" : "📍 Unpinned from top (standard window)");
         };
       }
 
@@ -5515,7 +5534,10 @@
           <select class="widget-select-system" onchange="renderInPageSticky(this.value)">
             ${sysOptions}
           </select>
-          <button class="widget-close-btn" onclick="toggleInPageSticky(false)" title="${isArabic ? 'إغلاق' : 'Close'}">✕</button>
+          <div style="display:flex;gap:4px;align-items:center;">
+            <button class="widget-close-btn" onclick="openFloatingNote(inPageStickyNoteId)" title="${isArabic ? 'تثبيت كنافذة عائمة فوق كل برامج الكمبيوتر (Always-on-top) 📌' : 'Pin floating window over all desktop programs 📌'}">📌</button>
+            <button class="widget-close-btn" onclick="toggleInPageSticky(false)" title="${isArabic ? 'إغلاق' : 'Close'}">✕</button>
+          </div>
         </div>
         <div class="widget-body">
           <div class="note-cred-row">
@@ -5761,7 +5783,7 @@
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.9";
+    const CURRENT_APP_VERSION = "1.0.10";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
