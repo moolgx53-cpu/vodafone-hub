@@ -551,12 +551,26 @@
     .sidebar-item-info {
       display: flex;
       align-items: center;
-      gap: 0.55rem;
+      gap: 0.5rem;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .sidebar-item-info span:not(.sidebar-icon) {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #tab-txt-wireless {
+      font-size: 0.78rem;
+      letter-spacing: -0.2px;
     }
 
     .sidebar-icon {
       font-size: 1.1rem;
       line-height: 1;
+      flex-shrink: 0;
     }
 
     .cat-tab.sidebar-item:hover {
@@ -6049,7 +6063,7 @@
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.14";
+    const CURRENT_APP_VERSION = "1.0.15";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
