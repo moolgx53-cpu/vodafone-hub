@@ -2264,6 +2264,12 @@
       gap: 0.5rem;
     }
 
+    .note-footer-btns {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
     .btn-float-note {
       display: inline-flex;
       align-items: center;
@@ -2288,10 +2294,113 @@
       transform: translateY(-1px);
     }
 
+    .btn-float-note.inpage-btn {
+      background: rgba(230, 0, 0, 0.08);
+      border-color: rgba(230, 0, 0, 0.2);
+      color: var(--vf-red-dark);
+    }
+
+    .btn-float-note.inpage-btn:hover {
+      background: var(--vf-red);
+      color: #ffffff;
+      border-color: var(--vf-red);
+    }
+
     .btn-float-note svg {
       width: 11px;
       height: 11px;
       fill: currentColor;
+    }
+
+    /* IN-PAGE DRAGGABLE FLOATING STICKY NOTE */
+    .inpage-sticky-widget {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      width: 300px;
+      border-radius: 12px;
+      padding: 10px 14px 8px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 99999;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      user-select: none;
+      transition: box-shadow 0.2s, background-color 0.25s;
+    }
+
+    .inpage-sticky-widget.yellow { background: #fef9c3; color: #713f12; border: 1px solid #fef08a; }
+    .inpage-sticky-widget.blue   { background: #e0f2fe; color: #075985; border: 1px solid #bae6fd; }
+    .inpage-sticky-widget.green  { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .inpage-sticky-widget.purple { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+    .inpage-sticky-widget.orange { background: #ffedd5; color: #9a3412; border: 1px solid #fed7aa; }
+
+    .inpage-sticky-widget .widget-pin {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.15rem;
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+      cursor: grab;
+    }
+
+    .inpage-sticky-widget .widget-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.14);
+      cursor: grab;
+    }
+
+    .widget-select-system {
+      background: rgba(255, 255, 255, 0.75);
+      color: inherit;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 6px;
+      padding: 3px 6px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .widget-close-btn {
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 6px;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .widget-close-btn:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .inpage-sticky-widget .widget-body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .inpage-sticky-widget .widget-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 4px;
+      border-top: 1px dashed rgba(0, 0, 0, 0.14);
+      font-size: 0.65rem;
+      font-weight: 700;
+      opacity: 0.75;
     }
 
     .empty-notes-box {
@@ -2804,6 +2913,9 @@
       إلغاء
     </button>
   </div>
+
+  <!-- IN-PAGE DRAGGABLE FLOATING STICKY NOTE (Zero Frames, 100% Pure Note) -->
+  <div class="inpage-sticky-widget" id="inpage-sticky-widget"></div>
 
   <!-- ==========================================================
        MODAL: TAX & RECHARGE CALCULATOR
@@ -4806,10 +4918,15 @@
 
             <div class="note-footer">
               <span class="note-date">🕒 ${note.updatedAt || ''}</span>
-              <button class="btn-float-note" onclick="openFloatingNote('${note.id}')" title="${isArabic ? 'فتح كنافذة عائمة مستقلة على سطح المكتب تظل مفتوحة حتى لو أغلقت المتصفح' : 'Open as floating desktop window independent of browser'}">
-                <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
-                <span>${isArabic ? 'نافذة عائمة ↗' : 'Float ↗'}</span>
-              </button>
+              <div class="note-footer-btns">
+                <button class="btn-float-note inpage-btn" onclick="toggleInPageSticky(true, '${note.id}')" title="${isArabic ? 'تثبيت نوتة عائمة حرة داخل الشاشة بدون أي إطار للمتصفح' : 'Pin floating note on screen without any browser frames'}">
+                  <span>${isArabic ? 'عائمة بالصفحة 📌' : 'In-Page 📌'}</span>
+                </button>
+                <button class="btn-float-note" onclick="openFloatingNote('${note.id}')" title="${isArabic ? 'فتح كنافذة عائمة فوق كل برامج الكمبيوتر (Always-on-top)' : 'Open floating window over all desktop programs'}">
+                  <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                  <span>${isArabic ? 'نافذة للـ PC ↗' : 'Float PC ↗'}</span>
+                </button>
+              </div>
             </div>
           </div>
         `;
@@ -5291,6 +5408,7 @@
           const pipWin = await window.documentPictureInPicture.requestWindow({
             width: 330,
             height: 380,
+            disallowReturnToOpener: true,
           });
 
           activePipNoteWindow = pipWin;
@@ -5305,7 +5423,7 @@
 
           renderPipNote(pipWin, noteId);
 
-          showToast(isArabic ? `تم فتح بطاقة (${note.system}) كشاشة عائمة بدون إطار على سطح المكتب! 📌` : `Opened (${note.system}) as frameless floating note! 📌`);
+          showToast(isArabic ? `تم فتح بطاقة (${note.system}) كشاشة عائمة على سطح المكتب! 📌` : `Opened (${note.system}) as desktop floating note! 📌`);
           return;
         } catch (err) {
           console.warn("Document PiP request failed, falling back to popup:", err);
@@ -5330,6 +5448,217 @@
       } else {
         alert(isArabic ? "يرجى السماح بالنوافذ المنبثقة (Pop-ups) من إعدادات المتصفح لفتح البطاقة العائمة!" : "Please allow pop-ups to open the floating note!");
       }
+    }
+
+    // ==========================================================
+    // IN-PAGE DRAGGABLE FLOATING STICKY NOTE (100% Borderless, Zero Browser Bars)
+    // ==========================================================
+    const CURRENT_APP_VERSION = "1.0.9";
+    let inPageStickyNoteId = null;
+
+    function toggleInPageSticky(show, noteId) {
+      const widget = document.getElementById("inpage-sticky-widget");
+      if (!widget) return;
+
+      if (!show) {
+        widget.style.display = "none";
+        inPageStickyNoteId = null;
+        return;
+      }
+
+      if (noteId) {
+        inPageStickyNoteId = noteId;
+      }
+      if (!inPageStickyNoteId) return;
+
+      renderInPageSticky(inPageStickyNoteId);
+      widget.style.display = "flex";
+
+      // Close modal if open so the user sees their sticky note directly on screen
+      const modal = document.getElementById("modal-sticky-notes");
+      if (modal && modal.style.display === "block") {
+        closeStickyNotesModal();
+      }
+
+      showToast(currentLang === "ar" ? "تم تثبيت النوتة العائمة حرة بالكامل! 📌 يمكنك سحبها لأي مكان بالماوس" : "Frameless floating note pinned! 📌 Drag it anywhere");
+    }
+
+    function renderInPageSticky(noteId) {
+      const widget = document.getElementById("inpage-sticky-widget");
+      if (!widget) return;
+
+      const prof = getActiveProfile();
+      const notes = prof.notes || [];
+      const note = notes.find(n => n.id === noteId) || notes[0];
+      if (!note) {
+        widget.style.display = "none";
+        return;
+      }
+      inPageStickyNoteId = note.id;
+
+      const isArabic = currentLang === "ar";
+      const color = note.color || 'yellow';
+      widget.className = `inpage-sticky-widget ${color}`;
+
+      const safeSystem = escapeHtml(note.system || '');
+      const safeUser = escapeHtml(note.username || '');
+      const safePass = escapeHtml(note.password || '');
+      const safeExtra = escapeHtml(note.extra || '');
+
+      const sysOptions = notes.map(n => {
+        const isSel = n.id === note.id ? 'selected' : '';
+        return `<option value="${escapeHtml(n.id)}" ${isSel}>${escapeHtml(n.system)}</option>`;
+      }).join('');
+
+      widget.innerHTML = `
+        <div class="widget-pin" title="${isArabic ? 'اسحب النوتة من هنا' : 'Drag note from here'}">📌</div>
+        <div class="widget-header" id="widget-drag-handle">
+          <select class="widget-select-system" onchange="renderInPageSticky(this.value)">
+            ${sysOptions}
+          </select>
+          <button class="widget-close-btn" onclick="toggleInPageSticky(false)" title="${isArabic ? 'إغلاق' : 'Close'}">✕</button>
+        </div>
+        <div class="widget-body">
+          <div class="note-cred-row">
+            <div class="cred-label-val">
+              <span class="cred-label">${isArabic ? "اسم المستخدم:" : "User:"}</span>
+              <span class="cred-value">${safeUser || '-'}</span>
+            </div>
+            <button class="btn-copy-cred" onclick="copyInPageField('${escapeHtml(note.username)}', this)" title="${isArabic ? "نسخ" : "Copy"}">
+              <span>${isArabic ? "نسخ" : "Copy"}</span>
+            </button>
+          </div>
+          <div class="note-cred-row">
+            <div class="cred-label-val">
+              <span class="cred-label">${isArabic ? "كلمة المرور:" : "Pass:"}</span>
+              <span class="cred-value is-masked" id="inpage-pass-val">${safePass || '-'}</span>
+            </div>
+            <div style="display:flex;gap:4px;align-items:center;">
+              <button class="btn-copy-cred" onclick="toggleInPagePassVisibility(this)" title="${isArabic ? "إظهار/إخفاء" : "Toggle"}">
+                <span class="eye-icon">👁</span>
+              </button>
+              <button class="btn-copy-cred" onclick="copyInPageField('${escapeHtml(note.password)}', this)" title="${isArabic ? "نسخ" : "Copy"}">
+                <span>${isArabic ? "نسخ" : "Copy"}</span>
+              </button>
+            </div>
+          </div>
+          ${safeExtra ? `
+          <div class="note-cred-row extra-row">
+            <div class="cred-label-val">
+              <span class="cred-label">${isArabic ? "ملاحظة:" : "Note:"}</span>
+              <span class="cred-extra-text">${safeExtra}</span>
+            </div>
+            <button class="btn-copy-cred mini" onclick="copyInPageField('${escapeHtml(note.extra)}', this)" title="${isArabic ? "نسخ" : "Copy"}">
+              <span>${isArabic ? "نسخ" : "Copy"}</span>
+            </button>
+          </div>` : ''}
+        </div>
+        <div class="widget-footer">
+          <span>${safeSystem}</span>
+          <span style="opacity:0.8;">${isArabic ? 'حرة وبدون إطارات ✨' : 'Frameless ✨'}</span>
+        </div>
+      `;
+
+      initInPageStickyDrag();
+    }
+
+    function toggleInPagePassVisibility(btn) {
+      const el = document.getElementById("inpage-pass-val");
+      if (!el) return;
+      if (el.classList.contains("is-masked")) {
+        el.classList.remove("is-masked");
+        btn.querySelector(".eye-icon").textContent = "🔒";
+      } else {
+        el.classList.add("is-masked");
+        btn.querySelector(".eye-icon").textContent = "👁";
+      }
+    }
+
+    function copyInPageField(text, btn) {
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = `<span>✓</span>`;
+        btn.style.background = "#22c55e";
+        btn.style.color = "#ffffff";
+        setTimeout(() => {
+          btn.innerHTML = orig;
+          btn.style.background = "";
+          btn.style.color = "";
+        }, 1200);
+      });
+    }
+
+    let isWidgetDragging = false;
+    let widgetOffsetX = 0;
+    let widgetOffsetY = 0;
+
+    function initInPageStickyDrag() {
+      const widget = document.getElementById("inpage-sticky-widget");
+      const handle = document.getElementById("widget-drag-handle");
+      const pin = widget ? widget.querySelector(".widget-pin") : null;
+      if (!widget || !handle) return;
+
+      const startDrag = (e) => {
+        if (e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT' || e.target.closest('button') || e.target.closest('select')) {
+          return;
+        }
+        isWidgetDragging = true;
+        const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type.startsWith('touch') ? e.touches[0].clientY : e.clientY;
+        const rect = widget.getBoundingClientRect();
+        widgetOffsetX = clientX - rect.left;
+        widgetOffsetY = clientY - rect.top;
+
+        widget.style.bottom = 'auto';
+        widget.style.right = 'auto';
+        widget.style.left = `${rect.left}px`;
+        widget.style.top = `${rect.top}px`;
+        widget.style.cursor = 'grabbing';
+      };
+
+      const doDrag = (e) => {
+        if (!isWidgetDragging) return;
+        if (e.cancelable) e.preventDefault();
+        const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type.startsWith('touch') ? e.touches[0].clientY : e.clientY;
+
+        let newX = clientX - widgetOffsetX;
+        let newY = clientY - widgetOffsetY;
+
+        const maxW = window.innerWidth - widget.offsetWidth - 10;
+        const maxH = window.innerHeight - widget.offsetHeight - 10;
+        newX = Math.max(10, Math.min(newX, maxW));
+        newY = Math.max(10, Math.min(newY, maxH));
+
+        widget.style.left = `${newX}px`;
+        widget.style.top = `${newY}px`;
+      };
+
+      const stopDrag = () => {
+        if (isWidgetDragging) {
+          isWidgetDragging = false;
+          widget.style.cursor = '';
+        }
+      };
+
+      handle.onmousedown = startDrag;
+      if (pin) pin.onmousedown = startDrag;
+      widget.onmousedown = (e) => {
+        if (e.target === widget) startDrag(e);
+      };
+
+      document.removeEventListener('mousemove', doDrag);
+      document.removeEventListener('mouseup', stopDrag);
+      document.addEventListener('mousemove', doDrag);
+      document.addEventListener('mouseup', stopDrag);
+
+      handle.ontouchstart = startDrag;
+      if (pin) pin.ontouchstart = startDrag;
+      document.removeEventListener('touchmove', doDrag);
+      document.removeEventListener('touchend', stopDrag);
+      document.addEventListener('touchmove', doDrag, { passive: false });
+      document.addEventListener('touchend', stopDrag);
     }
 
     function calculateTax() {
