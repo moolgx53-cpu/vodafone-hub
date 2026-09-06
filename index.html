@@ -5319,52 +5319,22 @@
         closeBtn.onclick = () => pipWin.close();
       }
 
-      // State for pin mode inside the sleek PiP window (stays in exact same sleek window)
-      let pipIsPinned = (pipWin._pipIsPinned !== undefined) ? pipWin._pipIsPinned : true;
-      pipWin._pipIsPinned = pipIsPinned;
-
       // Wire pin / always-on-top toggle button
       const pinBtn = pipWin.document.getElementById("pip-btn-pin");
       if (pinBtn) {
-        if (pipIsPinned) {
-          pinBtn.textContent = "📌";
-          pinBtn.classList.add("is-pinned");
-          pinBtn.title = isArabic ? "النافذة مثبتة في المقدمة 📌 (اضغط لإلغاء التثبيت)" : "Pinned on top 📌 (Click to unpin)";
-          pipWin.document.body.style.opacity = "1";
-        } else {
-          pinBtn.textContent = "📍";
-          pinBtn.classList.remove("is-pinned");
-          pinBtn.title = isArabic ? "النافذة غير مثبتة 📍 (اضغط لتثبيتها في المقدمة)" : "Unpinned 📍 (Click to pin on top)";
-        }
+        pinBtn.title = isArabic
+          ? "النافذة مثبتة فوق كل البرامج 📌 (اضغط لإلغاء التثبيت وتنزيلها خلف البرامج)"
+          : "Pinned on top 📌 (Click to unpin and sink behind other programs)";
 
         pinBtn.onclick = () => {
-          pipIsPinned = !pipIsPinned;
-          pipWin._pipIsPinned = pipIsPinned;
-
-          if (pipIsPinned) {
-            pinBtn.textContent = "📌";
-            pinBtn.classList.add("is-pinned");
-            pinBtn.title = isArabic ? "النافذة مثبتة في المقدمة 📌 (اضغط لإلغاء التثبيت)" : "Pinned on top 📌 (Click to unpin)";
-            pipWin.document.body.style.opacity = "1";
-            showPipFeedback(pinBtn, isArabic ? "📌 تم التثبيت دائماً في المقدمة!" : "📌 Pinned always on top!");
-          } else {
-            pinBtn.textContent = "📍";
-            pinBtn.classList.remove("is-pinned");
-            pinBtn.title = isArabic ? "النافذة غير مثبتة 📍 (اضغط لتثبيتها في المقدمة)" : "Unpinned 📍 (Click to pin on top)";
-            showPipFeedback(pinBtn, isArabic ? "📍 تم إلغاء وضع التثبيت!" : "📍 Unpinned!");
-          }
+          // Dock into the in-page floating note so it sinks behind external apps with 0% browser frame!
+          toggleInPageSticky(true, note.id);
+          pipWin.close();
+          showToast(isArabic
+            ? "📍 تم إلغاء التثبيت - النوتة الآن تعوم داخل صفحة المتصفح وتنزل خلف باقي البرامج لعدم حجب الشاشة!"
+            : "📍 Unpinned - Note now floats inside page and sinks behind other programs!");
         };
       }
-
-      // Smooth translucency when unpinned and inactive
-      pipWin.onblur = () => {
-        if (!pipWin._pipIsPinned) {
-          pipWin.document.body.style.opacity = "0.78";
-        }
-      };
-      pipWin.onfocus = () => {
-        pipWin.document.body.style.opacity = "1";
-      };
 
       // Wire select dropdown
       const sel = pipWin.document.getElementById("pip-select-system");
@@ -5450,6 +5420,7 @@
       if (!note) return;
 
       const isArabic = currentLang === "ar";
+      toggleInPageSticky(false);
 
       // 1. Direct Frameless Document Picture-in-Picture Window (Zero extra steps, always on top!)
       if ('documentPictureInPicture' in window) {
@@ -5820,7 +5791,7 @@
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.11";
+    const CURRENT_APP_VERSION = "1.0.12";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
