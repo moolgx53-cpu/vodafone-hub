@@ -2257,11 +2257,41 @@
     .note-footer {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: space-between;
       font-size: 0.68rem;
-      opacity: 0.65;
-      padding-top: 0.35rem;
+      padding-top: 0.4rem;
       border-top: 1px dashed rgba(0, 0, 0, 0.08);
+      gap: 0.5rem;
+    }
+
+    .btn-float-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: var(--radius-full);
+      padding: 3px 8px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: inherit;
+      cursor: pointer;
+      transition: var(--transition);
+      opacity: 0.85;
+    }
+
+    .btn-float-note:hover {
+      background: #111827;
+      color: #ffffff;
+      border-color: #111827;
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+
+    .btn-float-note svg {
+      width: 11px;
+      height: 11px;
+      fill: currentColor;
     }
 
     .empty-notes-box {
@@ -4776,12 +4806,41 @@
 
             <div class="note-footer">
               <span class="note-date">🕒 ${note.updatedAt || ''}</span>
+              <button class="btn-float-note" onclick="openFloatingNote('${note.id}')" title="${isArabic ? 'فتح كنافذة عائمة مستقلة على سطح المكتب تظل مفتوحة حتى لو أغلقت المتصفح' : 'Open as floating desktop window independent of browser'}">
+                <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                <span>${isArabic ? 'نافذة عائمة ↗' : 'Float ↗'}</span>
+              </button>
             </div>
           </div>
         `;
       });
 
       board.innerHTML = html;
+    }
+
+    function openFloatingNote(noteId) {
+      const prof = getActiveProfile();
+      const note = (prof.notes || []).find(n => n.id === noteId);
+      if (!note) return;
+
+      const isArabic = currentLang === "ar";
+      const width = 340;
+      const height = 400;
+      const left = Math.max(40, (window.screen.availWidth || 1200) - width - 60);
+      const top = Math.max(40, 100);
+
+      const win = window.open(
+        `note.html?id=${encodeURIComponent(noteId)}`,
+        `vf_note_${noteId}`,
+        `width=${width},height=${height},left=${left},top=${top},menubar=no,toolbar=no,location=no,status=no,resizable=yes`
+      );
+
+      if (win) {
+        win.focus();
+        showToast(isArabic ? `تم فتح بطاقة (${note.system}) كنافذة عائمة مستقلة على الشاشة 📌` : `Opened (${note.system}) as floating desktop window 📌`);
+      } else {
+        alert(isArabic ? "يرجى السماح بالنوافذ المنبثقة (Pop-ups) لفتح البطاقة العائمة!" : "Please allow pop-ups to open the floating note!");
+      }
     }
 
     function calculateTax() {
@@ -4885,7 +4944,7 @@
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.5";
+    const CURRENT_APP_VERSION = "1.0.6";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
