@@ -3395,7 +3395,7 @@
         <!-- Version Status & Auto-Update Button (Hidden per request) -->
         <button class="header-btn version-btn" id="btn-version-status" onclick="checkForUpdates(true)" style="display: none !important;">
           <span class="version-dot" id="version-dot"></span>
-          <span id="txt-version-number">v1.0.20</span>
+          <span id="txt-version-number">v1.0.21</span>
         </button>
 
         <!-- Direct PDF Download/Open Button -->
@@ -4824,37 +4824,6 @@
           `).join("")}
         </div>
 
-        <!-- Section 2: Interactive Cash Generator -->
-        <div class="cash-tool-card">
-          <div class="cash-tool-header">
-            <svg style="width:22px;height:22px;fill:currentColor" viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-            <span>أداة تركيب أكواد فودافون كاش السريعة (تحويل الأموال وشحن الرصيد)</span>
-          </div>
-          <div class="cash-tool-form">
-            <div class="cash-input-field">
-              <label>رقم الموبايل المستلم (010...):</label>
-              <input type="text" id="cash-phone" placeholder="010XXXXXXXX" oninput="updateCashCodes()">
-            </div>
-            <div class="cash-input-field">
-              <label>المبلغ (بالجنيه):</label>
-              <input type="number" id="cash-amount" placeholder="مثال: 50" oninput="updateCashCodes()">
-            </div>
-            <div class="cash-output-box">
-              <div>
-                <div style="font-size:0.75rem;color:var(--text-secondary);font-weight:700;">كود التحويل المباشر:</div>
-                <code id="cash-transfer-code">*9*7*الرقم*المبلغ#</code>
-              </div>
-              <button class="code-pill" onclick="copyCashCode('transfer')">نسخ الكود</button>
-            </div>
-            <div class="cash-output-box">
-              <div>
-                <div style="font-size:0.75rem;color:var(--text-secondary);font-weight:700;">كود الشحن للغير:</div>
-                <code id="cash-recharge-code">*9*3*الرقم*المبلغ#</code>
-              </div>
-              <button class="code-pill" onclick="copyCashCode('recharge')">نسخ الكود</button>
-            </div>
-          </div>
-        </div>
 
         <!-- Section 3: All Short Codes Matrix -->
         <div class="section-header">
@@ -4899,24 +4868,6 @@
         cancel: "إلغاء واشتراكات"
       };
       return map[cat] || "خدمات فودافون";
-    }
-
-    function updateCashCodes() {
-      const phone = document.getElementById("cash-phone").value.trim() || "الرقم";
-      const amount = document.getElementById("cash-amount").value.trim() || "المبلغ";
-      document.getElementById("cash-transfer-code").textContent = `*9*7*${phone}*${amount}#`;
-      document.getElementById("cash-recharge-code").textContent = `*9*3*${phone}*${amount}#`;
-    }
-
-    function copyCashCode(type) {
-      const phone = document.getElementById("cash-phone").value.trim();
-      const amount = document.getElementById("cash-amount").value.trim();
-      if (!phone || !amount) {
-        showToast("يرجى إدخال رقم الموبايل والمبلغ أولاً");
-        return;
-      }
-      const code = type === 'transfer' ? `*9*7*${phone}*${amount}#` : `*9*3*${phone}*${amount}#`;
-      copyToClipboard(code, type === 'transfer' ? 'تحويل فودافون كاش' : 'شحن كاش لغيرك');
     }
 
     function renderAdslExtraTable() {
@@ -7369,7 +7320,7 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.20";
+    const CURRENT_APP_VERSION = "1.0.21";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
