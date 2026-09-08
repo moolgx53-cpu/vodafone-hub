@@ -1371,21 +1371,27 @@
     .app-main-area {
       flex: 1;
       min-width: 0;
+      width: 100%;
       display: flex;
       flex-direction: column;
+      align-items: stretch;
       gap: 0.85rem;
     }
 
     .app-main-area .controls-hero {
       margin: 0;
       padding: 0;
+      width: 100%;
       max-width: 100%;
     }
 
     .app-main-area .main-content {
       margin: 0;
       padding: 0;
+      width: 100%;
       max-width: 100%;
+      flex: 1;
+      align-self: stretch;
     }
 
     /* Mobile Sidebar Toggle Button */
@@ -1850,10 +1856,14 @@
       margin: 0;
       padding: 0;
       width: 100%;
+      min-width: 0;
       flex: 1;
+      align-self: stretch;
+      box-sizing: border-box;
     }
 
     .section-header {
+      width: 100%;
       margin-bottom: 0.85rem;
       display: flex;
       align-items: center;
@@ -1862,6 +1872,7 @@
       gap: 0.5rem;
       padding-bottom: 0.4rem;
       border-bottom: 1.5px solid var(--border-color);
+      box-sizing: border-box;
     }
 
     .section-title {
@@ -1887,10 +1898,12 @@
 
     /* Card Grid (Compact: 260px min-width) */
     .plans-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      display: grid !important;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
       gap: 0.85rem;
       margin-bottom: 1.75rem;
+      width: 100% !important;
+      box-sizing: border-box;
     }
 
     /* Unified Card Design (Compact & Organized) */
@@ -3382,7 +3395,7 @@
         <!-- Version Status & Auto-Update Button -->
         <button class="header-btn version-btn" id="btn-version-status" onclick="checkForUpdates(true)" title="فحص التحديثات يدوياً">
           <span class="version-dot" id="version-dot"></span>
-          <span id="txt-version-number">v1.0.18</span>
+          <span id="txt-version-number">v1.0.19</span>
         </button>
 
         <!-- Direct PDF Download/Open Button -->
@@ -3733,6 +3746,9 @@
             <div class="stats-summary" id="results-count">
               يتم عرض كافة البيانات
             </div>
+          </div>
+        </div>
+      </section>
       <!-- LINES & SYSTEMS PRICING CALCULATOR SECTION -->
       <section class="line-calc-section" id="line-calc-section" style="display:none;">
         <div class="line-calc-card">
@@ -5270,16 +5286,16 @@
       }
 
       // Render plans
-      if (currentCategory === "all" && !hasSearch && budgetVal === "all") {
-        const sections = [
-          { cat: "red", title: isArabic ? "باقات فودافون ريد (Vodafone RED Plans)" : "Vodafone RED Plans", desc: isArabic ? "باقات الفاتورة الشهرية متضمنة ترفيه، تجوال، وتقسيط أجهزة" : "Monthly postpaid plans with entertainment, roaming & devices" },
-          { cat: "flex", title: isArabic ? "باقات فليكس الشهرية (Flex Rate Plans)" : "Flex Rate Plans", desc: isArabic ? "صلاحية 28 يوماً - مكالمات ورسائل وإنترنت" : "28 Days validity for calls, SMS & internet" },
-          { cat: "adsl", title: isArabic ? "باقات الإنترنت المنزلي (ADSL Rate Plans)" : "ADSL Rate Plans", desc: isArabic ? "سرعات تبدأ من 30 وحتى 200 ميجابت واشتراكات ترفيه مجانية" : "Speeds up to 200 Mbps with free entertainment" },
-          { cat: "wireless", title: isArabic ? "باقات هوم وايرلس (At Home Wireless 4G)" : "At Home Wireless 4G", desc: isArabic ? "إنترنت هوائي عالي السرعة بدون خط أرضي بشرائح 4G" : "High-speed 4G home internet router without landline" },
-          { cat: "mi_plus", title: isArabic ? "باقات الإنترنت للموبايل (MI Plus Bundle)" : "MI Plus Bundle", desc: isArabic ? "أفضل أسعار لميجات الإنترنت لجميع خطوط فودافون" : "Competitive mobile internet bundles for all customers" },
-          { cat: "business", title: isArabic ? "باقات فودافون للشركات 2026 (Business Plans)" : "Vodafone Business Plans 2026", desc: isArabic ? "دقائق العمل داخل الشركة، باقات فليكس بيزنس وريد بيزنس" : "Business Flex & Red Business corporate packages" },
-        ];
+      const sections = [
+        { cat: "red", title: isArabic ? "باقات فودافون ريد (Vodafone RED Plans)" : "Vodafone RED Plans", desc: isArabic ? "باقات الفاتورة الشهرية متضمنة ترفيه، تجوال، وتقسيط أجهزة" : "Monthly postpaid plans with entertainment, roaming & devices" },
+        { cat: "flex", title: isArabic ? "باقات فليكس الشهرية (Flex Rate Plans)" : "Flex Rate Plans", desc: isArabic ? "صلاحية 28 يوماً - مكالمات ورسائل وإنترنت" : "28 Days validity for calls, SMS & internet" },
+        { cat: "adsl", title: isArabic ? "باقات الإنترنت المنزلي (ADSL Rate Plans)" : "ADSL Rate Plans", desc: isArabic ? "سرعات تبدأ من 30 وحتى 200 ميجابت واشتراكات ترفيه مجانية" : "Speeds up to 200 Mbps with free entertainment" },
+        { cat: "wireless", title: isArabic ? "باقات هوم وايرلس (At Home Wireless 4G)" : "At Home Wireless 4G", desc: isArabic ? "إنترنت هوائي عالي السرعة بدون خط أرضي بشرائح 4G" : "High-speed 4G home internet router without landline" },
+        { cat: "mi_plus", title: isArabic ? "باقات الإنترنت للموبايل (MI Plus Bundle)" : "MI Plus Bundle", desc: isArabic ? "أفضل أسعار لميجات الإنترنت لجميع خطوط فودافون" : "Competitive mobile internet bundles for all customers" },
+        { cat: "business", title: isArabic ? "باقات فودافون للشركات 2026 (Business Plans)" : "Vodafone Business Plans 2026", desc: isArabic ? "دقائق العمل داخل الشركة، باقات فليكس بيزنس وريد بيزنس" : "Business Flex & Red Business corporate packages" },
+      ];
 
+      if (currentCategory === "all" && !hasSearch && budgetVal === "all") {
         let html = `
           <!-- Quick PDF Teaser Banner in All Plans View -->
           <div class="pdf-banner-card" style="margin-bottom:2rem;padding:1.15rem 1.5rem;">
@@ -5339,6 +5355,25 @@
               </button>
             </div>
           `;
+        } else if (currentCategory !== "all") {
+          const activeSec = sections.find(s => s.cat === currentCategory);
+          if (activeSec) {
+            html += `
+              <div class="section-header">
+                <div>
+                  <h2 class="section-title">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+                    <span>${activeSec.title}</span>
+                    <span class="badge badge-red" style="font-size:0.75rem; margin-right:0.4rem; vertical-align:middle;">${filtered.length} ${isArabic ? "باقات" : "plans"}</span>
+                  </h2>
+                  <p class="section-desc">${activeSec.desc}</p>
+                </div>
+                <button class="code-pill" onclick="switchCategory('all')" title="${isArabic ? 'العودة لعرض كافة الأقسام' : 'Return to all sections'}">
+                  ${isArabic ? "عرض جميع الأقسام" : "View all sections"} ←
+                </button>
+              </div>
+            `;
+          }
         }
 
         html += `<div class="plans-grid">${filtered.map(p => renderCard(p)).join("")}</div>`;
@@ -7334,7 +7369,7 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.18";
+    const CURRENT_APP_VERSION = "1.0.19";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
