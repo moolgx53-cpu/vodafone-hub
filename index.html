@@ -3389,13 +3389,13 @@
       </div>
 
       <div class="header-actions">
-        <!-- Compact Mode Indicator Badge -->
-        <span class="compact-indicator" id="compact-badge" title="الوضع العملي المكثف مفعّل لجميع الشاشات والأقسام">⚡ وضع مكثف</span>
+        <!-- Compact Mode Indicator Badge (Hidden per request) -->
+        <span class="compact-indicator" id="compact-badge" style="display: none !important;">⚡ وضع مكثف</span>
 
-        <!-- Version Status & Auto-Update Button -->
-        <button class="header-btn version-btn" id="btn-version-status" onclick="checkForUpdates(true)" title="فحص التحديثات يدوياً">
+        <!-- Version Status & Auto-Update Button (Hidden per request) -->
+        <button class="header-btn version-btn" id="btn-version-status" onclick="checkForUpdates(true)" style="display: none !important;">
           <span class="version-dot" id="version-dot"></span>
-          <span id="txt-version-number">v1.0.19</span>
+          <span id="txt-version-number">v1.0.20</span>
         </button>
 
         <!-- Direct PDF Download/Open Button -->
@@ -7369,7 +7369,7 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.19";
+    const CURRENT_APP_VERSION = "1.0.20";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
