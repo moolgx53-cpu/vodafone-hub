@@ -1111,6 +1111,75 @@
       margin-top: 0.15rem;
     }
 
+    /* Line SIM Price Banner */
+    .voda-line-price-banner {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.85rem 1rem;
+      background: var(--bg-subtle);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      user-select: none;
+      transition: var(--transition);
+      margin-bottom: 0.85rem;
+    }
+
+    .voda-line-price-banner:hover {
+      border-color: var(--vf-red-border);
+      background: var(--vf-red-subtle);
+    }
+
+    .voda-line-price-banner.active {
+      border-color: var(--text-primary);
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    [data-theme="dark"] .voda-line-price-banner.active {
+      border-color: #6e7787;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .sim-price-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.6rem;
+      margin-right: auto;
+      transition: var(--transition);
+    }
+
+    [dir="ltr"] .sim-price-input-wrap {
+      margin-right: 0;
+      margin-left: auto;
+    }
+
+    .sim-price-input-wrap:focus-within {
+      border-color: var(--vf-red);
+      box-shadow: 0 0 0 2px rgba(230, 0, 0, 0.15);
+    }
+
+    .sim-custom-price-input {
+      width: 58px;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      text-align: center;
+      outline: none;
+    }
+
+    .sim-currency-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
     /* Calculation Breakdown Summary Card */
     .line-calc-result-card {
       background: linear-gradient(135deg, rgba(230, 0, 0, 0.04), rgba(230, 0, 0, 0.01));
@@ -3350,7 +3419,7 @@
         <!-- Version Status & Auto-Update Button -->
         <button class="header-btn version-btn" id="btn-version-status" onclick="checkForUpdates(true)" title="فحص التحديثات يدوياً">
           <span class="version-dot" id="version-dot"></span>
-          <span id="txt-version-number">v1.0.16</span>
+          <span id="txt-version-number">v1.0.17</span>
         </button>
 
         <!-- Direct PDF Download/Open Button -->
@@ -3768,9 +3837,26 @@
             </div>
           </div>
 
-          <!-- 3. Vodafone Cash Add-on Toggle -->
-          <div class="voda-cash-banner" id="voda-cash-banner" onclick="toggleVodafoneCashFromBanner()">
-            <input type="checkbox" id="line-vodacash-checkbox" class="voda-cash-checkbox" onchange="calculateLineTotal()">
+          <!-- 3. Line SIM Price Toggle & Custom Input -->
+          <label class="voda-line-price-banner active" id="line-sim-banner" for="line-sim-checkbox">
+            <input type="checkbox" id="line-sim-checkbox" class="voda-cash-checkbox" checked onchange="onLineSimPriceChanged()">
+            <div class="voda-cash-content">
+              <div class="voda-cash-headline">
+                <span class="voda-cash-badge" style="background:var(--text-primary);" id="txt-sim-badge">شريحة جديدة</span>
+                <strong id="txt-sim-title">احتساب ثمن شراء الخط الجديد</strong>
+                <span class="voda-cash-price-tag" id="txt-sim-price-tag">(65 جنيه للخط)</span>
+              </div>
+              <div class="voda-cash-subtext" id="txt-sim-subtext">سعر الخط والشريحة الجديدة لمسبق الدفع (Prepaid) هو 65 ج.م. يمكنك تعديل السعر أو إلغاء التحديد للخطوط الحالية.</div>
+            </div>
+            <div class="sim-price-input-wrap">
+              <input type="number" id="line-sim-price-input" class="sim-custom-price-input" value="65" min="0" max="1000" oninput="onCustomSimPriceChange(this.value)" onclick="event.stopPropagation()">
+              <span class="sim-currency-label">ج.م</span>
+            </div>
+          </label>
+
+          <!-- 4. Vodafone Cash Add-on Toggle -->
+          <label class="voda-cash-banner" id="voda-cash-banner" for="line-vodacash-checkbox">
+            <input type="checkbox" id="line-vodacash-checkbox" class="voda-cash-checkbox" onchange="onVodafoneCashChanged()">
             <div class="voda-cash-content">
               <div class="voda-cash-headline">
                 <span class="voda-cash-badge" id="txt-cash-badge">محفظة كاش</span>
@@ -3779,11 +3865,15 @@
               </div>
               <div class="voda-cash-subtext" id="txt-cash-subtext">تفعيل المحفظة الإلكترونية لجميع الخطوط المحددة بسعر رمزي 5 جنيه لكل خط.</div>
             </div>
-          </div>
+          </label>
 
-          <!-- 4. Result Breakdown Summary Card -->
+          <!-- 5. Result Breakdown Summary Card -->
           <div class="line-calc-result-card">
             <div class="calc-breakdown-table">
+              <div class="calc-breakdown-row highlight" id="summary-sim-row">
+                <span id="lbl-summary-sim-fee">ثمن شراء الخطوط (<span id="summary-sim-count">1</span> خط × <span id="summary-sim-unit">65</span> ج.م):</span>
+                <strong id="summary-sim-total">65.00 ج.م</strong>
+              </div>
               <div class="calc-breakdown-row">
                 <span id="lbl-summary-single-plan">سعر النظام للخط الواحد:</span>
                 <strong id="summary-single-price">75.00 ج.م <small style="font-weight:normal;opacity:0.8;">(شامل الضريبة)</small></strong>
@@ -5328,6 +5418,26 @@
       // Deactivate package category tabs in sidebar
       document.querySelectorAll(".cat-tab").forEach(tab => tab.classList.remove("active"));
 
+      // Adjust default line sim price per line type
+      const simCb = document.getElementById("line-sim-checkbox");
+      const simInput = document.getElementById("line-sim-price-input");
+      const simBanner = document.getElementById("line-sim-banner");
+      if (simCb && simInput) {
+        if (lineType === "prepaid") {
+          simCb.checked = true;
+          simInput.value = "65";
+          if (simBanner) simBanner.classList.add("active");
+        } else if (lineType === "postpaid" || lineType === "enterprise") {
+          simCb.checked = false;
+          simInput.value = "0";
+          if (simBanner) simBanner.classList.remove("active");
+        } else if (lineType === "data") {
+          simCb.checked = true;
+          simInput.value = "65";
+          if (simBanner) simBanner.classList.add("active");
+        }
+      }
+
       // Filter catalog plans matching this line type
       if (lineType === "prepaid") {
         currentCategory = "flex";
@@ -5456,13 +5566,35 @@
       calculateLineTotal();
     }
 
-    // Toggle Vodafone Cash from the Banner
-    function toggleVodafoneCashFromBanner() {
+    // Toggle Line SIM Price Checkbox
+    function onLineSimPriceChanged() {
+      const cb = document.getElementById("line-sim-checkbox");
+      const banner = document.getElementById("line-sim-banner");
+      if (banner && cb) {
+        banner.classList.toggle("active", cb.checked);
+      }
+      calculateLineTotal();
+    }
+
+    // Custom SIM Price input handler
+    function onCustomSimPriceChange(val) {
+      const cb = document.getElementById("line-sim-checkbox");
+      const banner = document.getElementById("line-sim-banner");
+      const num = parseFloat(val);
+      if (cb && !cb.checked && !isNaN(num) && num > 0) {
+        cb.checked = true;
+        if (banner) banner.classList.add("active");
+      }
+      calculateLineTotal();
+    }
+
+    // Toggle Vodafone Cash Checkbox
+    function onVodafoneCashChanged() {
       const cb = document.getElementById("line-vodacash-checkbox");
-      if (!cb) return;
-      cb.checked = !cb.checked;
       const banner = document.getElementById("voda-cash-banner");
-      if (banner) banner.classList.toggle("active", cb.checked);
+      if (banner && cb) {
+        banner.classList.toggle("active", cb.checked);
+      }
       calculateLineTotal();
     }
 
@@ -5470,25 +5602,49 @@
     function calculateLineTotal() {
       const select = document.getElementById("line-system-select");
       const input = document.getElementById("line-count-input");
-      const cb = document.getElementById("line-vodacash-checkbox");
-      const banner = document.getElementById("voda-cash-banner");
+      const cashCb = document.getElementById("line-vodacash-checkbox");
+      const cashBanner = document.getElementById("voda-cash-banner");
+      const simCb = document.getElementById("line-sim-checkbox");
+      const simPriceInput = document.getElementById("line-sim-price-input");
+      const simBanner = document.getElementById("line-sim-banner");
 
       if (!select || !input) return;
 
       const opt = select.options[select.selectedIndex];
       const unitPrice = opt ? parseFloat(opt.getAttribute("data-price") || 0) : 0;
       const linesCount = Math.max(1, parseInt(input.value) || 1);
-      const isCashActive = cb ? cb.checked : false;
-
-      if (banner && cb) {
-        banner.classList.toggle("active", isCashActive);
+      const isCashActive = cashCb ? cashCb.checked : false;
+      if (cashBanner && cashCb) {
+        cashBanner.classList.toggle("active", isCashActive);
       }
 
+      const isSimActive = simCb ? simCb.checked : false;
+      const simUnitPrice = (isSimActive && simPriceInput) ? Math.max(0, parseFloat(simPriceInput.value) || 0) : 0;
+      if (simBanner && simCb) {
+        simBanner.classList.toggle("active", isSimActive);
+      }
+
+      const simTotal = simUnitPrice * linesCount;
       const plansTotal = unitPrice * linesCount;
       const cashFeeTotal = isCashActive ? (5 * linesCount) : 0;
-      const grandTotal = plansTotal + cashFeeTotal;
+      const grandTotal = simTotal + plansTotal + cashFeeTotal;
 
-      // Update Breakdown Summary UI
+      // Update Breakdown Summary UI - SIM Row
+      const simRow = document.getElementById("summary-sim-row");
+      const simCountEl = document.getElementById("summary-sim-count");
+      const simUnitEl = document.getElementById("summary-sim-unit");
+      const simTotalEl = document.getElementById("summary-sim-total");
+      if (simRow) {
+        if (isSimActive && simTotal > 0) {
+          simRow.style.display = "flex";
+          if (simCountEl) simCountEl.textContent = linesCount;
+          if (simUnitEl) simUnitEl.textContent = simUnitPrice;
+          if (simTotalEl) simTotalEl.textContent = `${simTotal.toFixed(2)} ج.م`;
+        } else {
+          simRow.style.display = "none";
+        }
+      }
+
       const singlePriceEl = document.getElementById("summary-single-price");
       if (singlePriceEl) {
         singlePriceEl.innerHTML = `${unitPrice.toFixed(2)} ج.م <small style="font-weight:normal;opacity:0.8;">(${currentLang === "ar" ? "شامل الضريبة" : "incl. tax"})</small>`;
@@ -5523,7 +5679,9 @@
     function copyLineCalculationSummary() {
       const select = document.getElementById("line-system-select");
       const input = document.getElementById("line-count-input");
-      const cb = document.getElementById("line-vodacash-checkbox");
+      const cashCb = document.getElementById("line-vodacash-checkbox");
+      const simCb = document.getElementById("line-sim-checkbox");
+      const simPriceInput = document.getElementById("line-sim-price-input");
 
       if (!select || !input) return;
 
@@ -5531,21 +5689,24 @@
       const planName = opt ? opt.getAttribute("data-name") : "نظام فودافون";
       const unitPrice = opt ? parseFloat(opt.getAttribute("data-price") || 0) : 0;
       const linesCount = Math.max(1, parseInt(input.value) || 1);
-      const isCashActive = cb ? cb.checked : false;
+      const isCashActive = cashCb ? cashCb.checked : false;
+      const isSimActive = simCb ? simCb.checked : false;
+      const simUnitPrice = (isSimActive && simPriceInput) ? Math.max(0, parseFloat(simPriceInput.value) || 0) : 0;
+      const simTotal = simUnitPrice * linesCount;
       const plansTotal = unitPrice * linesCount;
       const cashFeeTotal = isCashActive ? (5 * linesCount) : 0;
-      const grandTotal = plansTotal + cashFeeTotal;
+      const grandTotal = simTotal + plansTotal + cashFeeTotal;
 
-      const lineTypeLabel = currentLineType === "prepaid" ? "خط Prepaid (فليكس)" :
-                            currentLineType === "postpaid" ? "خط Postpaid (ريد)" :
-                            currentLineType === "enterprise" ? "خط Enterprise (شركات)" : "خط Data Line (داتا)";
+      const lineTypeLabel = currentLineType === "prepaid" ? "خط مسبق الدفع Prepaid (فليكس)" :
+                            currentLineType === "postpaid" ? "خط فاتورة Postpaid (ريد)" :
+                            currentLineType === "enterprise" ? "خط شركات Enterprise (بزنس)" : "خط إنترنت Data Line (داتا)";
 
       const summaryText = `🔴 بيان تكلفة خطوط فودافون مصر:
 ━━━━━━━━━━━━━━━━━
 • نوع الخط: ${lineTypeLabel}
-• النظام المختار: ${planName}
-• سعر الباقة للخط الواحد: ${unitPrice.toFixed(2)} ج.م (شامل الضريبة)
 • عدد الخطوط: ${linesCount} خط
+${isSimActive && simTotal > 0 ? `• ثمن شراء الخطوط (${simUnitPrice} ج.م × ${linesCount}): ${simTotal.toFixed(2)} ج.م\n` : ""}• النظام المختار: ${planName}
+• سعر باقة الخط الواحد: ${unitPrice.toFixed(2)} ج.م (شامل الضريبة)
 • إجمالي الباقات: ${plansTotal.toFixed(2)} ج.م
 ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)} ج.م (5 ج.م × ${linesCount} خط)\n` : ""}━━━━━━━━━━━━━━━━━
 💰 الإجمالي النهائي المطلوب سداده: ${grandTotal.toFixed(2)} جنيه مصري
@@ -7134,6 +7295,23 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
       const lblCalcLinesCount = document.getElementById("lbl-calc-lines-count");
       if (lblCalcLinesCount) lblCalcLinesCount.textContent = isArabic ? "تحديد عدد الخطوط:" : "Select Number of Lines:";
 
+      const txtSimBadge = document.getElementById("txt-sim-badge");
+      if (txtSimBadge) txtSimBadge.textContent = isArabic ? "شريحة جديدة" : "New SIM";
+      const txtSimTitle = document.getElementById("txt-sim-title");
+      if (txtSimTitle) txtSimTitle.textContent = isArabic ? "احتساب ثمن شراء الخط الجديد" : "Include New SIM Line Price";
+      const txtSimPriceTag = document.getElementById("txt-sim-price-tag");
+      if (txtSimPriceTag) txtSimPriceTag.textContent = isArabic ? "(65 جنيه للخط)" : "(65 EGP per line)";
+      const txtSimSubtext = document.getElementById("txt-sim-subtext");
+      if (txtSimSubtext) txtSimSubtext.textContent = isArabic ? "سعر الخط والشريحة الجديدة لمسبق الدفع (Prepaid) هو 65 ج.م. يمكنك تعديل السعر أو إلغاء التحديد للخطوط الحالية." : "New Prepaid SIM price is 65 EGP. You can adjust the price or uncheck for existing lines.";
+      const lblSummarySim = document.getElementById("lbl-summary-sim-fee");
+      if (lblSummarySim) {
+        const count = document.getElementById("summary-sim-count") ? document.getElementById("summary-sim-count").textContent : "1";
+        const unit = document.getElementById("summary-sim-unit") ? document.getElementById("summary-sim-unit").textContent : "65";
+        lblSummarySim.innerHTML = isArabic
+          ? `ثمن شراء الخطوط (<span id="summary-sim-count">${count}</span> خط × <span id="summary-sim-unit">${unit}</span> ج.م):`
+          : `New SIMs Price (<span id="summary-sim-count">${count}</span> lines × <span id="summary-sim-unit">${unit}</span> EGP):`;
+      }
+
       const txtCashBadge = document.getElementById("txt-cash-badge");
       if (txtCashBadge) txtCashBadge.textContent = isArabic ? "محفظة كاش" : "Cash Wallet";
       const txtCashTitle = document.getElementById("txt-cash-title");
@@ -7193,7 +7371,7 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.16";
+    const CURRENT_APP_VERSION = "1.0.17";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
