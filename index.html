@@ -3245,6 +3245,241 @@
       border-top: 1px dashed var(--vf-red-border);
     }
 
+    /* Billing Balance & Debt Calculator Modal Styles */
+    .billing-modal-box {
+      max-width: 660px;
+      width: 95%;
+    }
+
+    .billing-calc-intro {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.85rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 0.95rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+    }
+
+    .billing-calc-intro svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--vf-red);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .billing-section-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .billing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 0.95rem;
+    }
+
+    @media (max-width: 600px) {
+      .billing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .billing-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .billing-card:focus-within {
+      border-color: var(--vf-red);
+      box-shadow: 0 0 0 2px rgba(230, 0, 0, 0.12);
+      background: var(--bg-card);
+    }
+
+    .billing-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+    }
+
+    .billing-card-code {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--vf-red);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.5px;
+    }
+
+    .billing-card-label {
+      font-size: 0.83rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      flex: 1;
+    }
+
+    .billing-card-sub {
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .billing-card-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .billing-input {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      transition: var(--transition);
+    }
+
+    .billing-input:focus {
+      outline: none;
+      border-color: var(--vf-red);
+      box-shadow: 0 0 0 3px rgba(230, 0, 0, 0.12);
+    }
+
+    .billing-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      padding-top: 0.35rem;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .billing-card-result {
+      font-weight: 800;
+      color: var(--vf-red);
+      font-size: 0.88rem;
+    }
+
+    /* Grand Total Card */
+    .billing-grand-card {
+      background: linear-gradient(135deg, rgba(230, 0, 0, 0.08) 0%, rgba(230, 0, 0, 0.02) 100%);
+      border: 1.5px solid var(--vf-red-border);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .billing-grand-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .billing-grand-title {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .billing-grand-val {
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: var(--vf-red);
+      font-family: inherit;
+    }
+
+    .billing-breakdown-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.65rem;
+      padding-top: 0.55rem;
+      border-top: 1px dashed var(--vf-red-border);
+    }
+
+    .billing-tag {
+      font-size: 0.74rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.2rem 0.5rem;
+      color: var(--text-secondary);
+    }
+
+    .billing-tag strong {
+      color: var(--vf-red-dark);
+    }
+
+    /* Code 2 - Quota Calculator Card */
+    .billing-quota-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.09) 0%, rgba(16, 185, 129, 0.02) 100%);
+      border: 1.5px solid rgba(16, 185, 129, 0.35);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .billing-quota-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .billing-quota-badge {
+      background: #059669;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .billing-quota-val {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #059669;
+    }
+
+    .billing-actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      margin-top: 0.65rem;
+      flex-wrap: wrap;
+    }
+
     /* Toast Notifications */
     .toast-box {
       position: fixed;
@@ -3395,7 +3630,7 @@
         <!-- Version Status & Auto-Update Button (Hidden per request) -->
         <button class="header-btn version-btn" id="btn-version-status" onclick="checkForUpdates(true)" style="display: none !important;">
           <span class="version-dot" id="version-dot"></span>
-          <span id="txt-version-number">v1.0.21</span>
+          <span id="txt-version-number">v1.0.22</span>
         </button>
 
         <!-- Direct PDF Download/Open Button -->
@@ -3668,6 +3903,10 @@
         <button type="button" class="sidebar-tool-btn" onclick="openCalculatorModal(); closeSidebarOnMobile();">
           <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-6 14H7v-2h6v2zm4-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
           <span id="sidebar-calc-txt">حاسبة الرصيد والضريبة</span>
+        </button>
+        <button type="button" class="sidebar-tool-btn" onclick="openBillingBalanceModal(); closeSidebarOnMobile();" title="حاسبة رصيد ومديونية الخط (خانات 48 - 50 - 161 - 233 - 2)">
+          <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+          <span id="sidebar-billing-calc-txt">حاسبة رصيد ومديونية الخط</span>
         </button>
         <button type="button" class="sidebar-tool-btn" onclick="openOrDownloadPdf(); closeSidebarOnMobile();">
           <svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zm4.5 1.5h1v-2.5h-1V11zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
@@ -3956,6 +4195,170 @@
     <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.75rem;">
       * الحسابات تقريبية ومطابقة لأسعار كروت الشحن والفواتير الرسمية لشركة فودافون مصر.
     </p>
+  </div>
+
+  <!-- ==========================================================
+       MODAL: BILLING BALANCE & DEBT CALCULATOR (خانات 48, 50, 161, 233 وخانة 2)
+       ========================================================== -->
+  <div class="modal-box billing-modal-box" id="billing-balance-modal">
+    <div class="modal-header">
+      <h3 style="color:var(--vf-red);font-size:1.12rem;font-weight:800;display:flex;align-items:center;gap:0.55rem;">
+        <svg style="width:22px;height:22px;fill:currentColor" viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+        <span id="txt-billing-modal-title">حاسبة رصيد ومديونية الخط (نظام البيلينج)</span>
+      </h3>
+      <button class="modal-close-btn" onclick="closeAllModals()">✕</button>
+    </div>
+
+    <!-- Quick Explanation Note -->
+    <div class="billing-calc-intro">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+      <div>
+        <span id="txt-billing-intro-text">
+          احسب إجمالي المبالغ المستحقة على الخط بدقة وفقاً لأرقام خانات السيستم (48، 50، 161، 233)، بالإضافة لحساب الرصيد المتبقي للباقة من خانة 2 (مضروباً في 5).
+        </span>
+      </div>
+    </div>
+
+    <!-- Group 1: Debt & Total Due Calculation -->
+    <div class="billing-section-title">
+      <svg style="width:17px;height:17px;fill:var(--vf-red);" viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+      <span id="txt-billing-sec1-title">خانات المبالغ والمستحقات (المبلغ المطلوب دفعه)</span>
+    </div>
+
+    <div class="billing-grid">
+      <!-- Field 48 -->
+      <div class="billing-card">
+        <div class="billing-card-header">
+          <span class="billing-card-label" id="lbl-bcard-48">مكالمات على النوتة</span>
+          <span class="billing-card-code">خانة 48</span>
+        </div>
+        <div class="billing-card-sub" id="sub-bcard-48">الأساسي 3.00 ج. لو المدخل أكثر يُحسب الفارق</div>
+        <div class="billing-card-input-wrap">
+          <input type="number" step="any" id="billing-input-48" class="billing-input" placeholder="3.00" oninput="calculateBillingBalance()">
+        </div>
+        <div class="billing-card-footer">
+          <span id="lbl-due-48">المستحق:</span>
+          <span class="billing-card-result" id="res-calc-48">0.00 ج.م</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-muted);" id="formula-calc-48">الأساسي 3.00 ج (لا يوجد فارق)</div>
+      </div>
+
+      <!-- Field 50 -->
+      <div class="billing-card">
+        <div class="billing-card-header">
+          <span class="billing-card-label" id="lbl-bcard-50">مبلغ سلف (سلفني)</span>
+          <span class="billing-card-code">خانة 50</span>
+        </div>
+        <div class="billing-card-sub" id="sub-bcard-50">الشرائح (200 - 450 - 600) يُقرب للأعلى ويُحسب الفرق</div>
+        <div class="billing-card-input-wrap">
+          <input type="number" step="any" id="billing-input-50" class="billing-input" placeholder="مثال: 250" oninput="calculateBillingBalance()">
+        </div>
+        <div class="billing-card-footer">
+          <span id="lbl-due-50">السلف المستحق:</span>
+          <span class="billing-card-result" id="res-calc-50">0.00 ج.م</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-muted);display:flex;justify-content:space-between;align-items:center;" id="info-wrap-50">
+          <span id="res-tier-50">السقف: -</span>
+          <span id="formula-calc-50">-</span>
+        </div>
+      </div>
+
+      <!-- Field 161 -->
+      <div class="billing-card">
+        <div class="billing-card-header">
+          <span class="billing-card-label" id="lbl-bcard-161">الضريبة</span>
+          <span class="billing-card-code">خانة 161</span>
+        </div>
+        <div class="billing-card-sub" id="sub-bcard-161">الأساسي 0.00 ج. أي مبلغ زيادة يُضاف للإجمالي</div>
+        <div class="billing-card-input-wrap">
+          <input type="number" step="any" id="billing-input-161" class="billing-input" placeholder="0.00" oninput="calculateBillingBalance()">
+        </div>
+        <div class="billing-card-footer">
+          <span id="lbl-due-161">المستحق:</span>
+          <span class="billing-card-result" id="res-calc-161">0.00 ج.م</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-muted);" id="formula-calc-161">الأساسي: 0.00 ج</div>
+      </div>
+
+      <!-- Field 233 -->
+      <div class="billing-card">
+        <div class="billing-card-header">
+          <span class="billing-card-label" id="lbl-bcard-233">استلاف الباقة على النوتة</span>
+          <span class="billing-card-code">خانة 233</span>
+        </div>
+        <div class="billing-card-sub" id="sub-bcard-233">الباقة مستلفة ولم تُسدد. يُضاف المبلغ للإجمالي</div>
+        <div class="billing-card-input-wrap">
+          <input type="number" step="any" id="billing-input-233" class="billing-input" placeholder="مثال: 70 أو 130" oninput="calculateBillingBalance()">
+        </div>
+        <div class="billing-card-footer">
+          <span id="lbl-due-233">المستحق:</span>
+          <span class="billing-card-result" id="res-calc-233">0.00 ج.م</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-muted);" id="formula-calc-233">لا توجد باقة مستلفة</div>
+      </div>
+    </div>
+
+    <!-- Grand Total Card -->
+    <div class="billing-grand-card">
+      <div class="billing-grand-header">
+        <div>
+          <div class="billing-grand-title" id="txt-grand-due-title">المبلغ الإجمالي المطلوب دفعه من العميل:</div>
+          <div style="font-size:0.74rem;color:var(--text-muted);margin-top:2px;" id="txt-grand-due-sub">
+            مجموع مديونيات ومستحقات الخانات (48 + 50 + 161 + 233)
+          </div>
+        </div>
+        <div class="billing-grand-val" id="res-billing-grand-total">0.00 ج.م</div>
+      </div>
+
+      <div class="billing-breakdown-tags">
+        <div class="billing-tag"><span>48: </span><strong id="tag-due-48">0.00 ج.م</strong></div>
+        <div class="billing-tag"><span>50 (سلف): </span><strong id="tag-due-50">0.00 ج.م</strong></div>
+        <div class="billing-tag"><span>161 (ضريبة): </span><strong id="tag-due-161">0.00 ج.م</strong></div>
+        <div class="billing-tag"><span>233 (باقة): </span><strong id="tag-due-233">0.00 ج.م</strong></div>
+      </div>
+    </div>
+
+    <!-- Group 2: Independent Remaining Quota Section (Code 2) -->
+    <div class="billing-quota-card">
+      <div class="billing-quota-header">
+        <div style="display:flex;align-items:center;gap:0.45rem;">
+          <span class="billing-quota-badge">الخانة 2</span>
+          <span style="font-size:0.86rem;font-weight:800;color:#059669;" id="txt-quota-card-title">رصيد الباقة المتبقي (مستقلة عن المبالغ)</span>
+        </div>
+        <div style="font-size:0.72rem;color:var(--text-muted);" id="txt-quota-rule-badge">القيمة المدخلة × 5</div>
+      </div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:0.45rem;" id="txt-quota-desc">
+        توضيح الرصيد المتبقي من الباقة: اضرب الرقم المسجل في خانة 2 في 5 لحساب رصيد الوحدات أو الفليكسات المتبقية.
+      </div>
+      <div style="display:flex;align-items:center;gap:0.65rem;flex-wrap:wrap;">
+        <div style="flex:1;min-width:140px;">
+          <input type="number" step="any" id="billing-input-2" class="billing-input" placeholder="أدخل الرقم بخانة 2 (مثال: 120)" oninput="calculateBillingBalance()">
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;">
+          <div style="font-size:0.72rem;color:var(--text-muted);" id="lbl-quota-res">الرصيد المتبقي الفعلي:</div>
+          <div class="billing-quota-val">
+            <span id="res-calc-2">0</span>
+            <span style="font-size:0.8rem;font-weight:700;color:var(--text-secondary);" id="txt-quota-unit">وحدة / فليكس</span>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:0.72rem;color:#047857;margin-top:0.35rem;font-weight:600;" id="formula-calc-2">
+        0 × 5 = 0 وحدة
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="billing-actions-row">
+      <button type="button" onclick="copyBillingBreakdown(this)" id="btn-copy-billing" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 0.95rem;border-radius:var(--radius-sm);background:var(--vf-red);color:#fff;border:none;font-weight:700;font-size:0.82rem;cursor:pointer;">
+        <svg style="width:15px;height:15px;fill:currentColor" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+        <span id="txt-btn-copy-billing">نسخ تقرير الحسبة بالكامل</span>
+      </button>
+
+      <button type="button" onclick="resetBillingCalculator()" id="btn-reset-billing" style="display:inline-flex;align-items:center;gap:0.35rem;padding:0.5rem 0.85rem;border-radius:var(--radius-sm);background:var(--bg-subtle);color:var(--text-secondary);border:1px solid var(--border-color);font-weight:600;font-size:0.82rem;cursor:pointer;">
+        <svg style="width:14px;height:14px;fill:currentColor" viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+        <span id="txt-btn-reset-billing">تفريغ الخانات</span>
+      </button>
+    </div>
   </div>
 
   <!-- ==========================================================
@@ -5902,6 +6305,223 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
       setTimeout(() => { document.getElementById("calc-input-price").focus(); }, 100);
     }
 
+    function openBillingBalanceModal() {
+      document.getElementById("modal-overlay").classList.add("open");
+      const modal = document.getElementById("billing-balance-modal");
+      if (modal) modal.classList.add("open");
+      setTimeout(() => {
+        const inp = document.getElementById("billing-input-48");
+        if (inp) inp.focus();
+      }, 100);
+    }
+
+    function calculateBillingBalance() {
+      const isArabic = currentLang === "ar";
+      const egp = isArabic ? "ج.م" : "EGP";
+
+      // 1. Code 48 (Calls on Note): baseline 3.00, difference if > 3.00
+      const raw48 = document.getElementById("billing-input-48") ? document.getElementById("billing-input-48").value.trim() : "";
+      let due48 = 0;
+      let formula48 = isArabic ? "الأساسي 3.00 ج (لا يوجد فارق)" : "Base 3.00 (No difference)";
+      if (raw48 !== "") {
+        const val48 = parseFloat(raw48);
+        if (!isNaN(val48)) {
+          if (val48 > 3.00) {
+            due48 = val48 - 3.00;
+            formula48 = isArabic 
+              ? `الفرق: (${val48.toFixed(2)} - 3.00) = ${due48.toFixed(2)} ${egp}` 
+              : `Diff: (${val48.toFixed(2)} - 3.00) = ${due48.toFixed(2)} ${egp}`;
+          } else {
+            due48 = 0;
+            formula48 = isArabic ? "ضمن الحد الطبيعي (<= 3.00 ج)" : "Within normal limit (<= 3.00)";
+          }
+        }
+      }
+      const elRes48 = document.getElementById("res-calc-48");
+      if (elRes48) elRes48.textContent = `${due48.toFixed(2)} ${egp}`;
+      const elForm48 = document.getElementById("formula-calc-48");
+      if (elForm48) elForm48.textContent = formula48;
+      const elTag48 = document.getElementById("tag-due-48");
+      if (elTag48) elTag48.textContent = `${due48.toFixed(2)} ${egp}`;
+
+      // 2. Code 50 (Loan): tiers 200, 450, 600. Round up to higher tier and calculate difference
+      const raw50 = document.getElementById("billing-input-50") ? document.getElementById("billing-input-50").value.trim() : "";
+      let due50 = 0;
+      let tier50Text = "-";
+      let formula50 = "-";
+      if (raw50 !== "") {
+        const val50 = parseFloat(raw50);
+        if (!isNaN(val50)) {
+          let chosenTier = 200;
+          if (val50 <= 200) {
+            chosenTier = 200;
+          } else if (val50 <= 450) {
+            chosenTier = 450;
+          } else if (val50 <= 600) {
+            chosenTier = 600;
+          } else {
+            chosenTier = 600;
+          }
+
+          tier50Text = `${isArabic ? "السقف:" : "Ceiling:"} ${chosenTier} ${egp}`;
+
+          if (val50 > 600) {
+            due50 = 0;
+            formula50 = isArabic ? `المبلغ تجاوز أقصى سقف (600 ج)` : `Exceeded max ceiling (600)`;
+          } else {
+            due50 = Math.max(0, chosenTier - val50);
+            if (due50 > 0) {
+              formula50 = isArabic
+                ? `الفرق: (${chosenTier} - ${val50.toFixed(2)}) = ${due50.toFixed(2)} ${egp}`
+                : `Diff: (${chosenTier} - ${val50.toFixed(2)}) = ${due50.toFixed(2)} ${egp}`;
+            } else {
+              formula50 = isArabic ? `مسدد بالكامل (${chosenTier} ج)` : `Fully settled (${chosenTier})`;
+            }
+          }
+        }
+      }
+      const elRes50 = document.getElementById("res-calc-50");
+      if (elRes50) elRes50.textContent = `${due50.toFixed(2)} ${egp}`;
+      const elTier50 = document.getElementById("res-tier-50");
+      if (elTier50) elTier50.textContent = tier50Text;
+      const elForm50 = document.getElementById("formula-calc-50");
+      if (elForm50) elForm50.textContent = formula50;
+      const elTag50 = document.getElementById("tag-due-50");
+      if (elTag50) elTag50.textContent = `${due50.toFixed(2)} ${egp}`;
+
+      // 3. Code 161 (Tax): baseline 0.00, any excess is added
+      const raw161 = document.getElementById("billing-input-161") ? document.getElementById("billing-input-161").value.trim() : "";
+      let due161 = 0;
+      let formula161 = isArabic ? "الأساسي: 0.00 ج" : "Base: 0.00";
+      if (raw161 !== "") {
+        const val161 = parseFloat(raw161);
+        if (!isNaN(val161) && val161 > 0) {
+          due161 = val161;
+          formula161 = isArabic ? `ضريبة إضافية: ${val161.toFixed(2)} ${egp}` : `Extra tax: ${val161.toFixed(2)} ${egp}`;
+        } else {
+          due161 = 0;
+          formula161 = isArabic ? "0.00 (لا توجد ضريبة زائدة)" : "0.00 (No extra tax)";
+        }
+      }
+      const elRes161 = document.getElementById("res-calc-161");
+      if (elRes161) elRes161.textContent = `${due161.toFixed(2)} ${egp}`;
+      const elForm161 = document.getElementById("formula-calc-161");
+      if (elForm161) elForm161.textContent = formula161;
+      const elTag161 = document.getElementById("tag-due-161");
+      if (elTag161) elTag161.textContent = `${due161.toFixed(2)} ${egp}`;
+
+      // 4. Code 233 (Borrowed Plan on Note): full amount added
+      const raw233 = document.getElementById("billing-input-233") ? document.getElementById("billing-input-233").value.trim() : "";
+      let due233 = 0;
+      let formula233 = isArabic ? "لا توجد باقة مستلفة" : "No borrowed plan";
+      if (raw233 !== "") {
+        const val233 = parseFloat(raw233);
+        if (!isNaN(val233) && val233 > 0) {
+          due233 = val233;
+          formula233 = isArabic ? `باقة مستلفة مضافة: ${val233.toFixed(2)} ${egp}` : `Plan added: ${val233.toFixed(2)} ${egp}`;
+        } else {
+          due233 = 0;
+        }
+      }
+      const elRes233 = document.getElementById("res-calc-233");
+      if (elRes233) elRes233.textContent = `${due233.toFixed(2)} ${egp}`;
+      const elForm233 = document.getElementById("formula-calc-233");
+      if (elForm233) elForm233.textContent = formula233;
+      const elTag233 = document.getElementById("tag-due-233");
+      if (elTag233) elTag233.textContent = `${due233.toFixed(2)} ${egp}`;
+
+      // Grand Total Due
+      const grandTotal = due48 + due50 + due161 + due233;
+      const elGrand = document.getElementById("res-billing-grand-total");
+      if (elGrand) elGrand.textContent = `${grandTotal.toFixed(2)} ${egp}`;
+
+      // 5. Code 2 (Independent Quota): Input value * 5
+      const raw2 = document.getElementById("billing-input-2") ? document.getElementById("billing-input-2").value.trim() : "";
+      let quotaUnits = 0;
+      let formula2 = "0 × 5 = 0";
+      if (raw2 !== "") {
+        const val2 = parseFloat(raw2);
+        if (!isNaN(val2) && val2 > 0) {
+          quotaUnits = val2 * 5;
+          formula2 = isArabic 
+            ? `${val2} × 5 = ${quotaUnits.toLocaleString(isArabic ? 'ar-EG' : 'en-US')} وحدة / فليكس`
+            : `${val2} × 5 = ${quotaUnits.toLocaleString('en-US')} Units / Flexes`;
+        }
+      }
+      const elRes2 = document.getElementById("res-calc-2");
+      if (elRes2) elRes2.textContent = quotaUnits.toLocaleString(isArabic ? 'ar-EG' : 'en-US');
+      const elForm2 = document.getElementById("formula-calc-2");
+      if (elForm2) elForm2.textContent = formula2;
+    }
+
+    function resetBillingCalculator() {
+      const ids = ["billing-input-48", "billing-input-50", "billing-input-161", "billing-input-233", "billing-input-2"];
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+      });
+      calculateBillingBalance();
+      showToast(currentLang === "ar" ? "تم تفريغ خانات الحسبة بنجاح 🔄" : "Calculator inputs cleared 🔄");
+    }
+
+    function copyBillingBreakdown(btn) {
+      const isArabic = currentLang === "ar";
+      const egp = isArabic ? "ج.م" : "EGP";
+
+      const v48 = document.getElementById("billing-input-48")?.value.trim() || "0";
+      const d48 = document.getElementById("res-calc-48")?.textContent || "0.00 ج.م";
+
+      const v50 = document.getElementById("billing-input-50")?.value.trim() || "0";
+      const tier50 = document.getElementById("res-tier-50")?.textContent || "-";
+      const d50 = document.getElementById("res-calc-50")?.textContent || "0.00 ج.م";
+
+      const v161 = document.getElementById("billing-input-161")?.value.trim() || "0";
+      const d161 = document.getElementById("res-calc-161")?.textContent || "0.00 ج.م";
+
+      const v233 = document.getElementById("billing-input-233")?.value.trim() || "0";
+      const d233 = document.getElementById("res-calc-233")?.textContent || "0.00 ج.م";
+
+      const grand = document.getElementById("res-billing-grand-total")?.textContent || "0.00 ج.م";
+
+      const v2 = document.getElementById("billing-input-2")?.value.trim() || "0";
+      const r2 = document.getElementById("res-calc-2")?.textContent || "0";
+
+      const text = isArabic
+        ? `📊 تقرير فحص رصيد ومديونية الخط (نظام البيلينج - فودافون):\n` +
+          `───────────────────────────────\n` +
+          `• الخانة (48) مكالمات نوتة: المدخل [${v48}] | المستحق: ${d48}\n` +
+          `• الخانة (50) سلفني: المدخل [${v50}] (${tier50}) | المستحق: ${d50}\n` +
+          `• الخانة (161) الضريبة: المدخل [${v161}] | المستحق: ${d161}\n` +
+          `• الخانة (233) استلاف باقة: المدخل [${v233}] | المستحق: ${d233}\n` +
+          `───────────────────────────────\n` +
+          `💰 إجمالي المبلغ المطلوب دفعه: ${grand}\n` +
+          `───────────────────────────────\n` +
+          `📦 رصيد الباقة المتبقي (خانة 2): ${r2} وحدة/فليكس (المدخل: ${v2} × 5)`
+        : `📊 Vodafone Line Balance & Debt Breakdown Report:\n` +
+          `───────────────────────────────\n` +
+          `• Code (48) Calls on Note: Input [${v48}] | Due: ${d48}\n` +
+          `• Code (50) Loan: Input [${v50}] (${tier50}) | Due: ${d50}\n` +
+          `• Code (161) Tax: Input [${v161}] | Due: ${d161}\n` +
+          `• Code (233) Plan on Note: Input [${v233}] | Due: ${d233}\n` +
+          `───────────────────────────────\n` +
+          `💰 Grand Total Due to Pay: ${grand}\n` +
+          `───────────────────────────────\n` +
+          `📦 Remaining Quota (Code 2): ${r2} Units (Input: ${v2} × 5)`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = `<span>✓ ${isArabic ? "تم النسخ بنجاح" : "Copied!"}</span>`;
+        btn.style.background = "#059669";
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.style.background = "";
+        }, 1600);
+        showToast(isArabic ? "تم نسخ تقرير الحسبة بنجاح إلى الحافظة 📋" : "Report breakdown copied to clipboard 📋");
+      }).catch(() => {
+        showToast(isArabic ? "تعذر النسخ تلقائياً" : "Failed to copy");
+      });
+    }
+
     /* ========================================================
        EMPLOYEE SYSTEM STICKY NOTES ENGINE (PC-BOUND / LOCALSTORAGE)
        ======================================================== */
@@ -7210,6 +7830,35 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
       if (sbToggle) sbToggle.textContent = isArabic ? "الأقسام" : "Categories";
       const sbCalc = document.getElementById("sidebar-calc-txt");
       if (sbCalc) sbCalc.textContent = isArabic ? "حاسبة الرصيد والضريبة" : "Tax Calculator";
+      const sbBillingCalc = document.getElementById("sidebar-billing-calc-txt");
+      if (sbBillingCalc) sbBillingCalc.textContent = isArabic ? "حاسبة رصيد ومديونية الخط" : "Line Balance & Debt";
+      const billingModalTitle = document.getElementById("txt-billing-modal-title");
+      if (billingModalTitle) billingModalTitle.textContent = isArabic ? "حاسبة رصيد ومديونية الخط (نظام البيلينج)" : "Line Balance & Debt Calculator (Billing)";
+      const billingIntro = document.getElementById("txt-billing-intro-text");
+      if (billingIntro) billingIntro.textContent = isArabic 
+        ? "احسب إجمالي المبالغ المستحقة على الخط بدقة وفقاً لأرقام خانات السيستم (48، 50، 161، 233)، بالإضافة لحساب الرصيد المتبقي للباقة من خانة 2 (مضروباً في 5)." 
+        : "Calculate total amounts due on the line based on billing codes (48, 50, 161, 233), plus remaining plan balance from code 2 (multiplied by 5).";
+      const billingSec1 = document.getElementById("txt-billing-sec1-title");
+      if (billingSec1) billingSec1.textContent = isArabic ? "خانات المبالغ والمستحقات (المبلغ المطلوب دفعه)" : "Billing Codes & Dues (Amount Due)";
+      const bGrandTitle = document.getElementById("txt-grand-due-title");
+      if (bGrandTitle) bGrandTitle.textContent = isArabic ? "المبلغ الإجمالي المطلوب دفعه من العميل:" : "Total Amount Due from Customer:";
+      const bGrandSub = document.getElementById("txt-grand-due-sub");
+      if (bGrandSub) bGrandSub.textContent = isArabic ? "مجموع مديونيات ومستحقات الخانات (48 + 50 + 161 + 233)" : "Sum of dues from codes (48 + 50 + 161 + 233)";
+      const bQuotaTitle = document.getElementById("txt-quota-card-title");
+      if (bQuotaTitle) bQuotaTitle.textContent = isArabic ? "رصيد الباقة المتبقي (مستقلة عن المبالغ)" : "Remaining Plan Balance (Independent)";
+      const bQuotaRule = document.getElementById("txt-quota-rule-badge");
+      if (bQuotaRule) bQuotaRule.textContent = isArabic ? "القيمة المدخلة × 5" : "Input value × 5";
+      const bQuotaDesc = document.getElementById("txt-quota-desc");
+      if (bQuotaDesc) bQuotaDesc.textContent = isArabic 
+        ? "توضيح الرصيد المتبقي من الباقة: اضرب الرقم المسجل في خانة 2 في 5 لحساب رصيد الوحدات أو الفليكسات المتبقية." 
+        : "Remaining plan quota: Code 2 input is multiplied by 5 to calculate remaining units or flexes.";
+      const bQuotaUnit = document.getElementById("txt-quota-unit");
+      if (bQuotaUnit) bQuotaUnit.textContent = isArabic ? "وحدة / فليكس" : "Units / Flexes";
+      const bCopyBtn = document.getElementById("txt-btn-copy-billing");
+      if (bCopyBtn) bCopyBtn.textContent = isArabic ? "نسخ تقرير الحسبة بالكامل" : "Copy Full Report";
+      const bResetBtn = document.getElementById("txt-btn-reset-billing");
+      if (bResetBtn) bResetBtn.textContent = isArabic ? "تفريغ الخانات" : "Reset Fields";
+      calculateBillingBalance();
       const sbPdf = document.getElementById("sidebar-pdf-txt");
       if (sbPdf) sbPdf.textContent = isArabic ? "دليل الأكواد (PDF)" : "Codes & Support (PDF)";
       const sbNotes = document.getElementById("sidebar-notes-txt");
@@ -7320,7 +7969,7 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.21";
+    const CURRENT_APP_VERSION = "1.0.22";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
