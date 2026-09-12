@@ -4026,7 +4026,7 @@
         <!-- Version Status & Auto-Update Button (Hidden per request) -->
         <button class="header-btn version-btn" id="btn-version-status" onclick="checkForUpdates(true)" style="display: none !important;">
           <span class="version-dot" id="version-dot"></span>
-          <span id="txt-version-number">v1.0.24</span>
+          <span id="txt-version-number">v1.0.25</span>
         </button>
 
         <!-- Direct PDF / Docs Hub Button -->
@@ -4307,7 +4307,7 @@
         <button type="button" class="sidebar-tool-btn" onclick="switchCategory('pdf_guide'); closeSidebarOnMobile();" title="مكتبة ملفات التدريب ومستندات فودافون الرسمية">
           <svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zm4.5 1.5h1v-2.5h-1V11zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
           <span id="sidebar-pdf-txt">مكتبة المستندات والتدريب</span>
-          <span class="accordion-badge" style="background:var(--vf-red);color:#fff;margin-right:auto;font-size:0.65rem;">3 ملفات</span>
+          <span class="accordion-badge" style="background:var(--vf-red);color:#fff;margin-right:auto;font-size:0.65rem;">4 ملفات</span>
         </button>
         <button type="button" class="sidebar-tool-btn employee-notes-btn" onclick="openNotesModal(); closeSidebarOnMobile();" title="حسابات وبيانات دخول أنظمة فودافون للموظف">
           <svg viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
@@ -4980,28 +4980,6 @@
        ======================================================== */
     const TRAINING_DOCUMENTS = [
       {
-        id: "day4-enterprise",
-        title: "تدريب قطاع الشركات والعمليات النقدية (Day 4)",
-        titleEn: "Enterprise & Cash Operations (Day 4)",
-        category: "enterprise",
-        categoryLabel: "شركات وعمليات",
-        filePath: "docs/day4-enterprise-cash.pdf",
-        pages: 60,
-        size: "6.1 MB",
-        badge: "Day 4 Induction",
-        desc: "دليل تدريبي رسمي شامل لتشغيل خطوط وحسابات الشركات، المهن الحرة، باقات Business Flex 2025 و RED Business 2026، دورات الفواتير والتحصيل، الشيكات والفيزا، تقسيط PayMob، وشرائح eSIM.",
-        highlights: [
-          "مستندات فتح الحساب للشركات والمهن الحرة وسجل 5 سنين",
-          "باقات Business Flex 2025 (مع 1000 دقيقة Intra مجاناً)",
-          "باقات RED Business 2026 وعروض Roaming سافر بباقتك",
-          "دورة الفاتورة (7، 11، 20، 25) ومراحل Semi-hotline و Suspension",
-          "إجراءات استبدال الشريحة ونقل الملكية ونظام Extra",
-          "العمليات النقدية: كاش فقط، شيكات، بطاقات بنكية، وتقسيط PayMob",
-          "شرائح الـ eSIM (خط جديد 350ج / استبدال 300ج)",
-          "مهارات خدمة العملاء ونموذج The 3 Fix Model لامتصاص الغضب"
-        ]
-      },
-      {
         id: "day2-prepaid-vmt",
         title: "تدريب أنظمة الأفراد، فودافون كاش، وباقات النت (Day 2)",
         titleEn: "Prepaid, Vodafone Cash & MI Bundles (Day 2)",
@@ -5021,6 +4999,49 @@
           "تعديل البيانات (Wrong Data Form) والحالات الـ 8 الممنوعة",
           "فودافون كاش: رسوم 5ج، حدود المعاملات، الحوالات الخارجية، والأكواد",
           "باقات النت Plus الجديدة (*2000#) والأجهزة التكنولوجية الذكية"
+        ]
+      },
+      {
+        id: "day3-red-dsl",
+        title: "تدريب باقات RED والإنترنت المنزلي DSL (Day 3)",
+        titleEn: "RED & DSL Rate Plans (Day 3)",
+        category: "red",
+        categoryLabel: "أنظمة ريد وDSL",
+        filePath: "docs/day3-red-dsl.pdf",
+        pages: 74,
+        size: "12.5 MB",
+        badge: "Day 3 Induction",
+        desc: "المرجع التدريبي الشامل لأنظمة Vodafone RED، عروض وتخفيضات الإنترنت المنزلي ADSL / VDSL، أجهزة الراوتر الهوائي At Home Wireless، اشتراكات الترفيه، وخدمة سافر بباقتك للتجوال.",
+        highlights: [
+          "شرح تفصيلي لباقات RED (Essential, Advance, Prime, Elite)",
+          "مشاركة باقة الدقائق والإنترنت مع أفراد العائلة (Family Sharing)",
+          "خصومات اشتراك الإنترنت المنزلي VDSL وراوتر Home Wireless",
+          "خدمة التجوال الدولي (سافر بباقتك) وقائمة الدول وسياسة الاستخدام العادل",
+          "اشتراكات المنصات الترفيهية (WATCH IT, Shahid VIP, Anghami Plus, OSN)",
+          "مزايا لايف ستايل (طلبات برو، BEFIT 30، كنز Qanz، ونقاط RED Points)",
+          "تقسيط الأجهزة والموبايلات لعملاء RED حتى 15,000 إلى 25,000 ج.م"
+        ]
+      },
+      {
+        id: "day4-enterprise",
+        title: "تدريب قطاع الشركات والعمليات النقدية (Day 4)",
+        titleEn: "Enterprise & Cash Operations (Day 4)",
+        category: "enterprise",
+        categoryLabel: "شركات وعمليات",
+        filePath: "docs/day4-enterprise-cash.pdf",
+        pages: 60,
+        size: "6.1 MB",
+        badge: "Day 4 Induction",
+        desc: "دليل تدريبي رسمي شامل لتشغيل خطوط وحسابات الشركات، المهن الحرة، باقات Business Flex 2025 و RED Business 2026، دورات الفواتير والتحصيل، الشيكات والفيزا، تقسيط PayMob، وشرائح eSIM.",
+        highlights: [
+          "مستندات فتح الحساب للشركات والمهن الحرة وسجل 5 سنين",
+          "باقات Business Flex 2025 (مع 1000 دقيقة Intra مجاناً)",
+          "باقات RED Business 2026 وعروض Roaming سافر بباقتك",
+          "دورة الفاتورة (7، 11، 20، 25) ومراحل Semi-hotline و Suspension",
+          "إجراءات استبدال الشريحة ونقل الملكية ونظام Extra",
+          "العمليات النقدية: كاش فقط، شيكات، بطاقات بنكية، وتقسيط PayMob",
+          "شرائح الـ eSIM (خط جديد 350ج / استبدال 300ج)",
+          "مهارات خدمة العملاء ونموذج The 3 Fix Model لامتصاص الغضب"
         ]
       },
       {
@@ -8570,7 +8591,7 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.24";
+    const CURRENT_APP_VERSION = "1.0.25";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 

@@ -1,10 +1,10 @@
 /* ========================================================
    Vodafone Egypt Interactive Hub - Service Worker (PWA)
-   Version: 1.0.24
+   Version: 1.0.25
    Features: 100% Offline-First, Auto-Update & Stale-While-Revalidate
    ======================================================== */
 
-const CACHE_VERSION = 'v1.0.24';
+const CACHE_VERSION = 'v1.0.25';
 const CACHE_NAME = `voda-hub-${CACHE_VERSION}`;
 
 // Core assets to pre-cache for offline capability
@@ -16,6 +16,7 @@ const CORE_ASSETS = [
   './vodafone-logo.png',
   './vodafone-guide.pdf',
   './docs/day2-prepaid-vmt.pdf',
+  './docs/day3-red-dsl.pdf',
   './docs/day4-enterprise-cash.pdf',
   './docs/vodafone-guide.pdf',
   './version.json'
