@@ -1,10 +1,10 @@
 /* ========================================================
    Vodafone Egypt Interactive Hub - Service Worker (PWA)
-   Version: 1.0.23
+   Version: 1.0.24
    Features: 100% Offline-First, Auto-Update & Stale-While-Revalidate
    ======================================================== */
 
-const CACHE_VERSION = 'v1.0.23';
+const CACHE_VERSION = 'v1.0.24';
 const CACHE_NAME = `voda-hub-${CACHE_VERSION}`;
 
 // Core assets to pre-cache for offline capability
@@ -15,14 +15,23 @@ const CORE_ASSETS = [
   './manifest.json',
   './vodafone-logo.png',
   './vodafone-guide.pdf',
+  './docs/day2-prepaid-vmt.pdf',
+  './docs/day4-enterprise-cash.pdf',
+  './docs/vodafone-guide.pdf',
   './version.json'
 ];
 
 // Install: Cache all core assets and activate immediately
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(CORE_ASSETS);
+    caches.open(CACHE_NAME).then(async (cache) => {
+      for (const asset of CORE_ASSETS) {
+        try {
+          await cache.add(asset);
+        } catch (err) {
+          console.warn('[ServiceWorker] Could not pre-cache asset:', asset, err);
+        }
+      }
     }).then(() => {
       // Force the waiting service worker to become active
       return self.skipWaiting();
