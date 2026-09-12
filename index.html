@@ -4026,7 +4026,7 @@
         <!-- Version Status & Auto-Update Button (Hidden per request) -->
         <button class="header-btn version-btn" id="btn-version-status" onclick="checkForUpdates(true)" style="display: none !important;">
           <span class="version-dot" id="version-dot"></span>
-          <span id="txt-version-number">v1.0.25</span>
+          <span id="txt-version-number">v1.0.26</span>
         </button>
 
         <!-- Direct PDF / Docs Hub Button -->
@@ -4143,6 +4143,12 @@
         </div>
         <div class="code-pill sq-pill" onclick="copyToClipboard('207', 'سحب من المحفظة')" title="انقر لنسخ كود SQ (207)">
           <span>سحب من المحفظة:</span> <code>207</code>
+        </div>
+        <div class="code-pill sq-pill" onclick="copyToClipboard('209', 'سحب محفظة مقفولة (Cash Refund)')" title="انقر لنسخ كود SQ (209) - سحب رصيد محفظة مقفولة (Cash Refund)">
+          <span>سحب محفظة مقفولة (Refund):</span> <code>209</code>
+        </div>
+        <div class="code-pill sq-pill" onclick="copyToClipboard('0701', 'سحب كاش معلق لم يسمّع بالدرج')" title="انقر لنسخ كود SQ (0701) - سحب كاش معلق تم خصمه من العميل ولم يسمّع بالدرج">
+          <span>سحب معلق لم يسمّع:</span> <code>0701</code>
         </div>
       </div>
     </div>
@@ -8591,7 +8597,7 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.25";
+    const CURRENT_APP_VERSION = "1.0.26";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
