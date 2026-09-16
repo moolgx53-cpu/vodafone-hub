@@ -4057,7 +4057,7 @@
         <!-- Version Status & Auto-Update Button (Hidden per request) -->
         <button class="header-btn version-btn" id="btn-version-status" onclick="checkForUpdates(true)" style="display: none !important;">
           <span class="version-dot" id="version-dot"></span>
-          <span id="txt-version-number">v1.0.27</span>
+          <span id="txt-version-number">v1.0.28</span>
         </button>
 
         <!-- Direct PDF / Docs Hub Button -->
@@ -4165,6 +4165,9 @@
         </div>
         <div class="code-pill sq-pill" onclick="copyToClipboard('9940', 'خط فليكس جديد')" title="انقر لنسخ كود SQ (9940)">
           <span>خط فليكس جديد:</span> <code>9940</code>
+        </div>
+        <div class="code-pill sq-pill" onclick="copyToClipboard('99401', 'شريحة E-sim')" title="انقر لنسخ كود SQ (99401) - شريحة E-sim">
+          <span>شريحة E-sim:</span> <code>99401</code>
         </div>
         <div class="code-pill sq-pill" onclick="copyToClipboard('208', 'تفعيل المحفظة')" title="انقر لنسخ كود SQ (208)">
           <span>تفعيل المحفظة:</span> <code>208</code>
@@ -4293,7 +4296,7 @@
                 <span class="sidebar-icon">🟢</span>
                 <span id="tab-txt-line-prepaid">خط Prepaid</span>
               </div>
-              <span class="tab-count">فليكس</span>
+              <span class="tab-count">65ج (فليكس)</span>
             </button>
 
             <button type="button" class="line-tab sidebar-item" data-line="postpaid" onclick="selectLineCategory('postpaid'); closeSidebarOnMobile();">
@@ -4301,7 +4304,7 @@
                 <span class="sidebar-icon">👑</span>
                 <span id="tab-txt-line-postpaid">خط Postpaid</span>
               </div>
-              <span class="tab-count">ريد</span>
+              <span class="tab-count">450ج (ريد)</span>
             </button>
 
             <button type="button" class="line-tab sidebar-item" data-line="enterprise" onclick="selectLineCategory('enterprise'); closeSidebarOnMobile();">
@@ -4309,7 +4312,7 @@
                 <span class="sidebar-icon">🏢</span>
                 <span id="tab-txt-line-enterprise">خط Enterprise</span>
               </div>
-              <span class="tab-count">شركات</span>
+              <span class="tab-count">65ج (شركات)</span>
             </button>
 
             <button type="button" class="line-tab sidebar-item" data-line="data" onclick="selectLineCategory('data'); closeSidebarOnMobile();">
@@ -4317,7 +4320,7 @@
                 <span class="sidebar-icon">📶</span>
                 <span id="tab-txt-line-data">خط Data Line</span>
               </div>
-              <span class="tab-count">داتا</span>
+              <span class="tab-count">65ج (داتا)</span>
             </button>
           </nav>
         </div>
@@ -4443,22 +4446,22 @@
             <button type="button" class="line-type-btn active" data-type="prepaid" onclick="selectLineTypeInCalc('prepaid')">
               <span class="line-type-icon">🟢</span>
               <span class="line-type-name" id="txt-type-prepaid">خط Prepaid</span>
-              <span class="line-type-sub" id="txt-sub-prepaid">كارت وفليكس</span>
+              <span class="line-type-sub" id="txt-sub-prepaid">كارت وفليكس (65 ج)</span>
             </button>
             <button type="button" class="line-type-btn" data-type="postpaid" onclick="selectLineTypeInCalc('postpaid')">
               <span class="line-type-icon">👑</span>
               <span class="line-type-name" id="txt-type-postpaid">خط Postpaid</span>
-              <span class="line-type-sub" id="txt-sub-postpaid">فاتورة وريد RED</span>
+              <span class="line-type-sub" id="txt-sub-postpaid">ريد (450 ج: 200 خط + 250 تأمينات)</span>
             </button>
             <button type="button" class="line-type-btn" data-type="enterprise" onclick="selectLineTypeInCalc('enterprise')">
               <span class="line-type-icon">🏢</span>
               <span class="line-type-name" id="txt-type-enterprise">خط Enterprise</span>
-              <span class="line-type-sub" id="txt-sub-enterprise">بزنس والشركات</span>
+              <span class="line-type-sub" id="txt-sub-enterprise">شركات وبزنس (65 ج)</span>
             </button>
             <button type="button" class="line-type-btn" data-type="data" onclick="selectLineTypeInCalc('data')">
               <span class="line-type-icon">📶</span>
               <span class="line-type-name" id="txt-type-data">خط Data Line</span>
-              <span class="line-type-sub" id="txt-sub-data">داتا وهوام وايرلس</span>
+              <span class="line-type-sub" id="txt-sub-data">روتر هوائي وداتا (65 ج)</span>
             </button>
           </div>
 
@@ -6428,19 +6431,38 @@
       const simCb = document.getElementById("line-sim-checkbox");
       const simInput = document.getElementById("line-sim-price-input");
       const simBanner = document.getElementById("line-sim-banner");
+      const simPriceTag = document.getElementById("txt-sim-price-tag");
+      const simSubtext = document.getElementById("txt-sim-subtext");
+      const isAr = currentLang === "ar";
+
       if (simCb && simInput) {
+        simCb.checked = true;
+        if (simBanner) simBanner.classList.add("active");
+
         if (lineType === "prepaid") {
-          simCb.checked = true;
           simInput.value = "65";
-          if (simBanner) simBanner.classList.add("active");
-        } else if (lineType === "postpaid" || lineType === "enterprise") {
-          simCb.checked = false;
-          simInput.value = "0";
-          if (simBanner) simBanner.classList.remove("active");
+          if (simPriceTag) simPriceTag.textContent = isAr ? "(65 جنيه للخط)" : "(65 EGP / line)";
+          if (simSubtext) simSubtext.textContent = isAr 
+            ? "سعر الخط والشريحة الجديدة لمسبق الدفع (Prepaid) هو 65 ج.م. يمكنك تعديل السعر أو إلغاء التحديد للخطوط الحالية." 
+            : "New Prepaid SIM price is 65 EGP. You can adjust the price or uncheck for existing lines.";
+        } else if (lineType === "postpaid") {
+          simInput.value = "450";
+          if (simPriceTag) simPriceTag.textContent = isAr ? "(450 جنيه: 200 خط + 250 تأمينات)" : "(450 EGP: 200 line + 250 deposit)";
+          if (simSubtext) simSubtext.textContent = isAr 
+            ? "ثمن خط فودافون ريد (RED Postpaid) الجديد هو 450 ج.م (200 ج.م ثمن الخط + 250 ج.م تأمينات مستردة). يمكنك تعديل السعر أو إلغاء التحديد للخطوط الحالية." 
+            : "New Vodafone RED line is 450 EGP (200 EGP line fee + 250 EGP refundable deposit). You can adjust or uncheck for existing lines.";
+        } else if (lineType === "enterprise") {
+          simInput.value = "65";
+          if (simPriceTag) simPriceTag.textContent = isAr ? "(65 جنيه للخط)" : "(65 EGP / line)";
+          if (simSubtext) simSubtext.textContent = isAr 
+            ? "سعر خط الشركات والبزنس (Enterprise) الجديد هو 65 ج.م. يمكنك تعديل السعر أو إلغاء التحديد للخطوط الحالية." 
+            : "New Enterprise SIM price is 65 EGP. You can adjust the price or uncheck for existing lines.";
         } else if (lineType === "data") {
-          simCb.checked = true;
           simInput.value = "65";
-          if (simBanner) simBanner.classList.add("active");
+          if (simPriceTag) simPriceTag.textContent = isAr ? "(65 جنيه للخط)" : "(65 EGP / line)";
+          if (simSubtext) simSubtext.textContent = isAr 
+            ? "سعر خط الداتا والشريحة للروتر الهوائي (Home Wireless / Data Line) هو 65 ج.م. يمكنك تعديل السعر أو إلغاء التحديد للخطوط الحالية." 
+            : "New Data Line / Home Wireless SIM price is 65 EGP. You can adjust the price or uncheck for existing lines.";
         }
       }
 
@@ -6452,7 +6474,7 @@
       } else if (lineType === "enterprise") {
         currentCategory = "business";
       } else if (lineType === "data") {
-        currentCategory = "mi_plus";
+        currentCategory = "wireless";
       }
 
       // Open the calculator section
@@ -6516,7 +6538,7 @@
       } else if (lineType === "enterprise") {
         plans = VODAFONE_DATA.filter(p => p.category === "business");
       } else if (lineType === "data") {
-        plans = VODAFONE_DATA.filter(p => p.category === "mi_plus" || p.category === "wireless");
+        plans = VODAFONE_DATA.filter(p => p.category === "wireless" || p.category === "mi_plus");
       } else {
         plans = VODAFONE_DATA;
       }
@@ -6644,7 +6666,9 @@
         if (isSimActive && simTotal > 0) {
           simRow.style.display = "flex";
           if (simCountEl) simCountEl.textContent = linesCount;
-          if (simUnitEl) simUnitEl.textContent = simUnitPrice;
+          if (simUnitEl) {
+            simUnitEl.textContent = currentLineType === "postpaid" ? `${simUnitPrice} (200 خط + 250 تأمينات)` : simUnitPrice;
+          }
           if (simTotalEl) simTotalEl.textContent = `${simTotal.toFixed(2)} ج.م`;
         } else {
           simRow.style.display = "none";
@@ -6704,14 +6728,27 @@
       const grandTotal = simTotal + plansTotal + cashFeeTotal;
 
       const lineTypeLabel = currentLineType === "prepaid" ? "خط مسبق الدفع Prepaid (فليكس)" :
-                            currentLineType === "postpaid" ? "خط فاتورة Postpaid (ريد)" :
-                            currentLineType === "enterprise" ? "خط شركات Enterprise (بزنس)" : "خط إنترنت Data Line (داتا)";
+                            currentLineType === "postpaid" ? "خط فاتورة Postpaid (ريد RED)" :
+                            currentLineType === "enterprise" ? "خط شركات Enterprise (بزنس)" : "خط إنترنت Data Line (روتر هوائي / داتا)";
+
+      let simDetailsText = "";
+      if (isSimActive && simTotal > 0) {
+        if (currentLineType === "postpaid") {
+          simDetailsText = `• ثمن خطوط ريد الجديدة (${simUnitPrice} ج.م [200ج خط + 250ج تأمينات] × ${linesCount}): ${simTotal.toFixed(2)} ج.م\n`;
+        } else if (currentLineType === "enterprise") {
+          simDetailsText = `• ثمن خطوط الشركات الجديدة (${simUnitPrice} ج.م × ${linesCount}): ${simTotal.toFixed(2)} ج.م\n`;
+        } else if (currentLineType === "data") {
+          simDetailsText = `• ثمن خطوط داتا الروتر الهوائي (${simUnitPrice} ج.م × ${linesCount}): ${simTotal.toFixed(2)} ج.م\n`;
+        } else {
+          simDetailsText = `• ثمن شراء الخطوط الجديدة (${simUnitPrice} ج.م × ${linesCount}): ${simTotal.toFixed(2)} ج.م\n`;
+        }
+      }
 
       const summaryText = `🔴 بيان تكلفة خطوط فودافون مصر:
 ━━━━━━━━━━━━━━━━━
 • نوع الخط: ${lineTypeLabel}
 • عدد الخطوط: ${linesCount} خط
-${isSimActive && simTotal > 0 ? `• ثمن شراء الخطوط (${simUnitPrice} ج.م × ${linesCount}): ${simTotal.toFixed(2)} ج.م\n` : ""}• النظام المختار: ${planName}
+${simDetailsText}• النظام المختار: ${planName}
 • سعر باقة الخط الواحد: ${unitPrice.toFixed(2)} ج.م (شامل الضريبة)
 • إجمالي الباقات: ${plansTotal.toFixed(2)} ج.م
 ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)} ج.م (5 ج.م × ${linesCount} خط)\n` : ""}━━━━━━━━━━━━━━━━━
@@ -8533,19 +8570,19 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
       const typePrepaid = document.getElementById("txt-type-prepaid");
       if (typePrepaid) typePrepaid.textContent = isArabic ? "خط Prepaid" : "Prepaid";
       const subPrepaid = document.getElementById("txt-sub-prepaid");
-      if (subPrepaid) subPrepaid.textContent = isArabic ? "كارت وفليكس" : "Flex & Cards";
+      if (subPrepaid) subPrepaid.textContent = isArabic ? "كارت وفليكس (65 ج)" : "Flex & Cards (65 EGP)";
       const typePostpaid = document.getElementById("txt-type-postpaid");
       if (typePostpaid) typePostpaid.textContent = isArabic ? "خط Postpaid" : "Postpaid";
       const subPostpaid = document.getElementById("txt-sub-postpaid");
-      if (subPostpaid) subPostpaid.textContent = isArabic ? "فاتورة وريد RED" : "RED Bill";
+      if (subPostpaid) subPostpaid.textContent = isArabic ? "ريد (450 ج: 200+250 تأمين)" : "RED (450 EGP: 200+250 deposit)";
       const typeEnterprise = document.getElementById("txt-type-enterprise");
       if (typeEnterprise) typeEnterprise.textContent = isArabic ? "خط Enterprise" : "Enterprise";
       const subEnterprise = document.getElementById("txt-sub-enterprise");
-      if (subEnterprise) subEnterprise.textContent = isArabic ? "بزنس والشركات" : "Business Plans";
+      if (subEnterprise) subEnterprise.textContent = isArabic ? "شركات وبزنس (65 ج)" : "Business (65 EGP)";
       const typeData = document.getElementById("txt-type-data");
       if (typeData) typeData.textContent = isArabic ? "خط Data Line" : "Data Line";
       const subData = document.getElementById("txt-sub-data");
-      if (subData) subData.textContent = isArabic ? "داتا وهوام وايرلس" : "Mobile & Home Net";
+      if (subData) subData.textContent = isArabic ? "روتر هوائي وداتا (65 ج)" : "Home Router & Data (65 EGP)";
 
       const lblCalcSystem = document.getElementById("lbl-calc-system");
       if (lblCalcSystem) lblCalcSystem.textContent = isArabic ? "النظام / الباقة المتاحة:" : "Available Plan/System:";
@@ -8556,10 +8593,9 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
       if (txtSimBadge) txtSimBadge.textContent = isArabic ? "شريحة جديدة" : "New SIM";
       const txtSimTitle = document.getElementById("txt-sim-title");
       if (txtSimTitle) txtSimTitle.textContent = isArabic ? "احتساب ثمن شراء الخط الجديد" : "Include New SIM Line Price";
-      const txtSimPriceTag = document.getElementById("txt-sim-price-tag");
-      if (txtSimPriceTag) txtSimPriceTag.textContent = isArabic ? "(65 جنيه للخط)" : "(65 EGP per line)";
-      const txtSimSubtext = document.getElementById("txt-sim-subtext");
-      if (txtSimSubtext) txtSimSubtext.textContent = isArabic ? "سعر الخط والشريحة الجديدة لمسبق الدفع (Prepaid) هو 65 ج.م. يمكنك تعديل السعر أو إلغاء التحديد للخطوط الحالية." : "New Prepaid SIM price is 65 EGP. You can adjust the price or uncheck for existing lines.";
+
+      // Refresh dynamic line pricing tag and subtext for active line type
+      selectLineCategory(currentLineType);
       const lblSummarySim = document.getElementById("lbl-summary-sim-fee");
       if (lblSummarySim) {
         const count = document.getElementById("summary-sim-count") ? document.getElementById("summary-sim-count").textContent : "1";
@@ -8660,7 +8696,7 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.27";
+    const CURRENT_APP_VERSION = "1.0.28";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
