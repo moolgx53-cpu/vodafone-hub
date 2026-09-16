@@ -4187,7 +4187,7 @@
         <!-- Version Status & Auto-Update Button (Hidden per request) -->
         <button class="header-btn version-btn" id="btn-version-status" onclick="checkForUpdates(true)" style="display: none !important;">
           <span class="version-dot" id="version-dot"></span>
-          <span id="txt-version-number">v1.0.29</span>
+          <span id="txt-version-number">v1.0.30</span>
         </button>
 
         <!-- Direct PDF / Docs Hub Button -->
@@ -4245,9 +4245,9 @@
           <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
           <span id="txt-tab-ussd">أكواد سريعة</span>
         </button>
-        <button class="strip-tab-btn" id="tab-btn-sq" onclick="switchStripTab('sq')" title="أكواد طابور الفروع SQ وشريحة E-sim">
+        <button class="strip-tab-btn" id="tab-btn-sq" onclick="switchStripTab('sq')" title="أكواد طابور الفروع (SQ)">
           <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-          <span id="txt-tab-sq">SQ (أكواد الفرع وE-sim)</span>
+          <span id="txt-tab-sq">SQ</span>
         </button>
       </div>
 
@@ -8933,7 +8933,7 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.29";
+    const CURRENT_APP_VERSION = "1.0.30";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
