@@ -1,10 +1,10 @@
 /* ========================================================
    Vodafone Egypt Interactive Hub - Service Worker (PWA)
-   Version: 1.0.28
-   Features: 100% Offline-First, Auto-Update & Stale-While-Revalidate
+   Version: 1.0.29
+   Features: 100% Offline-First, Auto-Update & Network-First for Pages
    ======================================================== */
 
-const CACHE_VERSION = 'v1.0.28';
+const CACHE_VERSION = 'v1.0.29';
 const CACHE_NAME = `voda-hub-${CACHE_VERSION}`;
 
 // Core assets to pre-cache for offline capability
@@ -34,7 +34,7 @@ self.addEventListener('install', (event) => {
         }
       }
     }).then(() => {
-      // Force the waiting service worker to become active
+      // Force the waiting service worker to become active immediately
       return self.skipWaiting();
     })
   );
@@ -46,7 +46,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames
-          .filter((name) => name.startsWith('voda-hub-') && name !== CACHE_NAME)
+          .filter((name) => name !== CACHE_NAME)
           .map((name) => {
             console.log('[ServiceWorker] Removing old cache:', name);
             return caches.delete(name);
@@ -59,11 +59,11 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch: Network-First for version.json, Stale-While-Revalidate for everything else
+// Fetch: Network-First for HTML pages & version.json, Cache-First/Stale-While-Revalidate for other static assets
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // Always fetch version.json fresh from the network to detect updates
+  // 1. Always fetch version.json fresh from network to detect updates instantly
   if (url.pathname.endsWith('version.json')) {
     event.respondWith(
       fetch(event.request, { cache: 'no-store' })
@@ -77,7 +77,28 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // For all other resources: Stale-While-Revalidate
+  // 2. Network-First for HTML navigation & page requests so code changes reflect immediately online
+  const isHtml = event.request.mode === 'navigate' ||
+                 (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) ||
+                 url.pathname.endsWith('.html') ||
+                 url.pathname.endsWith('/');
+
+  if (isHtml) {
+    event.respondWith(
+      fetch(event.request, { cache: 'no-store' })
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const clone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return networkResponse;
+        })
+        .catch(() => caches.match(event.request).then(c => c || caches.match('./index.html') || caches.match('./')))
+    );
+    return;
+  }
+
+  // 3. For other assets (PDFs, icons, images): Stale-While-Revalidate
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       const fetchPromise = fetch(event.request).then((networkResponse) => {
@@ -89,11 +110,9 @@ self.addEventListener('fetch', (event) => {
         }
         return networkResponse;
       }).catch((err) => {
-        // Network failure is fine; cachedResponse will serve offline
         return cachedResponse;
       });
 
-      // Return cached version immediately if available, otherwise wait for network
       return cachedResponse || fetchPromise;
     })
   );

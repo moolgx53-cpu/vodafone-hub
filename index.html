@@ -895,6 +895,136 @@
       border-color: var(--vf-red-border);
     }
 
+    .code-pill.highlight-pill {
+      border-color: var(--vf-red) !important;
+      background: var(--vf-red-subtle) !important;
+      box-shadow: 0 0 0 1px rgba(230, 0, 0, 0.25);
+    }
+
+    /* Official Line Prices Overview Grid */
+    .line-prices-overview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 0.85rem;
+    }
+
+    @media (max-width: 900px) {
+      .line-prices-overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .line-prices-overview-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .line-price-summary-card {
+      background: var(--bg-subtle);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.75rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      position: relative;
+    }
+
+    .line-price-summary-card:hover {
+      border-color: var(--vf-red-border);
+      background: var(--vf-red-subtle);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(230, 0, 0, 0.1);
+    }
+
+    .line-price-summary-card.active {
+      border-color: var(--vf-red);
+      background: var(--surface);
+      box-shadow: 0 2px 10px rgba(230, 0, 0, 0.15);
+    }
+
+    .line-price-summary-card.red-featured {
+      border-color: rgba(230, 0, 0, 0.35);
+      background: linear-gradient(145deg, var(--bg-subtle), rgba(230, 0, 0, 0.04));
+    }
+
+    .lpc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.35rem;
+    }
+
+    .lpc-badge {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+      background: rgba(0, 0, 0, 0.05);
+      padding: 1px 6px;
+      border-radius: var(--radius-full);
+    }
+
+    .line-price-summary-card.active .lpc-badge {
+      background: var(--vf-red);
+      color: #ffffff;
+    }
+
+    .lpc-name {
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .lpc-price-tag {
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+      margin-top: 0.15rem;
+    }
+
+    .lpc-amount {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--vf-red);
+      line-height: 1;
+    }
+
+    .lpc-currency {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .lpc-breakdown {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #047857;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 4px;
+      padding: 2px 5px;
+      display: inline-block;
+      line-height: 1.25;
+    }
+
+    [data-theme="dark"] .lpc-breakdown {
+      background: #064e3b;
+      border-color: #059669;
+      color: #6ee7b7;
+    }
+
+    .lpc-desc {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+      margin-top: 0.1rem;
+    }
+
     /* Line Type Switcher Tabs (Compact) */
     .line-calc-types-bar {
       display: grid;
@@ -4057,7 +4187,7 @@
         <!-- Version Status & Auto-Update Button (Hidden per request) -->
         <button class="header-btn version-btn" id="btn-version-status" onclick="checkForUpdates(true)" style="display: none !important;">
           <span class="version-dot" id="version-dot"></span>
-          <span id="txt-version-number">v1.0.28</span>
+          <span id="txt-version-number">v1.0.29</span>
         </button>
 
         <!-- Direct PDF / Docs Hub Button -->
@@ -4115,9 +4245,9 @@
           <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
           <span id="txt-tab-ussd">أكواد سريعة</span>
         </button>
-        <button class="strip-tab-btn" id="tab-btn-sq" onclick="switchStripTab('sq')" title="أكواد طابور الفروع SQ">
+        <button class="strip-tab-btn" id="tab-btn-sq" onclick="switchStripTab('sq')" title="أكواد طابور الفروع SQ وشريحة E-sim">
           <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-          <span id="txt-tab-sq">SQ</span>
+          <span id="txt-tab-sq">SQ (أكواد الفرع وE-sim)</span>
         </button>
       </div>
 
@@ -4125,6 +4255,9 @@
       <div class="codes-list" id="strip-list-ussd">
         <div class="code-pill" onclick="copyToClipboard('*9#', 'كاش')" title="انقر للنسخ السريع">
           <span>كاش:</span> <code>*9#</code>
+        </div>
+        <div class="code-pill highlight-pill" onclick="copyToClipboard('99401', 'شريحة E-sim (كود SQ)')" title="انقر لنسخ كود SQ شريحة E-sim (99401)">
+          <span>📱 شريحة E-sim (SQ):</span> <code>99401</code>
         </div>
         <div class="code-pill" onclick="copyToClipboard('*155#', 'إلغاء الاشتراكات NTRA')" title="انقر للنسخ السريع">
           <span>إلغاء الخدمات NTRA:</span> <code>*155#</code>
@@ -4154,6 +4287,12 @@
 
       <!-- SQ Codes List -->
       <div class="codes-list" id="strip-list-sq" style="display: none;">
+        <div class="code-pill sq-pill highlight-pill" onclick="copyToClipboard('99401', 'شريحة E-sim')" title="انقر لنسخ كود SQ (99401) - شريحة E-sim">
+          <span>📱 شريحة E-sim:</span> <code>99401</code>
+        </div>
+        <div class="code-pill sq-pill" onclick="copyToClipboard('9940', 'خط فليكس جديد')" title="انقر لنسخ كود SQ (9940)">
+          <span>خط فليكس جديد:</span> <code>9940</code>
+        </div>
         <div class="code-pill sq-pill" onclick="copyToClipboard('004', 'نقل الملكية')" title="انقر لنسخ كود SQ (004)">
           <span>نقل الملكية:</span> <code>004</code>
         </div>
@@ -4162,12 +4301,6 @@
         </div>
         <div class="code-pill sq-pill" onclick="copyToClipboard('222', 'شحن ارضى')" title="انقر لنسخ كود SQ (222)">
           <span>شحن ارضى:</span> <code>222</code>
-        </div>
-        <div class="code-pill sq-pill" onclick="copyToClipboard('9940', 'خط فليكس جديد')" title="انقر لنسخ كود SQ (9940)">
-          <span>خط فليكس جديد:</span> <code>9940</code>
-        </div>
-        <div class="code-pill sq-pill" onclick="copyToClipboard('99401', 'شريحة E-sim')" title="انقر لنسخ كود SQ (99401) - شريحة E-sim">
-          <span>شريحة E-sim:</span> <code>99401</code>
         </div>
         <div class="code-pill sq-pill" onclick="copyToClipboard('208', 'تفعيل المحفظة')" title="انقر لنسخ كود SQ (208)">
           <span>تفعيل المحفظة:</span> <code>208</code>
@@ -4441,6 +4574,73 @@
             <button type="button" class="line-calc-close-btn" onclick="closeLineCalculator()" title="إغلاق الحاسبة">✕</button>
           </div>
 
+          <!-- Official Line Purchase Prices Overview Cards -->
+          <div class="line-prices-overview-grid" id="line-prices-overview-grid">
+            <div class="line-price-summary-card red-featured" data-line="postpaid" onclick="selectLineTypeInCalc('postpaid')" title="اضغط لاختيار خط فودافون ريد">
+              <div class="lpc-header">
+                <span class="lpc-badge">👑 خط Postpaid</span>
+                <span style="font-size:0.7rem;font-weight:700;color:var(--vf-red);">فاتورة شهرية</span>
+              </div>
+              <h3 class="lpc-name">خط فودافون ريد (RED)</h3>
+              <div class="lpc-price-tag">
+                <span class="lpc-amount">450</span>
+                <span class="lpc-currency">جنيه ثمن الخط</span>
+              </div>
+              <div class="lpc-breakdown">
+                ⚡ 200 ج ثمن الخط + 250 ج تأمينات مستردة
+              </div>
+              <div class="lpc-desc">شريحة خط ريد الرسمية + باقات RED المعتمدة (تنعكس بالحاسبة فورياً)</div>
+            </div>
+
+            <div class="line-price-summary-card" data-line="enterprise" onclick="selectLineTypeInCalc('enterprise')" title="اضغط لاختيار خط الشركات">
+              <div class="lpc-header">
+                <span class="lpc-badge">🏢 خط Enterprise</span>
+                <span style="font-size:0.7rem;font-weight:700;color:var(--text-muted);">بزنس</span>
+              </div>
+              <h3 class="lpc-name">خط الشركات والبزنس</h3>
+              <div class="lpc-price-tag">
+                <span class="lpc-amount">65</span>
+                <span class="lpc-currency">جنيه ثمن الخط</span>
+              </div>
+              <div class="lpc-breakdown">
+                ⚡ 65 جنيه ثمن الشريحة والخط الجديد
+              </div>
+              <div class="lpc-desc">شريحة قطاع الأعمال والشركات + باقات بيزنس فليكس وريد بيزنس</div>
+            </div>
+
+            <div class="line-price-summary-card" data-line="data" onclick="selectLineTypeInCalc('data')" title="اضغط لاختيار خط الروتر الهوائي">
+              <div class="lpc-header">
+                <span class="lpc-badge">📶 خط Data Line</span>
+                <span style="font-size:0.7rem;font-weight:700;color:var(--text-muted);">راوتر هوائي 4G</span>
+              </div>
+              <h3 class="lpc-name">خط داتا الروتر الهوائي</h3>
+              <div class="lpc-price-tag">
+                <span class="lpc-amount">65</span>
+                <span class="lpc-currency">جنيه ثمن الخط</span>
+              </div>
+              <div class="lpc-breakdown">
+                ⚡ 65 جنيه شريحة راوتر 4G الهوائي
+              </div>
+              <div class="lpc-desc">شريحة راوتر Home Wireless وباقات إنترنت منزلي بدون خط أرضي</div>
+            </div>
+
+            <div class="line-price-summary-card active" data-line="prepaid" onclick="selectLineTypeInCalc('prepaid')" title="اضغط لاختيار خط مسبق الدفع">
+              <div class="lpc-header">
+                <span class="lpc-badge">🟢 خط Prepaid</span>
+                <span style="font-size:0.7rem;font-weight:700;color:var(--text-muted);">كارت وفليكس</span>
+              </div>
+              <h3 class="lpc-name">خط الأفراد مسبق الدفع</h3>
+              <div class="lpc-price-tag">
+                <span class="lpc-amount">65</span>
+                <span class="lpc-currency">جنيه ثمن الخط</span>
+              </div>
+              <div class="lpc-breakdown">
+                ⚡ 65 جنيه ثمن الشريحة والخط الجديد
+              </div>
+              <div class="lpc-desc">شريحة خطوط الأفراد مسبقة الدفع الجديدة + شحن فليكس أو كروت</div>
+            </div>
+          </div>
+
           <!-- 1. Line Type Tabs -->
           <div class="line-calc-types-bar" id="calc-line-types-bar">
             <button type="button" class="line-type-btn active" data-type="prepaid" onclick="selectLineTypeInCalc('prepaid')">
@@ -4547,7 +4747,7 @@
               <div class="grand-total-info">
                 <span class="grand-total-label" id="lbl-grand-total">الإجمالي المطلوب سداده:</span>
                 <div class="grand-total-number">
-                  <span class="grand-total-val" id="summary-grand-total">75.00</span>
+                  <span class="grand-total-val" id="summary-grand-total">140.00</span>
                   <span class="grand-total-currency" id="txt-total-currency">جنيه مصري</span>
                 </div>
               </div>
@@ -5589,6 +5789,10 @@
     ];
 
     const PDF_SERVICE_CODES = [
+      // SQ Branch Queue Codes
+      { cat: "sq", code: "99401", title: "كود شريحة E-sim (شباك الفرع SQ)", note: "كود شاشة الفرع لطلب وتفعيل شريحة E-sim الإلكترونية لجميع عملاء فودافون مصر." },
+      { cat: "sq", code: "9940", title: "كود خط فليكس جديد (شباك الفرع SQ)", note: "كود شباك الفرع لطلب شراء خط فليكس مسبق الدفع جديد." },
+
       // Vodafone Cash Codes (Page 1 & 2 of PDF)
       { cat: "cash", code: "*9#", title: "القائمة الرئيسية للمحفظة", note: "تتيح الوصول لجميع خدمات فودافون كاش ومعاملاتها." },
       { cat: "cash", code: "*9*5#", title: "إنشاء الرقم السري للمحفظة", note: "كود تعيين الرقم السري المكون من 6 أرقام لأول مرة." },
@@ -6443,28 +6647,33 @@
           simInput.value = "65";
           if (simPriceTag) simPriceTag.textContent = isAr ? "(65 جنيه للخط)" : "(65 EGP / line)";
           if (simSubtext) simSubtext.textContent = isAr 
-            ? "سعر الخط والشريحة الجديدة لمسبق الدفع (Prepaid) هو 65 ج.م. يمكنك تعديل السعر أو إلغاء التحديد للخطوط الحالية." 
-            : "New Prepaid SIM price is 65 EGP. You can adjust the price or uncheck for existing lines.";
+            ? "سعر الخط والشريحة الجديدة لمسبق الدفع (Prepaid) هو 65 ج.م. ينعكس مباشرة في الإجمالي المطلوب سداده." 
+            : "New Prepaid SIM price is 65 EGP. Reflected in grand total.";
         } else if (lineType === "postpaid") {
           simInput.value = "450";
           if (simPriceTag) simPriceTag.textContent = isAr ? "(450 جنيه: 200 خط + 250 تأمينات)" : "(450 EGP: 200 line + 250 deposit)";
           if (simSubtext) simSubtext.textContent = isAr 
-            ? "ثمن خط فودافون ريد (RED Postpaid) الجديد هو 450 ج.م (200 ج.م ثمن الخط + 250 ج.م تأمينات مستردة). يمكنك تعديل السعر أو إلغاء التحديد للخطوط الحالية." 
-            : "New Vodafone RED line is 450 EGP (200 EGP line fee + 250 EGP refundable deposit). You can adjust or uncheck for existing lines.";
+            ? "ثمن خط فودافون ريد (RED Postpaid) الجديد هو 450 ج.م (200 ج.م ثمن الخط + 250 ج.م تأمينات مستردة). ينعكس مباشرة في الإجمالي المطلوب سداده." 
+            : "New Vodafone RED line is 450 EGP (200 EGP line fee + 250 EGP refundable deposit). Reflected in grand total.";
         } else if (lineType === "enterprise") {
           simInput.value = "65";
           if (simPriceTag) simPriceTag.textContent = isAr ? "(65 جنيه للخط)" : "(65 EGP / line)";
           if (simSubtext) simSubtext.textContent = isAr 
-            ? "سعر خط الشركات والبزنس (Enterprise) الجديد هو 65 ج.م. يمكنك تعديل السعر أو إلغاء التحديد للخطوط الحالية." 
-            : "New Enterprise SIM price is 65 EGP. You can adjust the price or uncheck for existing lines.";
+            ? "سعر خط الشركات والبزنس (Enterprise) الجديد هو 65 ج.م. ينعكس مباشرة في الإجمالي المطلوب سداده." 
+            : "New Enterprise SIM price is 65 EGP. Reflected in grand total.";
         } else if (lineType === "data") {
           simInput.value = "65";
           if (simPriceTag) simPriceTag.textContent = isAr ? "(65 جنيه للخط)" : "(65 EGP / line)";
           if (simSubtext) simSubtext.textContent = isAr 
-            ? "سعر خط الداتا والشريحة للروتر الهوائي (Home Wireless / Data Line) هو 65 ج.م. يمكنك تعديل السعر أو إلغاء التحديد للخطوط الحالية." 
-            : "New Data Line / Home Wireless SIM price is 65 EGP. You can adjust the price or uncheck for existing lines.";
+            ? "سعر خط الداتا والشريحة للروتر الهوائي (Home Wireless / Data Line) هو 65 ج.م. ينعكس مباشرة في الإجمالي المطلوب سداده." 
+            : "New Data Line / Home Wireless SIM price is 65 EGP. Reflected in grand total.";
         }
       }
+
+      // Highlight active overview card
+      document.querySelectorAll(".line-price-summary-card").forEach(card => {
+        card.classList.toggle("active", card.getAttribute("data-line") === lineType);
+      });
 
       // Filter catalog plans matching this line type
       if (lineType === "prepaid") {
@@ -6499,6 +6708,11 @@
       // Highlight correct line-type-btn in the calculator
       document.querySelectorAll(".line-type-btn").forEach(btn => {
         btn.classList.toggle("active", btn.getAttribute("data-type") === currentLineType);
+      });
+
+      // Highlight correct overview card
+      document.querySelectorAll(".line-price-summary-card").forEach(card => {
+        card.classList.toggle("active", card.getAttribute("data-line") === currentLineType);
       });
 
       // Populate systems dropdown and calculate
@@ -6543,13 +6757,23 @@
         plans = VODAFONE_DATA;
       }
 
-      select.innerHTML = plans.map(p => {
-        const quotaInfo = currentLang === "ar" ? p.quotaText : p.quotaTextEn;
-        const nameStr = currentLang === "ar" ? p.name : p.nameEn;
+      const isAr = currentLang === "ar";
+      let optionsHtml = `<option value="sim_only" data-price="0" data-net="0" data-name="${isAr ? 'شراء الخط فقط (بدون باقة إضافية)' : 'Line SIM only (No extra bundle)'}">
+        ${isAr ? '⭐ شراء الخط والشريحة فقط (0 ج.م باقة إضافية)' : '⭐ Line SIM only (0 EGP bundle)'}
+      </option>`;
+
+      optionsHtml += plans.map(p => {
+        const quotaInfo = isAr ? p.quotaText : p.quotaTextEn;
+        const nameStr = isAr ? p.name : p.nameEn;
         return `<option value="${p.id}" data-price="${p.priceAfterTax}" data-net="${p.priceBeforeTax}" data-name="${escapeHtml(nameStr)}">
           ${nameStr} - ${p.priceAfterTax} ج.م شامل (${quotaInfo})
         </option>`;
       }).join("");
+
+      select.innerHTML = optionsHtml;
+      if (plans.length > 0 && select.options.length > 1) {
+        select.selectedIndex = 1;
+      }
 
       onCalcSystemChanged();
     }
@@ -6662,12 +6886,25 @@
       const simCountEl = document.getElementById("summary-sim-count");
       const simUnitEl = document.getElementById("summary-sim-unit");
       const simTotalEl = document.getElementById("summary-sim-total");
+      const lblSummarySim = document.getElementById("lbl-summary-sim-fee");
+
       if (simRow) {
         if (isSimActive && simTotal > 0) {
           simRow.style.display = "flex";
           if (simCountEl) simCountEl.textContent = linesCount;
           if (simUnitEl) {
             simUnitEl.textContent = currentLineType === "postpaid" ? `${simUnitPrice} (200 خط + 250 تأمينات)` : simUnitPrice;
+          }
+          if (lblSummarySim) {
+            if (currentLineType === "postpaid") {
+              lblSummarySim.innerHTML = `ثمن خطوط ريد الجديدة (<span id="summary-sim-count">${linesCount}</span> خط × <span id="summary-sim-unit">${simUnitPrice} [200 خط + 250 تأمينات]</span> ج.م):`;
+            } else if (currentLineType === "enterprise") {
+              lblSummarySim.innerHTML = `ثمن خطوط الشركات (<span id="summary-sim-count">${linesCount}</span> خط × <span id="summary-sim-unit">${simUnitPrice}</span> ج.م):`;
+            } else if (currentLineType === "data") {
+              lblSummarySim.innerHTML = `ثمن خطوط داتا الروتر الهوائي (<span id="summary-sim-count">${linesCount}</span> خط × <span id="summary-sim-unit">${simUnitPrice}</span> ج.م):`;
+            } else {
+              lblSummarySim.innerHTML = `ثمن شراء الخطوط (<span id="summary-sim-count">${linesCount}</span> خط × <span id="summary-sim-unit">${simUnitPrice}</span> ج.م):`;
+            }
           }
           if (simTotalEl) simTotalEl.textContent = `${simTotal.toFixed(2)} ج.م`;
         } else {
@@ -8696,7 +8933,7 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
        PWA SERVICE WORKER & AUTO-UPDATER ENGINE
        Automatic version checking, background updates & offline sync
        ======================================================== */
-    const CURRENT_APP_VERSION = "1.0.28";
+    const CURRENT_APP_VERSION = "1.0.29";
     let swRegistration = null;
     let deferredInstallPrompt = null;
 
@@ -8790,13 +9027,19 @@ ${isCashActive ? `• خدمة فودافون كاش: ${cashFeeTotal.toFixed(2)}
     }
 
     // Apply update and reload
-    function applyUpdateAndReload() {
+    async function applyUpdateAndReload() {
+      try {
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map(k => caches.delete(k)));
+        }
+      } catch (e) {}
       if (navigator.serviceWorker && navigator.serviceWorker.controller) {
         navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
       }
       setTimeout(() => {
         window.location.reload(true);
-      }, 200);
+      }, 250);
     }
 
     // Dismiss banner
